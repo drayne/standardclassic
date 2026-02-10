@@ -19,9 +19,9 @@ return new class extends Migration
         });
 
         DB::table('media_types')->insert([
-            ['name' => MediaType::SONG->value],
-            ['name' => MediaType::SHOW->value],
-            ['name' => MediaType::PODCAST->value],
+            ['name' => MediaType::SONG->value, 'created_at' => now(), 'updated_at' => now()],
+            ['name' => MediaType::SHOW->value, 'created_at' => now(), 'updated_at' => now()],
+            ['name' => MediaType::PODCAST->value, 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 
