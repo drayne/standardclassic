@@ -18,7 +18,8 @@ class MediaInfolist
                 TextEntry::make('artist')
                     ->placeholder('-'),
                 TextEntry::make('file_path'),
-                ImageEntry::make('image_path'),
+                ImageEntry::make('image_path')
+                    ->disk('radio-covers'),
                 TextEntry::make('duration')
                     ->numeric()
                     ->placeholder('-'),

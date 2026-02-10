@@ -25,7 +25,8 @@ class MediaTable
                     ->searchable(),
                 TextColumn::make('file_path')
                     ->searchable(),
-                ImageColumn::make('image_path'),
+                ImageColumn::make('image_path')
+                    ->disk('radio-covers'),
                 TextColumn::make('duration')
                     ->numeric()
                     ->sortable(),
