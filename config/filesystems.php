@@ -63,18 +63,14 @@ return [
         'radio' => [
             'driver' => 'local',
             'root' => '/radio',
-            'throw' => false,
-            'report' => false,
             'visibility' => 'private',
         ],
 
         'radio-covers' => [
             'driver' => 'local',
             'root' => '/radio/covers',
-            'url' => env('APP_URL', 'http://localhost') . '/covers', // Add this
+            'url' => env('APP_URL') . '/covers',
             'visibility' => 'public',
-            'throw' => false,
-            'report' => false,
         ],
     ],
 
@@ -91,7 +87,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-        public_path('covers') => '/radio/covers',
+        public_path('covers') => '/radio/covers'
     ],
 
 ];
