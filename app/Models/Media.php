@@ -20,4 +20,10 @@ class Media extends Model
     {
         return $this->belongsTo(MediaType::class, 'media_type_id');
     }
+
+    public function playlists(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Playlist::class, 'playlist_media')
+            ->withPivot('sort_order');
+    }
 }

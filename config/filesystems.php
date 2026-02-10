@@ -60,6 +60,13 @@ return [
             'report' => false,
         ],
 
+        'radio' => [
+            'driver' => 'local',
+            'root' => '/radio',
+            'throw' => false,
+            'report' => false,
+        ],
+
     ],
 
     /*
