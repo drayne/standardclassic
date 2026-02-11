@@ -27,4 +27,19 @@ class Media extends Model
         return $this->belongsToMany(Playlist::class, 'playlist_media')
             ->withPivot('sort_order');
     }
+
+    protected static function booted(): void
+    {
+        static::deleted(function ($media) {
+            // Brišemo audio fajl
+            if ($media->file_path) {
+                Storage::disk('radio')->delete($media->file_path);
+            }
+
+            // Brišemo cover sliku
+            if ($media->image_path) {
+                Storage::disk('radio-covers')->delete($media->image_path);
+            }
+        });
+    }
 }
