@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\TrackOrder;
 use App\Http\Controllers\Controller;
 use App\Models\Playlist;
 use Cache;
-use Illuminate\Http\Request;
 
 class RadioController extends Controller
 {
@@ -20,7 +20,7 @@ class RadioController extends Controller
         }
 
         // 2. Nađi posljednji pušteni redoslijed iz keša
-        $lastOrder = Cache::get('radio_last_order', -1);
+        $lastOrder = Cache::get(TrackOrder::NEXT_TRACK, -1);
 
         // 3. Uzmi sljedeću pjesmu iz te plejliste (pazeći na sort_order)
         $nextItem = $playlist->media()
@@ -36,19 +36,24 @@ class RadioController extends Controller
         }
 
         if ($nextItem) {
-            // Zapamti ovaj sort_order za sljedeći poziv
-            Cache::put('radio_last_order', $nextItem->pivot->sort_order);
+            // 1. Ono što je do sad bilo "Trenutno", sada postaje "Prethodno/Svirajuće"
+            $currentlyPlayingOrder = Cache::get(TrackOrder::NEXT_TRACK);
+            if ($currentlyPlayingOrder !== null) {
+                Cache::put(TrackOrder::CURRENT_TRACK, $currentlyPlayingOrder);
+            } else {
+                // Ako je ovo APSOLUTNO prvi poziv, postavi trenutni na isti kao next
+                // dok ne dođe drugi poziv (koji stiže milisekundu kasnije)
+                Cache::put(TrackOrder::CURRENT_TRACK, $nextItem->pivot->sort_order);
+            }
 
-            // PUTANJA: Prilagođavamo je tvojoj strukturi
-            // file_path u bazi je vjerovatno 'audio/naslov-timestamp.mp3'
-            // Zato pazimo da ne dupliramo /audio/
-            $cleanPath = ltrim($nextItem->file_path, '/');
+            // 2. Ažuriraj novi last_order (ono što Liquidsoap upravo baferuje)
+            Cache::put(TrackOrder::NEXT_TRACK, $nextItem->pivot->sort_order);
 
-            // Finalna apsolutna putanja za WSL
-            $fullPath = "/home/vedran/radio/" . $cleanPath;
-
-            return response($fullPath, 200)
-                ->header('Content-Type', 'text/plain');
+            return response()->json([
+                'title' => $nextItem->title ?? 'Unknown Title',
+                'artist' => $nextItem->artist ?? 'StandardClassic',
+                'path' => "/home/vedran/radio/" . ltrim($nextItem->file_path, '/'),
+            ]);
         }
 
         return "/home/vedran/radio/audio/fallback.mp3";
