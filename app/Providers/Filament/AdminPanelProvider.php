@@ -2,13 +2,14 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Dashboard;
 use App\Filament\Widgets\RadioPlayerWidget;
 use App\Filament\Widgets\RadioStatusWidget;
+use App\Filament\Widgets\ServiceStatusWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -32,8 +33,9 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Red,
             ])
+//            ->databaseNotifications()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -44,7 +46,8 @@ class AdminPanelProvider extends PanelProvider
 //                AccountWidget::class,
 //                FilamentInfoWidget::class,
 //                RadioStatusWidget::class,
-                RadioPlayerWidget::class
+                RadioPlayerWidget::class,
+                ServiceStatusWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
