@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\TrackOrder;
 use App\Http\Controllers\Controller;
+use App\Http\Services\CurrentlyPlayingService;
 use App\Models\Playlist;
 use Cache;
 
@@ -36,18 +37,7 @@ class RadioController extends Controller
         }
 
         if ($nextItem) {
-            // 1. Ono što je do sad bilo "Trenutno", sada postaje "Prethodno/Svirajuće"
-            $currentlyPlayingOrder = Cache::get(TrackOrder::NEXT_TRACK);
-            if ($currentlyPlayingOrder !== null) {
-                Cache::put(TrackOrder::CURRENT_TRACK, $currentlyPlayingOrder);
-            } else {
-                // Ako je ovo APSOLUTNO prvi poziv, postavi trenutni na isti kao next
-                // dok ne dođe drugi poziv (koji stiže milisekundu kasnije)
-                Cache::put(TrackOrder::CURRENT_TRACK, $nextItem->pivot->sort_order);
-            }
-
-            // 2. Ažuriraj novi last_order (ono što Liquidsoap upravo baferuje)
-            Cache::put(TrackOrder::NEXT_TRACK, $nextItem->pivot->sort_order);
+            CurrentlyPlayingService::updateTracks($nextItem);
 
             return response()->json([
                 'title' => $nextItem->title ?? 'Unknown Title',
