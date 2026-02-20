@@ -57,6 +57,7 @@ class RadioController extends Controller
         return response()->json([
             'title'  => $nextItem->title ?? 'Unknown Title',
             'artist' => $nextItem->artist ?? 'StandardClassic',
+            'media_id' => $nextItem->id,
             'path'   => "/home/vedran/radio/" . ltrim($nextItem->file_path, '/'),
         ]);
     }

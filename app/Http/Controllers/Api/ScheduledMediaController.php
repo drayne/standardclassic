@@ -31,6 +31,7 @@ class ScheduledMediaController extends Controller
                 'status' => 'play_now',
                 'title'  => $schedule->media->title,
                 'artist' => $schedule->media->artist ?? 'Scheduled Event',
+                'media_id' => $schedule->media->id,
                 'path'   => "/home/vedran/radio/" . ltrim($schedule->media->file_path, '/'),
             ]);
         }
