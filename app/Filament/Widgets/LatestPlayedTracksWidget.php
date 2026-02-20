@@ -9,6 +9,8 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestPlayedTracksWidget extends BaseWidget
 {
+    protected static ?string $pollingInterval = '10s';
+
     protected static ?int $sort = 1;
 
     protected int | string | array $columnSpan = 2;
@@ -16,6 +18,7 @@ class LatestPlayedTracksWidget extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
+            ->poll('10s')
             ->query(
                 PlayedTrack::query()
                     ->with('media')
@@ -23,18 +26,32 @@ class LatestPlayedTracksWidget extends BaseWidget
                     ->limit(5)
             )
             ->columns([
-                Tables\Columns\TextColumn::make('media.title')
-                    ->label('Track'),
-                Tables\Columns\TextColumn::make('media.artist')
-                    ->label('Artist'),
-                Tables\Columns\TextColumn::make('played_at')
-                    ->since()
-                    ->label('Played')
-                    ->dateTime(),
+                Tables\Columns\Layout\Split::make([
+                    Tables\Columns\ImageColumn::make('media.image_path')
+                        ->circular()
+                        ->defaultImageUrl(url('/images/default-music.png'))
+                        ->disk('radio-covers')
+                        ->grow(false),
+                    Tables\Columns\Layout\Stack::make([
+                        Tables\Columns\TextColumn::make('media.title')
+                            ->weight('bold')
+                            ->color('slate-900')
+                            ->size('sm'),
+                        Tables\Columns\TextColumn::make('media.artist')
+                            ->color('gray-500')
+                            ->size('xs'),
+                    ])->space(1),
+                    Tables\Columns\Layout\Stack::make([
+                        Tables\Columns\TextColumn::make('played_at')
+                            ->since()
+                            ->badge()
+                            ->color('gray')
+                            ->icon('heroicon-m-play')
+                            ->alignEnd(),
+                    ])->grow(false),
+                ]),
             ])
             ->paginated(false)
-            ->headerActions([])
-            ->actions([])
-            ->bulkActions([]);
+            ->header(null);
     }
 }

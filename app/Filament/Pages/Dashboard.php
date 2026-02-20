@@ -8,4 +8,14 @@ class Dashboard extends \Filament\Pages\Dashboard
     {
         return 4;
     }
+
+    public function getWidgets(): array
+    {
+        return [
+            \App\Filament\Widgets\ServiceStatusWidget::class,
+            \App\Filament\Widgets\RadioPlayerWidget::class,
+            \App\Filament\Widgets\LatestPlayedTracksWidget::class,
+            \App\Filament\Widgets\UpcomingScheduleWidget::class,
+        ];
+    }
 }
