@@ -18,6 +18,8 @@ use Filament\Tables\Table;
 
 class MediaTypeResource extends Resource
 {
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $model = MediaType::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

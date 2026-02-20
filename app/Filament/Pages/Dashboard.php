@@ -18,4 +18,6 @@ class Dashboard extends \Filament\Pages\Dashboard
             \App\Filament\Widgets\UpcomingScheduleWidget::class,
         ];
     }
+
+    protected ?string $heading = '';
 }
