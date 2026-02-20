@@ -25,23 +25,18 @@ class RadioPlayerWidget extends Widget
     protected function getViewData(): array
     {
         // Samo čitamo trenutne vrijednosti, ne mijenjamo ih!
-        $currentOrder = Cache::get(\App\Enums\TrackOrder::CURRENT_TRACK);
-        $nextOrder = Cache::get(\App\Enums\TrackOrder::NEXT_TRACK);
+        $currentTrack = Cache::get(TrackOrder::CURRENT_TRACK);
+        $nextTrack = Cache::get(TrackOrder::NEXT_TRACK);
 
-        $playlist = \App\Models\Playlist::where('active', true)->first();
-
-        // Ako nema ništa u kešu (npr. tek upaljen server),
-        // možemo uzeti prvu pjesmu ali BEZ upisivanja u keš ovdje.
-        $current = $playlist?->media()->wherePivot('sort_order', $currentOrder)->first();
-        $next = $playlist?->media()->wherePivot('sort_order', $nextOrder)->first();
+//        $playlist = \App\Models\Playlist::where('active', true)->first();
 
         return [
-            'current' => $current,
-            'next' => $next,
+            'current' => $currentTrack,
+            'next' => $nextTrack,
         ];
     }
 
-    public function skip()
+    public function skip(): void
     {
         $service = new RadioService();
         if ($service->skipTrack()) {

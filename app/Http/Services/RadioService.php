@@ -4,7 +4,7 @@ namespace App\Http\Services;
 
 class RadioService
 {
-    public function skipTrack()
+    public function skipTrack(): bool
     {
         try {
             // Koristimo host.docker.internal jer Liquidsoap radi na WSL hostu, a ne u kontejneru

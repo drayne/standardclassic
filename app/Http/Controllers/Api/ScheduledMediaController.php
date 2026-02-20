@@ -20,17 +20,18 @@ class ScheduledMediaController extends Controller
             ->with('media')
             ->first();
 
-        if ($schedule) {
-            CurrentlyPlayingService::updateTracks($schedule->media);
-            $schedule->update(['played' => true]);
+        \Log::info('Provjera sada: ' . $startOfWindow . ' - ' . $endOfWindow);
+        \Log::info($schedule);
 
-            $baseWslPath = '/home/vedran/radio/';
-            $filePath = $baseWslPath . ltrim($schedule->media->file_path, '/');
+        if ($schedule && $schedule->media) {
+            CurrentlyPlayingService::setScheduledTrack($schedule->media);
+            $schedule->update(['played' => true]);
 
             return response()->json([
                 'status' => 'play_now',
-                'file' => $filePath,
-                'title' => $schedule->media->title
+                'title'  => $schedule->media->title,
+                'artist' => $schedule->media->artist ?? 'Scheduled Event',
+                'path'   => "/home/vedran/radio/" . ltrim($schedule->media->file_path, '/'),
             ]);
         }
 

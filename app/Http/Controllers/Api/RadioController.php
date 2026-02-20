@@ -12,40 +12,61 @@ class RadioController extends Controller
 {
     public function getNextTrack()
     {
-        // 1. Nađi aktivnu plejlistu
-        $playlist = Playlist::where('active', true)->first();
+        // 1. Aktivna plejlista sa učitanim medijima (Eager Loading)
+        $playlist = Playlist::with('media')->where('active', true)->first();
 
-        if (!$playlist) {
-            // Ako nema aktivne plejliste, pusti neki fallback fajl
-            return "/home/vedran/radio/audio/fallback.mp3";
+        if (!$playlist || $playlist->media->isEmpty()) {
+            \Log::error("Radio: Nema aktivne plejliste ili je plejlista prazna!");
+            return $this->fallbackResponse();
         }
 
-        // 2. Nađi posljednji pušteni redoslijed iz keša
-        $lastOrder = Cache::get(TrackOrder::NEXT_TRACK, -1);
+        // 2. Odredi sort_order
+        $lastTrackInQueue = Cache::get(TrackOrder::NEXT_TRACK);
+        $lastPlayedSortOrder = -1; // Počinjemo od -1 da bi prva pesma sa 0 bila validna
 
-        // 3. Uzmi sljedeću pjesmu iz te plejliste (pazeći na sort_order)
-        $nextItem = $playlist->media()
-            ->wherePivot('sort_order', '>', $lastOrder)
-            ->orderBy('sort_order', 'asc')
+        if ($lastTrackInQueue) {
+            // Koristimo kolekciju iz memorije umesto novog upita za brzinu i sigurnost
+            $found = $playlist->media->firstWhere('id', $lastTrackInQueue->id);
+            if ($found && isset($found->pivot->sort_order)) {
+                $lastPlayedSortOrder = $found->pivot->sort_order;
+            }
+        }
+
+        // 3. Pronađi sledeću pesmu
+        $nextItem = $playlist->media
+            ->where('pivot.sort_order', '>', $lastPlayedSortOrder)
+            ->sortBy('pivot.sort_order')
             ->first();
 
-        // 4. Ako nema više pjesama (došli smo do kraja), vrati se na prvu
+        // 4. Cirkularna logika - ako nema sledeće, uzmi prvu
         if (!$nextItem) {
-            $nextItem = $playlist->media()
-                ->orderBy('sort_order', 'asc')
-                ->first();
+            $nextItem = $playlist->media->sortBy('pivot.sort_order')->first();
         }
 
-        if ($nextItem) {
-            CurrentlyPlayingService::updateTracks($nextItem);
-
-            return response()->json([
-                'title' => $nextItem->title ?? 'Unknown Title',
-                'artist' => $nextItem->artist ?? 'StandardClassic',
-                'path' => "/home/vedran/radio/" . ltrim($nextItem->file_path, '/'),
-            ]);
+        // 5. Finalna provera pre bilo kakvog pristupa propertijima
+        if (!$nextItem) {
+            \Log::error("Radio: Kritična greška - nextItem je null nakon svih provera.");
+            return $this->fallbackResponse();
         }
 
-        return "/home/vedran/radio/audio/fallback.mp3";
+        // Ažuriraj keš i vrati odgovor
+        CurrentlyPlayingService::updateTracks($nextItem);
+
+        \Log::info("Radio: Sledeća pesma spremna: " . $nextItem->title);
+
+        return response()->json([
+            'title'  => $nextItem->title ?? 'Unknown Title',
+            'artist' => $nextItem->artist ?? 'StandardClassic',
+            'path'   => "/home/vedran/radio/" . ltrim($nextItem->file_path, '/'),
+        ]);
+    }
+
+    private function fallbackResponse()
+    {
+        return response()->json([
+            'title'  => 'Fallback',
+            'artist' => 'Radio',
+            'path'   => "/home/vedran/radio/audio/fallback.mp3",
+        ]);
     }
 }
