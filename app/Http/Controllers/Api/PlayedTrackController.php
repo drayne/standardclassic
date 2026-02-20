@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\TrackOrder;
 use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\PlayedTrack;
 use App\Models\TrackType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class PlayedTrackController extends Controller
@@ -29,8 +31,7 @@ class PlayedTrackController extends Controller
             ]);
 
             // 3. Ažuriranje keša (za "Now Playing" widget)
-            // Sada keš više ne laže, jer Liquidsoap javlja tačan momenat starta
-//            Cache::put(TrackOrder::CURRENT_TRACK, $media);
+            Cache::put(TrackOrder::CURRENT_TRACK, $media);
 
             \Log::info("Radio: Potvrđeno puštanje - {$media->title} [Tip: {$type->name}]");
 

@@ -11,7 +11,7 @@ class ServiceStatusWidget extends StatsOverviewWidget
     protected ?string $pollingInterval = 'everyMinute';
 
     protected int | string | array $columnSpan = [
-        'lg' => 1,
+        'lg' => 4,
     ];
 
     protected function getStats(): array

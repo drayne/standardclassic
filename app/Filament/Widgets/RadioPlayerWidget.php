@@ -14,8 +14,8 @@ class RadioPlayerWidget extends Widget
 {
     protected string $view = 'filament.widgets.radio-player-widget';
     protected int | string | array $columnSpan = [
-        'md' => 3,
-        'xl' => 3,
+        'md' => 4,
+        'xl' => 4,
     ];
 
     // Ovo će natjerati widget da se osvježi bez reload-a stranice
