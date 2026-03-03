@@ -10,6 +10,8 @@ class EditMediaSchedule extends EditRecord
 {
     protected static string $resource = MediaScheduleResource::class;
 
+    protected ?string $heading = 'Izmijeni zakazanu emisiju';
+
     protected function getHeaderActions(): array
     {
         return [

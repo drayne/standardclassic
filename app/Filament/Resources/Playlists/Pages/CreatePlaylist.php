@@ -8,4 +8,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreatePlaylist extends CreateRecord
 {
     protected static string $resource = PlaylistResource::class;
+
+    public function canCreateAnother(): bool
+    {
+        return false;
+    }
 }

@@ -6,6 +6,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -16,34 +17,40 @@ class MediaTable
     {
         return $table
             ->columns([
-                TextColumn::make('media_type_id')
-                    ->numeric()
+                IconColumn::make('type.name')
+                    ->label('Tip')
+                    ->icon(fn (string $state): string => match (strtolower($state)) {
+                        'song' => 'heroicon-o-musical-note',
+                        'show' => 'heroicon-o-microphone',
+                        'podcast' => 'heroicon-o-megaphone',
+                        default => 'heroicon-o-question-mark-circle',
+                    })
+                    ->color(fn (string $state): string => match (strtolower($state)) {
+                        'song' => 'primary',
+                        'show' => 'success',
+                        'podcast' => 'warning',
+                        default => 'gray',
+                    })
                     ->sortable(),
                 TextColumn::make('title')
+                    ->label('Naziv')
                     ->searchable(),
                 TextColumn::make('artist')
-                    ->searchable(),
-                TextColumn::make('file_path')
+                    ->label('Izvođač')
                     ->searchable(),
                 ImageColumn::make('image_path')
+                    ->label('Slika')
                     ->disk('radio-covers'),
                 TextColumn::make('duration')
+                    ->label('Trajanje')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
+                ViewAction::make()->label('Detalji'),
                 EditAction::make(),
             ])
             ->toolbarActions([

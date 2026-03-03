@@ -21,7 +21,7 @@ class UpcomingScheduleWidget extends BaseWidget
             ->poll('15s')
             ->query(
                 MediaSchedule::query()
-                    ->with('media')
+                    ->with(['media', 'media.type'])
                     ->where('played', false)
                     ->where('scheduled_at', '>', now())
                     ->orderBy('scheduled_at', 'asc')
@@ -33,6 +33,21 @@ class UpcomingScheduleWidget extends BaseWidget
                         ->circular()
                         ->defaultImageUrl(url('/images/default-music.png'))
                         ->disk('radio-covers')
+                        ->grow(false),
+                    Tables\Columns\IconColumn::make('media.type.name')
+                        ->label('Tip')
+                        ->icon(fn (string $state): string => match (strtolower($state)) {
+                            'song' => 'heroicon-o-musical-note',
+                            'show' => 'heroicon-o-microphone',
+                            'podcast' => 'heroicon-o-megaphone',
+                            default => 'heroicon-o-question-mark-circle',
+                        })
+                        ->color(fn (string $state): string => match (strtolower($state)) {
+                            'song' => 'primary',
+                            'show' => 'success',
+                            'podcast' => 'warning',
+                            default => 'gray',
+                        })
                         ->grow(false),
                     Tables\Columns\Layout\Stack::make([
                         Tables\Columns\TextColumn::make('media.title')
@@ -55,6 +70,8 @@ class UpcomingScheduleWidget extends BaseWidget
                 ]),
             ])
             ->paginated(false)
-            ->header(null);
+            ->header(null)
+            ->heading('Predstojeće zakazane emisije')
+            ->emptyStateHeading('Nema zakazanih emisija');
     }
 }

@@ -25,7 +25,7 @@ class MediaForm
                         Grid::make(2)
                             ->schema([
                                 TextInput::make('title')
-                                    ->label('Naslov')
+                                    ->label('Naziv')
                                     ->required()
                                     ->placeholder('npr. Mesečeva Sonata'),
 
@@ -37,11 +37,11 @@ class MediaForm
                                     ->preload(),
 
                                 TextInput::make('artist')
-                                    ->label('Izvođač / Autor')
+                                    ->label('Izvođač')
                                     ->placeholder('npr. Ludwig van Beethoven'),
 
                                 TextInput::make('duration')
-                                    ->label('Trajanje (sekunde)')
+                                    ->label('Trajanje')
                                     ->numeric()
                                     ->suffix('s')
                                     ->helperText('Ovo će biti automatski izračunato'),
@@ -117,7 +117,7 @@ class MediaForm
                                     ->columnSpan(1),
 
                                 FileUpload::make('image_path')
-                                    ->label('Ikonica (Cover Art)')
+                                    ->label('Slika')
                                     ->image()
                                     ->disk('radio-covers')
                                     ->imageEditor()

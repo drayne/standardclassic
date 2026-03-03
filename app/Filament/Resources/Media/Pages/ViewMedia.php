@@ -10,6 +10,8 @@ class ViewMedia extends ViewRecord
 {
     protected static string $resource = MediaResource::class;
 
+    protected ?string $heading = 'Detalji medija';
+
     protected function getHeaderActions(): array
     {
         return [

@@ -18,9 +18,15 @@ class MediaScheduleResource extends Resource
 {
     protected static ?string $model = MediaSchedule::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $navigationLabel = 'Zakazane emisije';
 
-    protected static ?string $recordTitleAttribute = 'Zakazani termini';
+    protected static ?string $modelLabel = 'Zakazana emisija';
+
+    protected static ?string $pluralModelLabel = 'Zakazane emisije';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendarDays;
+
+    protected static ?string $recordTitleAttribute = 'Zakazane emisije';
 
     public static function form(Schema $schema): Schema
     {

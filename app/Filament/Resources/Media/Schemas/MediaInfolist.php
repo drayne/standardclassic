@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Media\Schemas;
 
+use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
@@ -12,15 +13,32 @@ class MediaInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('media_type_id')
-                    ->numeric(),
-                TextEntry::make('title'),
+                IconEntry::make('type.name')
+                    ->label('Tip')
+                    ->icon(fn (string $state): string => match (strtolower($state)) {
+                        'song' => 'heroicon-o-musical-note',
+                        'show' => 'heroicon-o-microphone',
+                        'podcast' => 'heroicon-o-megaphone',
+                        default => 'heroicon-o-question-mark-circle',
+                    })
+                    ->color(fn (string $state): string => match (strtolower($state)) {
+                        'song' => 'primary',
+                        'show' => 'success',
+                        'podcast' => 'warning',
+                        default => 'gray',
+                    }),
+                TextEntry::make('title')
+                    ->label('Naziv'),
                 TextEntry::make('artist')
+                    ->label('Izvođač')
                     ->placeholder('-'),
-                TextEntry::make('file_path'),
+                TextEntry::make('file_path')
+                    ->label('Putanja fajla'),
                 ImageEntry::make('image_path')
+                    ->label('Slika')
                     ->disk('radio-covers'),
                 TextEntry::make('duration')
+                    ->label('Trajanje')
                     ->numeric()
                     ->placeholder('-'),
                 TextEntry::make('created_at')

@@ -34,7 +34,7 @@ class MediaSchedulesTable
             ->columns([
                 // Prikazuje naslov medija preko relacije
                 TextColumn::make('media.title')
-                    ->label('Medijski fajl')
+                    ->label('Naziv')
                     ->searchable()
                     ->sortable(),
 
@@ -55,8 +55,7 @@ class MediaSchedulesTable
                 // Dodajemo i informaciju o izvođaču ako postoji u media tabeli
                 TextColumn::make('media.artist')
                     ->label('Izvođač')
-                    ->color('gray')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->color('gray'),
             ])
             ->filters([
                 // Ovde kasnije možemo dodati filter za "Samo buduća emitovanja"
@@ -64,6 +63,7 @@ class MediaSchedulesTable
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
-            ]);
+            ])
+            ->emptyStateHeading('Nema zakazanih emisija');
     }
 }

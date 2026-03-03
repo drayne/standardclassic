@@ -11,10 +11,12 @@ class EditMedia extends EditRecord
 {
     protected static string $resource = MediaResource::class;
 
+    protected ?string $heading = 'Izmjena medija';
+
     protected function getHeaderActions(): array
     {
         return [
-            ViewAction::make(),
+            ViewAction::make()->label('Detalji'),
             DeleteAction::make(),
         ];
     }

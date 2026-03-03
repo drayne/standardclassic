@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Dashboard;
 use App\Filament\Widgets\LatestPlayedTracksWidget;
 use App\Filament\Widgets\RadioPlayerWidget;
@@ -32,9 +33,11 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->breadcrumbs(false)
             ->globalSearch(false)
+            ->darkMode(false)
             ->viteTheme('resources/css/filament/admin/theme.css')
-            ->login()
+            ->login(Login::class)
             ->colors([
                 'primary' => Color::Red,
             ])

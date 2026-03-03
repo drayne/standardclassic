@@ -14,7 +14,7 @@ class EditMediaType extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ViewAction::make(),
+            ViewAction::make()->label('Detalji'),
             DeleteAction::make(),
         ];
     }

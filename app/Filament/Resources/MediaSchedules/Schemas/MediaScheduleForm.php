@@ -21,6 +21,7 @@ class MediaScheduleForm
                         Grid::make(2)
                             ->schema([
                                 Select::make('media_id')
+                                    ->label('Naziv')
                                     ->relationship('media', 'title')
                                     ->searchable()
                                     ->preload()

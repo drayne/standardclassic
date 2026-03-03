@@ -8,4 +8,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateMediaType extends CreateRecord
 {
     protected static string $resource = MediaTypeResource::class;
+
+    public function canCreateAnother(): bool
+    {
+        return false;
+    }
 }

@@ -21,7 +21,7 @@ class LatestPlayedTracksWidget extends BaseWidget
             ->poll('10s')
             ->query(
                 PlayedTrack::query()
-                    ->with('media')
+                    ->with(['media', 'media.type'])
                     ->latest('played_at')
                     ->limit(5)
             )
@@ -31,6 +31,21 @@ class LatestPlayedTracksWidget extends BaseWidget
                         ->circular()
                         ->defaultImageUrl(url('/images/default-music.png'))
                         ->disk('radio-covers')
+                        ->grow(false),
+                    Tables\Columns\IconColumn::make('media.type.name')
+                        ->label('Tip')
+                        ->icon(fn (string $state): string => match (strtolower($state)) {
+                            'song' => 'heroicon-o-musical-note',
+                            'show' => 'heroicon-o-microphone',
+                            'podcast' => 'heroicon-o-megaphone',
+                            default => 'heroicon-o-question-mark-circle',
+                        })
+                        ->color(fn (string $state): string => match (strtolower($state)) {
+                            'song' => 'primary',
+                            'show' => 'success',
+                            'podcast' => 'warning',
+                            default => 'gray',
+                        })
                         ->grow(false),
                     Tables\Columns\Layout\Stack::make([
                         Tables\Columns\TextColumn::make('media.title')
@@ -52,6 +67,7 @@ class LatestPlayedTracksWidget extends BaseWidget
                 ]),
             ])
             ->paginated(false)
-            ->header(null);
+            ->header(null)
+            ->heading('Poslednje reprodukovano');
     }
 }
