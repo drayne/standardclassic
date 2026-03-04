@@ -126,7 +126,6 @@ class MediaForm
                                         $name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                                         return (string) str($name)->slug()->append('-' . time() . '.' . $file->getClientOriginalExtension());
                                     })
-                                    ->required()
                                     ->columnSpan(1),
                             ]),
                     ]),

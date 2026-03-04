@@ -36,7 +36,8 @@ class MediaInfolist
                     ->label('Putanja fajla'),
                 ImageEntry::make('image_path')
                     ->label('Slika')
-                    ->disk('radio-covers'),
+                    ->disk('radio-covers')
+                    ->defaultImageUrl(url('https://ui-avatars.com/api/?name=?&color=7F9CF5&background=EBF4FF&format=svg&icon=heroicon-s-musical-note')),
                 TextEntry::make('duration')
                     ->label('Trajanje')
                     ->numeric()
