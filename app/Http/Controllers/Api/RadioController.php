@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\CurrentlyPlayingService;
 use App\Models\Playlist;
 use Cache;
+use Storage;
 
 class RadioController extends Controller
 {
@@ -54,20 +55,30 @@ class RadioController extends Controller
 
         \Log::info("Radio: Sledeća pesma spremna: " . $nextItem->title);
 
+        $path = Storage::disk('radio')->path($nextItem->file_path);
+
+        // 2. "Lokalni Hack" za Liquidsoap koji radi VAN Dockera
+        if (app()->environment('local')) {
+            // Menjamo Docker putanju (/var/www/html) tvojom pravom putanjom na disku
+            $path = str_replace('/var/www/html', '/projects/standardclassic', $path);
+        }
+
         return response()->json([
             'title'  => $nextItem->title ?? 'Unknown Title',
             'artist' => $nextItem->artist ?? 'StandardClassic',
             'media_id' => $nextItem->id,
-            'path'   => "/home/vedran/radio/" . ltrim($nextItem->file_path, '/'),
+            'path'   => $path
         ]);
     }
 
     private function fallbackResponse()
     {
+        $fallbackPath = Storage::disk('radio')->path('fallback.mp3');
+
         return response()->json([
             'title'  => 'Fallback',
             'artist' => 'Radio',
-            'path'   => "/home/vedran/radio/audio/fallback.mp3",
+            'path'   => $fallbackPath
         ]);
     }
 }
