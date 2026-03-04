@@ -9,6 +9,11 @@ class CreateMediaSchedule extends CreateRecord
 {
     protected static string $resource = MediaScheduleResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Nova zakazana emisija';
+    }
+
     public function canCreateAnother(): bool
     {
         return false;

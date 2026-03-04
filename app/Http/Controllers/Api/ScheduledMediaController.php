@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\CurrentlyPlayingService;
 use App\Models\MediaSchedule;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Storage;
 
 class ScheduledMediaController extends Controller
 {
@@ -27,12 +29,17 @@ class ScheduledMediaController extends Controller
             CurrentlyPlayingService::setScheduledTrack($schedule->media);
             $schedule->update(['played' => true]);
 
+            $projectRoot = config('radio.radio_project_root', base_path());
+            $dockerPath = Storage::disk('radio')->path($schedule->media->file_path);
+            $relativePath = Str::after($dockerPath, base_path() . '/');
+            $fullPath = rtrim($projectRoot, '/') . '/' . $relativePath;
+
             return response()->json([
                 'status' => 'play_now',
                 'title'  => $schedule->media->title,
                 'artist' => $schedule->media->artist ?? 'Scheduled Event',
                 'media_id' => $schedule->media->id,
-                'path'   => "/home/vedran/radio/" . ltrim($schedule->media->file_path, '/'),
+                'path'   => $fullPath,
             ]);
         }
 

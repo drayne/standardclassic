@@ -74,14 +74,17 @@ end
 thread.run.recurrent(delay=10.0, check_for_scheduled_media)
 
 # --- 3. MIKSANJE ---
-# Definišemo funkciju koja proverava dostupnost reda
-radio = switch(track_sensitive=false, [
+radio = mksafe(switch(track_sensitive=false, [
   ({ scheduled_queue.is_ready() }, scheduled_queue),
   ({ true }, music)
-])
+]))
 
-# Crossfade i ostalo ostaje isto
-radio = crossfade(smart=true, duration=3.0, fade_in=2.0, fade_out=2.0, radio)
+# 2. Koristimo najprostiju formu crossfade-a
+# U 2.x verzijama, crossfade je funkcija koja prima izvor i opcione parametre
+# Ako ne prolazi sa trajanjem, probaj samo: radio = crossfade(radio)
+radio = crossfade(duration=3.0, fade_in=2.0, fade_out=2.0, radio)
+
+# 3. Fallback za svaki slučaj
 radio = fallback(track_sensitive=false, [radio, blank()])
 
 # --- 5. OUTPUT ---
