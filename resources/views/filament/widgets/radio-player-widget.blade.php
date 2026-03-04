@@ -116,3 +116,13 @@
         </div>
     </x-filament::section>
 </x-filament-widgets::widget>
+
+<script>
+    document.addEventListener('livewire:load', function () {
+        const audio = document.getElementById('radio-stream');
+        // Sprečavamo Livewire da resetuje plejer ako već svira
+        audio.addEventListener('play', () => {
+            audio.setAttribute('data-playing', 'true');
+        });
+    });
+</script>
