@@ -8,16 +8,10 @@ class RadioService
     {
         try {
             // Koristimo host.docker.internal jer Liquidsoap radi na WSL hostu, a ne u kontejneru
-            $host = "host.docker.internal";
-            $port = 1234;
+            $host = config('radio.icecast_host');
+            $port = config('radio.icecast_telnet_port');
 
             $fp = @fsockopen($host, $port, $errno, $errstr, 2);
-
-            if (!$fp) {
-                // Ako host.docker.internal ne prođe, probajmo IP adresu gateway-a (često 172.17.0.1)
-                $host = "172.17.0.1";
-                $fp = @fsockopen($host, $port, $errno, $errstr, 2);
-            }
 
             if (!$fp) {
                 throw new \Exception("Nije moguće uspostaviti vezu: $errstr ($errno)");
