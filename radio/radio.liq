@@ -92,5 +92,5 @@ output.icecast(
   port=8000,
   password="sc2026Radio-",
   mount="radio.mp3",
-  radio
+  mksafe(radio)
 )
