@@ -9,6 +9,8 @@ class CreatePlaylist extends CreateRecord
 {
     protected static string $resource = PlaylistResource::class;
 
+    protected ?string $heading = 'Nova plejlista';
+
     public function canCreateAnother(): bool
     {
         return false;

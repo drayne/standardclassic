@@ -20,7 +20,7 @@ class MediaScheduleResource extends Resource
 
     protected static ?string $navigationLabel = 'Zakazane emisije';
 
-    protected static ?string $modelLabel = 'Zakazana emisija';
+    protected static ?string $modelLabel = 'zakazanu emisiju';
 
     protected static ?string $pluralModelLabel = 'Zakazane emisije';
 

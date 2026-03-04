@@ -19,11 +19,14 @@ class PlaylistsTable
                 TextColumn::make('name')
                     ->searchable(),
                 IconColumn::make('active')
+                    ->label('Aktivna')
                     ->boolean(),
-                TextColumn::make('created_at')
-                    ->dateTime()
+                TextColumn::make('media_count')
+                    ->label('Broj zapisa')
+                    ->counts('media')
                     ->sortable(),
                 TextColumn::make('updated_at')
+                    ->label('Poslednje ažuriranje')
                     ->dateTime()
                     ->sortable(),
             ])

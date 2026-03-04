@@ -22,7 +22,7 @@ class PlaylistResource extends Resource
 
     protected static ?string $navigationLabel = 'Plejliste';
 
-    protected static ?string $modelLabel = 'Plejlista';
+    protected static ?string $modelLabel = 'plejlistu';
 
     protected static ?string $pluralModelLabel = 'Plejliste';
 

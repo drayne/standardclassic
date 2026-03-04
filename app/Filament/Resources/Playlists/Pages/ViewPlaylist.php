@@ -10,6 +10,8 @@ class ViewPlaylist extends ViewRecord
 {
     protected static string $resource = PlaylistResource::class;
 
+    protected ?string $heading = 'Pregled plejliste';
+
     protected function getHeaderActions(): array
     {
         return [
