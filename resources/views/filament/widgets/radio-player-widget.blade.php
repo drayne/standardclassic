@@ -3,7 +3,7 @@
         @php
             // Provjera da li je Liquidsoap aktivan (koristimo istu logiku kao u ServiceStatusWidget-u)
             // Timeout je postavljen na veoma nisko (0.2s) da ne bi kočio renderovanje stranice
-            $liquidsoapSocket = @fsockopen('host.docker.internal', 1234, $errno, $errstr, 0.2);
+            $liquidsoapSocket = @fsockopen(config('radio.icecast_host'), config('radio.icecast_telnet_port'), $errno, $errstr, 0.2);
             $isLive = is_resource($liquidsoapSocket);
             if ($isLive) {
                 fclose($liquidsoapSocket);

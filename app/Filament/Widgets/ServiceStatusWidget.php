@@ -18,8 +18,8 @@ class ServiceStatusWidget extends StatsOverviewWidget
     {
         return [
             $this->getListenersCount(),
-            $this->checkPort('Icecast Streaming', 'host.docker.internal', 8000, 'heroicon-m-signal'),
-            $this->checkPort('Liquidsoap Engine', 'host.docker.internal', 1234, 'heroicon-m-bolt'),
+            $this->checkPort('Icecast Streaming', config('radio.icecast_host'), config('radio.icecast_port'), 'heroicon-m-signal'),
+            $this->checkPort('Liquidsoap Engine', config('radio.icecast_host'), config('radio.icecast_telnet_port'), 'heroicon-m-bolt'),
         ];
     }
 
@@ -47,7 +47,9 @@ class ServiceStatusWidget extends StatsOverviewWidget
     private function getListenersCount(): Stat
     {
         try {
-            $response = Http::timeout(2)->get('http://host.docker.internal:8000/status-json.xsl');
+            $host = config('radio.icecast_host');
+            $port = config('radio.icecast_port');
+            $response = Http::timeout(2)->get(sprintf('http://%s:%s/status-json.xsl', $host, $port));
 
             if ($response->successful()) {
                 $data = $response->json();
