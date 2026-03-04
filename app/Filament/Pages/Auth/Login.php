@@ -17,7 +17,8 @@ class Login extends BaseLogin
     {
         return $schema
             ->components([
-                $this->getEmailFormComponent(),
+                $this->getEmailFormComponent()
+                    ->label('E-mail'),
                 $this->getPasswordFormComponent(),
             ]);
     }
