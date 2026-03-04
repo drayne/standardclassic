@@ -2,4 +2,4 @@ version: '3'
 services:
   laravel.test:
     volumes:
-      - ~/radio:/radio
+      - ~/radio:/var/www/html/storage/app/radio
