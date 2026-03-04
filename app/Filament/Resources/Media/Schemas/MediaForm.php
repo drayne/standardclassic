@@ -37,7 +37,7 @@ class MediaForm
                                     ->preload(),
 
                                 TextInput::make('artist')
-                                    ->label('Izvođač')
+                                    ->label('Izvođač / Kompozitor')
                                     ->placeholder('npr. Ludwig van Beethoven'),
 
                                 TextInput::make('duration')

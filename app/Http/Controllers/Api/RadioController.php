@@ -56,14 +56,6 @@ class RadioController extends Controller
 
         \Log::info("Radio: Sledeća pesma spremna: " . $nextItem->title);
 
-//        $fullPath = Storage::disk('radio')->path($nextItem->file_path);
-//
-//        dd(Storage::disk('radio'));
-//        // 2. "Lokalni Hack" za Liquidsoap koji radi VAN Dockera
-//        if (app()->environment('local')) {
-//            $fullPath = str_replace('/var/www/html', '/home/vedran/projects/standardclassic', $fullPath);
-//        }
-
         $projectRoot = config('radio.radio_project_root', base_path());
         $relativePath = Str::after(Storage::disk('radio')->path($nextItem->file_path), base_path() . '/');
         $fullPath = rtrim($projectRoot, '/') . '/' . $relativePath;

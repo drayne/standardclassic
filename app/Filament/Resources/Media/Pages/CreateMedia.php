@@ -9,6 +9,11 @@ class CreateMedia extends CreateRecord
 {
     protected static string $resource = MediaResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Unos novog zapisa';
+    }
+
     public function canCreateAnother(): bool
     {
         return false;

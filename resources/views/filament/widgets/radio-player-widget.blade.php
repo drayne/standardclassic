@@ -21,7 +21,15 @@
                         'bg-gradient-to-tr from-primary-600 to-primary-400 animate-[spin_8s_linear_infinite]' => $isLive,
                         'bg-gray-300 dark:bg-gray-700 opacity-50' => !$isLive,
                     ])>
-                        <x-heroicon-s-musical-note class="w-10 h-10 text-white" />
+                        @if($current?->image_path)
+                            <img src="{{ Storage::disk('radio-covers')->url($current->image_path) }}"
+                                 alt="{{ $current->title }}"
+                                 class="w-full h-full object-cover opacity-90 rounded-full">
+                        @else
+                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-tr from-gray-800 to-gray-950">
+                                <x-heroicon-s-musical-note class="w-10 h-10 text-gray-600" />
+                            </div>
+                        @endif
                         <div class="absolute w-3 h-3 bg-white dark:bg-gray-900 rounded-full shadow-inner"></div>
                     </div>
 
