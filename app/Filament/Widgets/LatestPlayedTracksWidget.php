@@ -69,6 +69,6 @@ class LatestPlayedTracksWidget extends BaseWidget
             ->paginated(false)
             ->header(null)
             ->heading('Poslednje reprodukovano')
-            ->emptyStateHeading('nema reprodukovanih');
+            ->emptyStateHeading('Nema reprodukovanih');
     }
 }
