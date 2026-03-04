@@ -95,7 +95,7 @@
                 <div class="flex-1 w-full text-center sm:text-left">
                     <p class="text-[10px] font-bold text-gray-400 uppercase mb-2 ml-1">Slušaj stream uživo (Preview)</p>
                     <audio id="radio-stream" controls class="w-full h-10 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700">
-                        <source src="http://localhost:8000/radio.mp3" type="audio/mpeg">
+                        <source src="{{ $source }}" type="audio/mpeg">
                         Vaš pretraživač ne podržava audio element.
                     </audio>
                 </div>

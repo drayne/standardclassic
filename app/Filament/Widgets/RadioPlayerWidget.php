@@ -29,10 +29,15 @@ class RadioPlayerWidget extends Widget
         $nextTrack = Cache::get(TrackOrder::NEXT_TRACK);
 
 //        $playlist = \App\Models\Playlist::where('active', true)->first();
+        $protocol = app()->environment('local') ? 'http' : 'https';
+        $host = config('radio.icecast_host');
+        $port = config('radio.icecast_port');
+        $icecastMount = config('radio.icecast_mount');
 
         return [
             'current' => $currentTrack,
             'next' => $nextTrack,
+            'source' => $protocol . '://' . $host . ':' . $port . '/' . $icecastMount
         ];
     }
 
