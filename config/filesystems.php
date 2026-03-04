@@ -62,14 +62,14 @@ return [
 
         'radio' => [
             'driver' => 'local',
-            'root' => '/radio',
+            'root' => storage_path('app/radio'),
             'visibility' => 'private',
         ],
 
         'radio-covers' => [
             'driver' => 'local',
-            'root' => '/radio/covers',
-            'url' => env('APP_URL') . '/covers',
+            'root' => storage_path('app/public/covers'),
+            'url' => env('APP_URL') . '/storage/covers',
             'visibility' => 'public',
         ],
     ],
