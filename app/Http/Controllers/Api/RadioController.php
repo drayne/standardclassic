@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\CurrentlyPlayingService;
 use App\Models\Playlist;
 use Cache;
+use Illuminate\Support\Str;
 use Storage;
 
 class RadioController extends Controller
@@ -55,19 +56,24 @@ class RadioController extends Controller
 
         \Log::info("Radio: Sledeća pesma spremna: " . $nextItem->title);
 
-        $path = Storage::disk('radio')->path($nextItem->file_path);
+//        $fullPath = Storage::disk('radio')->path($nextItem->file_path);
+//
+//        dd(Storage::disk('radio'));
+//        // 2. "Lokalni Hack" za Liquidsoap koji radi VAN Dockera
+//        if (app()->environment('local')) {
+//            $fullPath = str_replace('/var/www/html', '/home/vedran/projects/standardclassic', $fullPath);
+//        }
 
-        // 2. "Lokalni Hack" za Liquidsoap koji radi VAN Dockera
-        if (app()->environment('local')) {
-            // Menjamo Docker putanju (/var/www/html) tvojom pravom putanjom na disku
-            $path = str_replace('/var/www/html', '/projects/standardclassic', $path);
-        }
+        $projectRoot = config('radio.radio_project_root', base_path());
+        $relativePath = Str::after(Storage::disk('radio')->path($nextItem->file_path), base_path() . '/');
+        $fullPath = rtrim($projectRoot, '/') . '/' . $relativePath;
+
 
         return response()->json([
             'title'  => $nextItem->title ?? 'Unknown Title',
             'artist' => $nextItem->artist ?? 'StandardClassic',
             'media_id' => $nextItem->id,
-            'path'   => $path
+            'path'   => $fullPath
         ]);
     }
 
