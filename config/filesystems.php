@@ -60,6 +60,18 @@ return [
             'report' => false,
         ],
 
+        'radio' => [
+            'driver' => 'local',
+            'root' => '/radio',
+            'visibility' => 'private',
+        ],
+
+        'radio-covers' => [
+            'driver' => 'local',
+            'root' => '/radio/covers',
+            'url' => env('APP_URL') . '/covers',
+            'visibility' => 'public',
+        ],
     ],
 
     /*
@@ -75,6 +87,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('covers') => '/radio/covers'
     ],
 
 ];
