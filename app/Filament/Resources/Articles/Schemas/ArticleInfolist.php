@@ -16,9 +16,12 @@ class ArticleInfolist
                     ->label('Kategorija'),
                 TextEntry::make('slug'),
                 TextEntry::make('title')
-                    ->label('Naslov'),
+                    ->label('Naslov')
+                    ->getStateUsing(fn ($record) => $record->translations->where('language.code', 'sr')->first()?->title ?? '-'),
                 TextEntry::make('content')
                     ->label('Sadržaj')
+                    ->html()
+                    ->getStateUsing(fn ($record) => $record->translations->where('language.code', 'sr')->first()?->content ?? '-')
                     ->columnSpanFull(),
                 ImageEntry::make('image')
                     ->placeholder('-'),

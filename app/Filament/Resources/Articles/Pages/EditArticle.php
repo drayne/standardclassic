@@ -11,6 +11,8 @@ class EditArticle extends EditRecord
 {
     protected static string $resource = ArticleResource::class;
 
+    protected ?string $heading = 'Izmjena vijesti';
+
     protected function getHeaderActions(): array
     {
         return [

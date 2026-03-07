@@ -21,9 +21,9 @@ return new class extends Migration
 
         // Populate initial languages
         DB::table('languages')->insert([
-            ['name' => 'Serbian', 'code' => 'sr', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'English', 'code' => 'en', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'German', 'code' => 'de', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Srpski', 'code' => 'sr', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Engleski', 'code' => 'en', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Njemački', 'code' => 'de', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 
