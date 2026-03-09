@@ -16,38 +16,34 @@ class ArticlesTable
     {
         return $table
             ->columns([
-                ImageColumn::make('image')
-                    ->label('Slika'),
-                TextColumn::make('category.name')
-                    ->label('Kategorija')
+                TextColumn::make('title')
+                    ->label('Naslov')
+                    ->getStateUsing(fn ($record) => $record->translations->where('language.code', 'sr')->first()?->title ?? '-')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('translations.title')
-                    ->label('Naslovi')
+                TextColumn::make('category.name')
+                    ->label('Kategorija')
+                    ->badge()
+                    ->extraAttributes(['class' => 'text-xs'])
                     ->searchable()
-                    ->listWithLineBreaks()
-                    ->limitList(2),
+                    ->sortable(),
+                ImageColumn::make('image')
+                    ->label('Slika'),
                 TextColumn::make('published_at')
                     ->label('Objavljeno')
                     ->dateTime()
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->label('Kreirano')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                ViewAction::make()->label('Detalji'),
+                EditAction::make()->label('Izmijeni'),
             ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+            ->columnToggleFormColumns(0)
+            ->bulkActions([
+                DeleteBulkAction::make()->label('Izbriši izabrane'),
             ]);
     }
 }

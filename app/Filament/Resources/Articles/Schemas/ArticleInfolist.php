@@ -18,6 +18,7 @@ class ArticleInfolist
                         TextEntry::make('category.name')
                             ->hiddenLabel()
                             ->badge()
+                            ->extraAttributes(['class' => 'text-xs'])
                             ->color('primary'),
 
                         TextEntry::make('title')
