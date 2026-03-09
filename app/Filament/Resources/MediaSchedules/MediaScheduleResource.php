@@ -20,6 +20,8 @@ class MediaScheduleResource extends Resource
 
     protected static ?string $navigationLabel = 'Zakazane emisije';
 
+    protected static string|null|\UnitEnum $navigationGroup = 'Radio';
+
     protected static ?string $modelLabel = 'zakazanu emisiju';
 
     protected static ?string $pluralModelLabel = 'Zakazane emisije';

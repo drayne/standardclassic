@@ -20,6 +20,8 @@ class CategoryResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
+    protected static string|null|\UnitEnum $navigationGroup = 'Radio';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'Category';
