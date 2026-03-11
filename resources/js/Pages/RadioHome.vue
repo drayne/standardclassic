@@ -2,11 +2,6 @@
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
-const tags = [
-    'Klasična muzika', 'Filmovi', 'Knjige', 'Umetnost', 'Kultura', 'Radio',
-    'Koncerti', 'Opera', 'Balet', 'Jazz', 'Pozorište', 'Književnost'
-];
-
 const dailyNews = [
     { date: '11.03.2026', title: 'Izveštaj o privrednom rastu u regionu' },
     { date: '10.03.2026', title: 'Novi zakon o saobraćaju stupa na snagu' },
@@ -20,39 +15,36 @@ const dailyNews = [
 
     <MainLayout>
         <!-- Hero Section -->
-        <section class="mb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div class="flex flex-wrap gap-4 text-gray-500 font-medium">
-                <span v-for="(tag, index) in tags" :key="index"
-                    class="text-xl md:text-2xl lg:text-3xl hover:text-radio-red cursor-default transition uppercase tracking-tighter"
-                    :class="index % 3 === 0 ? 'text-black font-bold' : ''">
-                    {{ tag }}
-                </span>
+        <section class="mb-20 grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            <div class="flex items-center justify-center">
+                <img src="/images/klasicna-muzika.jpg" alt="Klasična muzika" class="w-full h-auto" />
             </div>
-            <div class="relative bg-gray-200 aspect-[4/3] rounded-lg overflow-hidden flex items-center justify-center">
-                <p class="text-gray-400 italic">[Umetnička ilustracija]</p>
+            <div class="flex">
+                <img src="/images/slika-andjeli.jpg" alt="Umetnička ilustracija - Anđeli" class="w-full object-cover" />
             </div>
         </section>
 
         <!-- Welcome Section -->
-        <section class="mb-20 grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div class="lg:col-span-1">
-                <div class="bg-gray-200 aspect-square rounded-lg overflow-hidden flex items-center justify-center mb-4">
-                    <p class="text-gray-400 italic">[Slika: Gustavo Dudamel]</p>
+        <section class="mb-20 grid grid-cols-1 lg:grid-cols-4 gap-12">
+            <div class="lg:col-span-2">
+                <div class="aspect-square overflow-hidden flex flex-col mb-4">
+                    <img src="/images/gustavo-dudamel.jpg" alt="Gustavo Dudamel" class="w-full h-64 object-cover" />
+                    <span class="text-gray-500">Gustavo Dudamel - direktor Njujorške filharmonije</span>
                 </div>
             </div>
             <div class="lg:col-span-2 prose max-w-none">
-                <h1 class="text-4xl font-bold mb-6 uppercase border-b-4 border-radio-red inline-block">Dobrodošli na Standard Classic</h1>
-                <p class="text-lg text-gray-700 leading-relaxed mb-6">
-                    Muzika je najviša forma komunikacije koja prevazilazi reči i granice. Na našem radiju, svakodnevno vam donosimo najlepše kompozicije svetskih majstora, od baroka do savremenog doba.
+                <h1 class="text-2xl mb-7 inline-block">Dobro došli na <b>Standard</b><span class="text-red-700">Classic</span> Radio</h1>
+                <p class="text-lg text-gray-700 leading-relaxed mb-7">
+                    Naš cilj je da vratimo kulturu na velika vrata u regionu, ne samo kroz klasičnu muziku, nego i kroz priču o filmovima, stripu, starim gramofonskim pločama, slikarstvu, pozorištu, ali i da pratimo svakodnevna dešavanja u redovnom životu.
                 </p>
-                <p class="text-lg text-gray-700 leading-relaxed">
-                    Verujemo da klasična muzika nije stvar prošlosti, već živahna, inspirativna snaga koja nas povezuje sa dubljim ljudskim emocijama. Pridružite nam se u istraživanju lepote zvuka.
+                <p class="text-lg text-gray-700 leading-relaxed underline">
+                    Pročitajte više o nama i našim planovima.
                 </p>
             </div>
         </section>
 
         <!-- Culture News & Comic Section -->
-        <section class="mb-20 grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <section v-if="false" class="mb-20 grid grid-cols-1 lg:grid-cols-2 gap-16">
             <!-- Culture News -->
             <div>
                 <h2 class="text-2xl font-bold mb-8 uppercase tracking-wider flex items-center">
@@ -92,7 +84,7 @@ const dailyNews = [
         </section>
 
         <!-- Bottom Grid -->
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-16 pb-12">
+        <section v-if="false" class="grid grid-cols-1 lg:grid-cols-2 gap-16 pb-12">
             <!-- Daily News -->
             <div>
                 <h2 class="text-2xl font-bold mb-8 uppercase tracking-wider flex items-center">

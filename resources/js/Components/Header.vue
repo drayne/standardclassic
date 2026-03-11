@@ -30,13 +30,13 @@ import { Link } from '@inertiajs/vue3';
 
                 <!-- Donji red: Navigacioni meni -->
                 <nav class="hidden lg:flex items-center gap-8">
-                    <Link href="#" class="text-lg font-normal hover:text-red-700 transition">program</Link>
-                    <Link href="#" class="text-lg font-normal hover:text-red-700 transition">emisije</Link>
-                    <Link href="#" class="text-lg font-normal hover:text-red-700 transition">podkasti</Link>
-                    <Link href="#" class="text-lg font-normal hover:text-red-700 transition">zašto postojimo</Link>
+                    <Link href="#" class="text-base font-normal hover:text-red-700 transition">program</Link>
+                    <Link href="#" class="text-base font-normal hover:text-red-700 transition">emisije</Link>
+                    <Link href="#" class="text-base font-normal hover:text-red-700 transition">podkasti</Link>
+                    <Link href="#" class="text-base font-normal hover:text-red-700 transition">zašto postojimo</Link>
                     <Link
                         href="#"
-                        class="bg-[#b31b1b] text-white px-6 py-2 text-lg font-medium hover:bg-black transition duration-300 uppercase rounded-full"
+                        class="bg-[#b31b1b] text-white px-5 py-1 text-base font-medium hover:opacity-80 transition duration-300 rounded-full"
                     >
                         slušaj uživo
                     </Link>
