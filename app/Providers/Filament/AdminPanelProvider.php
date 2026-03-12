@@ -33,6 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->collapsibleNavigationGroups(false)
             ->breadcrumbs(false)
             ->globalSearch(false)
             ->darkMode(false)

@@ -15,4 +15,9 @@ class CreatePlaylist extends CreateRecord
     {
         return false;
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

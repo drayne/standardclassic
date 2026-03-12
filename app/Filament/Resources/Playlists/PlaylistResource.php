@@ -20,6 +20,8 @@ class PlaylistResource extends Resource
 {
     protected static ?string $model = Playlist::class;
 
+    protected static string|null|\UnitEnum $navigationGroup = 'Radio';
+
     protected static ?string $navigationLabel = 'Plejliste';
 
     protected static ?string $modelLabel = 'plejlistu';

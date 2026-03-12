@@ -34,12 +34,11 @@ class PlaylistsTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()->label('Izmijeni'),
             ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+            ->columnToggleFormColumns(0)
+            ->bulkActions([
+                DeleteBulkAction::make()->label('Izbriši izabrane'),
             ]);
     }
 }

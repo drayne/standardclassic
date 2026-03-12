@@ -22,6 +22,8 @@ class MediaResource extends Resource
 
     protected static ?string $navigationLabel = 'Mediji';
 
+    protected static string|null|\UnitEnum $navigationGroup = 'Radio';
+
     protected static ?string $modelLabel = 'Medij';
 
     protected static ?string $pluralModelLabel = 'Mediji';

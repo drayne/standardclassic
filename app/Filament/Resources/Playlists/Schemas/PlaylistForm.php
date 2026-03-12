@@ -13,8 +13,11 @@ class PlaylistForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('Naziv')
                     ->required(),
                 Toggle::make('active')
+                    ->label('Aktivna')
+                    ->columnSpanFull()
                     ->required(),
             ]);
     }

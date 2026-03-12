@@ -72,6 +72,13 @@ return [
             'url' => env('APP_URL') . '/storage/covers',
             'visibility' => 'public',
         ],
+
+        'article-images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/articles'),
+            'url' => env('APP_URL') . '/storage/articles',
+            'visibility' => 'public',
+        ],
     ],
 
     /*
