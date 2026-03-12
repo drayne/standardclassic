@@ -20,26 +20,33 @@ const dailyNews = [
                 <img src="/images/klasicna-muzika.jpg" alt="Klasična muzika" class="w-full h-auto" />
             </div>
             <div class="flex">
-                <img src="/images/slika-andjeli.jpg" alt="Umetnička ilustracija - Anđeli" class="w-full object-cover" />
+                <img src="/images/slika-andjeli.jpg" alt="Umetnička ilustracija - Anđeli" class="w-full object-cover rounded-lg shadow-md" />
             </div>
         </section>
 
         <!-- Welcome Section -->
-        <section class="mb-20 grid grid-cols-1 lg:grid-cols-4 gap-12">
-            <div class="lg:col-span-2">
-                <div class="aspect-square overflow-hidden flex flex-col mb-4">
-                    <img src="/images/gustavo-dudamel.jpg" alt="Gustavo Dudamel" class="w-full h-64 object-cover" />
-                    <span class="text-gray-500">Gustavo Dudamel - direktor Njujorške filharmonije</span>
+        <section class="-mb-44">
+            <h2 class="text-lg font-bold mb-1 uppercase tracking-wide flex items-center whitespace-nowrap">
+                <span class="w-8 h-1 bg-radio-red mr-3"></span>
+                O nama
+            </h2>
+            <hr v-if="false" class="text-gray-300 mb-6">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 mt-4">
+                <div class="lg:col-span-2">
+                    <div class="aspect-square overflow-hidden flex flex-col mb-4">
+                        <img src="/images/gustavo-dudamel.jpg" alt="Gustavo Dudamel" class="w-full h-64 object-cover rounded-lg shadow-md" />
+                        <span class="text-gray-500 mt-2 text-sm italic">Gustavo Dudamel - direktor Njujorške filharmonije</span>
+                    </div>
                 </div>
-            </div>
-            <div class="lg:col-span-2 prose max-w-none">
-                <h1 class="text-2xl mb-7 inline-block">Dobro došli na <b>Standard</b><span class="text-red-700">Classic</span> Radio</h1>
-                <p class="text-lg text-gray-700 leading-relaxed mb-7">
-                    Naš cilj je da vratimo kulturu na velika vrata u regionu, ne samo kroz klasičnu muziku, nego i kroz priču o filmovima, stripu, starim gramofonskim pločama, slikarstvu, pozorištu, ali i da pratimo svakodnevna dešavanja u redovnom životu.
-                </p>
-                <p class="text-lg text-gray-700 leading-relaxed underline">
-                    Pročitajte više o nama i našim planovima.
-                </p>
+                <div class="lg:col-span-2 prose max-w-none">
+                    <h1 class="text-2xl mb-7 inline-block">Dobro došli na <b>Standard</b><span class="text-red-700">Classic</span> Radio</h1>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-7">
+                        Naš cilj je da vratimo kulturu na velika vrata u regionu, ne samo kroz klasičnu muziku, nego i kroz priču o filmovima, stripu, starim gramofonskim pločama, slikarstvu, pozorištu, ali i da pratimo svakodnevna dešavanja u redovnom životu.
+                    </p>
+                    <p class="text-lg text-radio-red font-bold hover:underline cursor-pointer">
+                        Pročitajte više o nama i našim planovima &rarr;
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -84,24 +91,24 @@ const dailyNews = [
         </section>
 
         <!-- Bottom Grid -->
-        <section v-if="false" class="grid grid-cols-1 lg:grid-cols-2 gap-16 pb-12">
+        <section v-if="true" class="grid grid-cols-1 lg:grid-cols-2 gap-16 pb-12">
             <!-- Daily News -->
             <div>
-                <h2 class="text-2xl font-bold mb-8 uppercase tracking-wider flex items-center">
+                <h2 class="text-lg font-bold mb-1 uppercase tracking-wide flex items-center whitespace-nowrap">
                     <span class="w-8 h-1 bg-radio-red mr-3"></span>
                     Vijesti iz dnevno-političkog života
                 </h2>
-                <ul class="space-y-4">
-                    <li v-for="news in dailyNews" :key="news.date" class="border-b pb-4 last:border-0">
-                        <span class="text-radio-red text-sm font-bold block mb-1">{{ news.date }}</span>
-                        <a href="#" class="text-lg font-medium hover:text-radio-red transition">{{ news.title }}</a>
+                <ul class="space-y-4 mt-6">
+                    <li v-for="news in dailyNews" :key="news.date" class="border-b border-gray-300 pb-4 last:border-0 flex items-center gap-6">
+                        <span class="text-radio-red text-sm font-bold block">{{ news.date }}</span>
+                        <a href="#" class="text-base font-medium hover:text-radio-red transition">{{ news.title }}</a>
                     </li>
                 </ul>
             </div>
 
             <!-- Podcasts & Shows -->
             <div>
-                <h2 class="text-2xl font-bold mb-8 uppercase tracking-wider flex items-center">
+                <h2 class="text-lg font-bold mb-1 uppercase tracking-wide flex items-center whitespace-nowrap">
                     <span class="w-8 h-1 bg-radio-red mr-3"></span>
                     Podkasti i emisije
                 </h2>
