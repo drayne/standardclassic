@@ -3,6 +3,8 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
 const dailyNews = [
+    { date: '13.03.2026', title: 'Sastanak Standard Classic Radio radne grupe' },
+    { date: '12.03.2026', title: 'Kulturna dešavanja u Bijeljini' },
     { date: '11.03.2026', title: 'Izveštaj o privrednom rastu u regionu' },
     { date: '10.03.2026', title: 'Novi zakon o saobraćaju stupa na snagu' },
     { date: '09.03.2026', title: 'Otvoren novi tehnološki park' },
@@ -112,18 +114,21 @@ const dailyNews = [
                     <span class="w-8 h-1 bg-radio-red mr-3"></span>
                     Podkasti i emisije
                 </h2>
-                <div class="bg-black text-white p-8 rounded-xl flex flex-col md:flex-row gap-8 items-center">
-                    <div class="bg-gray-700 w-32 h-32 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden">
-                        <p class="text-[10px] text-gray-400 text-center px-2">[Aljoša Ljubojević]</p>
+                <div class="mt-6">
+                    <div class="md:float-left w-full md:w-58 h-auto md:ml-0 md:mr-8 mb-6 md:mb-4 flex items-center justify-center overflow-hidden">
+                        <img src="/images/aljosa-logo.jpg" alt="Aljoša Ljubojević" class="w-full h-auto object-contain rounded-lg shadow-sm" />
                     </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Razgovori o duhovnosti</h3>
-                        <p class="text-gray-400 text-sm mb-4 italic">Autor: Aljoša Ljubojević</p>
-                        <p class="text-gray-300 mb-6 leading-relaxed">
-                            Svakog utorka istražujemo duboka pitanja ljudskog postojanja i duhovne muzike.
+                    <div class="overflow-hidden md:overflow-visible flex flex-col">
+                        <h3 class="text-xl font-bold mb-1">Gdje se fura (ne)kultura</h3>
+                        <p class="text-radio-red text-sm mb-3 italic font-bold">Autor: Aljoša Ljubojević</p>
+                        <p class="text-gray-700 mb-3 leading-relaxed">
+                            Gdje se fura (ne)kultura je naša najbolja emisija gdje slušaoci i gledaoci mogu da prate odličan podkast serija koji vodi Aljoša Ljubojević, poznati novinar iz Bijeljine. Aljoša će razgovarati sa brojnim kulturnim radnicima, ali i poznavaocima filma, sporta, dobre muzike, stripova i mnogo toga.
                         </p>
-                        <button class="border border-white px-6 py-2 rounded-full hover:bg-white hover:text-black transition uppercase text-xs font-bold">Poslušaj epizodu</button>
+                        <div class="mt-0">
+                            <button class="text-radio-red font-bold hover:underline text-base">Pogledajte detaljnije &rarr;</button>
+                        </div>
                     </div>
+                    <div class="clear-both"></div>
                 </div>
             </div>
         </section>
