@@ -1,13 +1,13 @@
 <script setup>
-import Header from '@/Components/Header.vue';
-import Footer from '@/Components/Footer.vue';
+import Footer from '@/Components/Footer.vue'
+import Header from '@/Components/Header.vue'
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col font-sans text-gray-900 antialiased">
+    <div class="flex min-h-screen flex-col font-sans text-gray-900 antialiased">
         <Header />
 
-        <main class="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
+        <main class="mx-auto w-full max-w-6xl grow px-4 py-8">
             <slot />
         </main>
 

@@ -8,6 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
 class ArticlesTable
@@ -27,8 +28,12 @@ class ArticlesTable
                     ->extraAttributes(['class' => 'text-xs'])
                     ->searchable()
                     ->sortable(),
+                ToggleColumn::make('active')
+                    ->label('Aktivna')
+                    ->sortable(),
                 ImageColumn::make('image')
-                    ->label('Slika'),
+                    ->label('Slika')
+                    ->disk('article-images'),
                 TextColumn::make('published_at')
                     ->label('Objavljeno')
                     ->dateTime()

@@ -94,7 +94,8 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-        public_path('covers') => '/radio/covers'
+        public_path('covers') => storage_path('app/public/covers'),
+        public_path('articles') => storage_path('app/public/articles'),
     ],
 
 ];

@@ -25,7 +25,7 @@ class ArticleInfolist
                             ->hiddenLabel()
                             ->getStateUsing(fn ($record) => $record->translations->where('language.code', 'sr')->first()?->title ?? '-')
                             ->size('2xl')
-                            ->extraAttributes(['class' => 'text-gray-200 font-bold text-2xl'])
+                            ->extraAttributes(['class' => 'text-black dark:text-white font-bold text-2xl'])
                             ->columnSpanFull(),
 
                         TextEntry::make('published_at')
@@ -37,6 +37,7 @@ class ArticleInfolist
 
                         ImageEntry::make('image')
                             ->hiddenLabel()
+                            ->disk('article-images')
                             ->extraImgAttributes([
                                 'style' => 'width: 100%; height: auto; object-fit: cover; border-radius: 0.5rem;',
                             ])

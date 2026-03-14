@@ -6,6 +6,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -25,6 +26,9 @@ class ArticleForm
                             ->label('Kategorija')
                             ->relationship('category', 'name')
                             ->required(),
+                        Toggle::make('active')
+                            ->label('Aktivna')
+                            ->default(true),
                         DateTimePicker::make('published_at')
                             ->label('Datum objave')
                             ->native(false)
@@ -33,7 +37,7 @@ class ArticleForm
                         FileUpload::make('image')
                             ->label('Slika')
                             ->image()
-                            ->directory('articles')
+                            ->disk('article-images')
                             ->columnSpanFull(),
                     ]),
 
