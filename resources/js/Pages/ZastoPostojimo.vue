@@ -8,7 +8,6 @@ import { Head } from '@inertiajs/vue3'
 
     <MainLayout>
         <div class="py-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-lg leading-relaxed text-gray-700">
                     <img
                         src="/images/zasto-postojimo.png"
@@ -79,7 +78,6 @@ import { Head } from '@inertiajs/vue3'
                             prošlost, nego temelj budućnosti.</b
                         >
                     </p>
-                </div>
             </div>
         </div>
     </MainLayout>
