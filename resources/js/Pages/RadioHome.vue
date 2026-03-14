@@ -1,51 +1,67 @@
-<script setup>
-import MainLayout from '@/Layouts/MainLayout.vue';
-import { Head } from '@inertiajs/vue3';
-
-const dailyNews = [
-    { date: '13.03.2026', title: 'Sastanak Standard Classic Radio radne grupe' },
-    { date: '12.03.2026', title: 'Kulturna dešavanja u Bijeljini' },
-    { date: '11.03.2026', title: 'Izveštaj o privrednom rastu u regionu' },
-    { date: '10.03.2026', title: 'Novi zakon o saobraćaju stupa na snagu' },
-    { date: '09.03.2026', title: 'Otvoren novi tehnološki park' },
-    { date: '08.03.2026', title: 'Međunarodni dan žena obeležen širom zemlje' },
-];
-</script>
-
 <template>
     <Head title="Početna" />
 
     <MainLayout>
         <!-- Hero Section -->
-        <section class="mb-20 grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+        <section
+            class="mb-20 grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2"
+        >
             <div class="flex items-center justify-center">
-                <img src="/images/klasicna-muzika.jpg" alt="Klasična muzika" class="w-full h-auto" />
+                <img
+                    src="/images/klasicna-muzika.jpg"
+                    alt="Klasična muzika"
+                    class="h-auto w-full"
+                />
             </div>
             <div class="flex">
-                <img src="/images/slika-andjeli.jpg" alt="Umetnička ilustracija - Anđeli" class="w-full object-cover rounded-lg shadow-md" />
+                <img
+                    src="/images/slika-andjeli.jpg"
+                    alt="Umetnička ilustracija - Anđeli"
+                    class="w-full rounded-lg object-cover shadow-md"
+                />
             </div>
         </section>
 
         <!-- Welcome Section -->
         <section class="-mb-44">
-            <h2 class="text-lg font-bold mb-1 uppercase tracking-wide flex items-center whitespace-nowrap">
-                <span class="w-8 h-1 bg-radio-red mr-3"></span>
+            <h2
+                class="mb-1 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase"
+            >
+                <span class="bg-radio-red mr-3 h-1 w-8"></span>
                 O nama
             </h2>
-            <hr v-if="false" class="text-gray-300 mb-6">
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 mt-4">
+            <hr v-if="false" class="mb-6 text-gray-300" />
+            <div class="mt-4 grid grid-cols-1 gap-12 lg:grid-cols-4">
                 <div class="lg:col-span-2">
-                    <div class="aspect-square overflow-hidden flex flex-col mb-4">
-                        <img src="/images/gustavo-dudamel.jpg" alt="Gustavo Dudamel" class="w-full h-64 object-cover rounded-lg shadow-md" />
-                        <span class="text-gray-500 mt-2 text-sm italic">Gustavo Dudamel - direktor Njujorške filharmonije</span>
+                    <div
+                        class="mb-4 flex aspect-square flex-col overflow-hidden"
+                    >
+                        <img
+                            src="/images/gustavo-dudamel.jpg"
+                            alt="Gustavo Dudamel"
+                            class="h-64 w-full rounded-lg object-cover shadow-md"
+                        />
+                        <span class="mt-2 text-sm text-gray-500 italic"
+                            >Gustavo Dudamel - direktor Njujorške
+                            filharmonije</span
+                        >
                     </div>
                 </div>
-                <div class="lg:col-span-2 prose max-w-none">
-                    <h1 class="text-2xl mb-7 inline-block">Dobro došli na <b>Standard</b><span class="text-red-700">Classic</span> Radio</h1>
-                    <p class="text-lg text-gray-700 leading-relaxed mb-7">
-                        Naš cilj je da vratimo kulturu na velika vrata u regionu, ne samo kroz klasičnu muziku, nego i kroz priču o filmovima, stripu, starim gramofonskim pločama, slikarstvu, pozorištu, ali i da pratimo svakodnevna dešavanja u redovnom životu.
+                <div class="prose max-w-none lg:col-span-2">
+                    <h1 class="mb-7 inline-block text-2xl">
+                        Dobro došli na <b>Standard</b
+                        ><span class="text-red-700">Classic</span> Radio
+                    </h1>
+                    <p class="mb-7 text-lg leading-relaxed text-gray-700">
+                        Naš cilj je da vratimo kulturu na velika vrata u
+                        regionu, ne samo kroz klasičnu muziku, nego i kroz priču
+                        o filmovima, stripu, starim gramofonskim pločama,
+                        slikarstvu, pozorištu, ali i da pratimo svakodnevna
+                        dešavanja u redovnom životu.
                     </p>
-                    <p class="text-lg text-radio-red font-bold hover:underline cursor-pointer">
+                    <p
+                        class="text-radio-red cursor-pointer text-lg font-bold hover:underline"
+                    >
                         Pročitajte više o nama i našim planovima &rarr;
                     </p>
                 </div>
@@ -53,79 +69,143 @@ const dailyNews = [
         </section>
 
         <!-- Culture News & Comic Section -->
-        <section v-if="false" class="mb-20 grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <section
+            v-if="false"
+            class="mb-20 grid grid-cols-1 gap-16 lg:grid-cols-2"
+        >
             <!-- Culture News -->
             <div>
-                <h2 class="text-2xl font-bold mb-8 uppercase tracking-wider flex items-center">
-                    <span class="w-8 h-1 bg-radio-red mr-3"></span>
+                <h2
+                    class="mb-8 flex items-center text-2xl font-bold tracking-wider uppercase"
+                >
+                    <span class="bg-radio-red mr-3 h-1 w-8"></span>
                     Vijesti iz kulture
                 </h2>
-                <div class="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <div class="bg-gray-200 h-64 flex items-center justify-center">
-                        <p class="text-gray-400 italic">[Slika: Violinistkinja]</p>
+                <div
+                    class="overflow-hidden rounded-xl border bg-white shadow-sm transition hover:shadow-md"
+                >
+                    <div
+                        class="flex h-64 items-center justify-center bg-gray-200"
+                    >
+                        <p class="text-gray-400 italic">
+                            [Slika: Violinistkinja]
+                        </p>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-3">Virtuoznost na sceni: Koncertni spektakl u Narodnom pozorištu</h3>
-                        <p class="text-gray-600 mb-4">
-                            Mlada zvezda svetske violine oduševila je publiku svojim izvođenjem Čajkovskog...
+                        <h3 class="mb-3 text-xl font-bold">
+                            Virtuoznost na sceni: Koncertni spektakl u Narodnom
+                            pozorištu
+                        </h3>
+                        <p class="mb-4 text-gray-600">
+                            Mlada zvezda svetske violine oduševila je publiku
+                            svojim izvođenjem Čajkovskog...
                         </p>
-                        <button class="text-radio-red font-bold hover:underline">Pročitaj više &rarr;</button>
+                        <button
+                            class="text-radio-red font-bold hover:underline"
+                        >
+                            Pročitaj više &rarr;
+                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Comic / Iznogud -->
             <div>
-                <h2 class="text-2xl font-bold mb-8 uppercase tracking-wider flex items-center">
-                    <span class="w-8 h-1 bg-radio-red mr-3"></span>
+                <h2
+                    class="mb-8 flex items-center text-2xl font-bold tracking-wider uppercase"
+                >
+                    <span class="bg-radio-red mr-3 h-1 w-8"></span>
                     Strip kutak
                 </h2>
-                <div class="bg-gray-100 p-8 rounded-xl">
-                    <div class="bg-gray-300 aspect-video rounded-lg mb-6 flex items-center justify-center">
+                <div class="rounded-xl bg-gray-100 p-8">
+                    <div
+                        class="mb-6 flex aspect-video items-center justify-center rounded-lg bg-gray-300"
+                    >
                         <p class="text-gray-500 italic">[Strip: Iznogud]</p>
                     </div>
-                    <h3 class="text-xl font-bold mb-4 uppercase">Iznogud: Želja da se bude kalif umesto kalifa</h3>
+                    <h3 class="mb-4 text-xl font-bold uppercase">
+                        Iznogud: Želja da se bude kalif umesto kalifa
+                    </h3>
                     <p class="text-gray-700">
-                        Ove nedelje pratimo nove spletke najpoznatijeg velikog vezira u potrazi za moći...
+                        Ove nedelje pratimo nove spletke najpoznatijeg velikog
+                        vezira u potrazi za moći...
                     </p>
                 </div>
             </div>
         </section>
 
         <!-- Bottom Grid -->
-        <section v-if="true" class="grid grid-cols-1 lg:grid-cols-2 gap-16 pb-12">
+        <section
+            v-if="true"
+            class="grid grid-cols-1 gap-16 pb-12 lg:grid-cols-2"
+        >
             <!-- Daily News -->
             <div>
-                <h2 class="text-lg font-bold mb-1 uppercase tracking-wide flex items-center whitespace-nowrap">
-                    <span class="w-8 h-1 bg-radio-red mr-3"></span>
+                <h2
+                    class="mb-1 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase"
+                >
+                    <span class="bg-radio-red mr-3 h-1 w-8"></span>
                     Vijesti iz dnevno-političkog života
                 </h2>
-                <ul class="space-y-4 mt-6">
-                    <li v-for="news in dailyNews" :key="news.date" class="border-b border-gray-300 pb-4 last:border-0 flex items-center gap-6">
-                        <span class="text-radio-red text-sm font-bold block">{{ news.date }}</span>
-                        <a href="#" class="text-base font-medium hover:text-radio-red transition">{{ news.title }}</a>
+                <ul class="mt-6 space-y-4">
+                    <li
+                        v-for="article in kulturaArticles"
+                        :key="article.id"
+                        class="flex items-center gap-6 border-b border-gray-300 pb-4 last:border-0"
+                    >
+                        <span class="text-radio-red block text-sm font-bold">{{
+                            article.published_at
+                        }}</span>
+                        <a
+                            href="#"
+                            class="hover:text-radio-red text-base font-medium transition"
+                            >{{ article.title }}</a
+                        >
                     </li>
                 </ul>
             </div>
 
             <!-- Podcasts & Shows -->
             <div>
-                <h2 class="text-lg font-bold mb-1 uppercase tracking-wide flex items-center whitespace-nowrap">
-                    <span class="w-8 h-1 bg-radio-red mr-3"></span>
+                <h2
+                    class="mb-1 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase"
+                >
+                    <span class="bg-radio-red mr-3 h-1 w-8"></span>
                     Podkasti i emisije
                 </h2>
                 <div class="mt-6">
-                    <div class="md:float-left w-full md:w-58 h-auto md:ml-0 md:mr-8 mb-6 md:mb-4 flex items-center justify-center overflow-hidden">
-                        <img src="/images/aljosa-logo.jpg" alt="Aljoša Ljubojević" class="w-full h-auto object-contain rounded-lg shadow-sm" />
+                    <div
+                        class="mb-6 flex h-auto w-full items-center justify-center overflow-hidden md:float-left md:mr-8 md:mb-4 md:ml-0 md:w-58"
+                    >
+                        <img
+                            src="/images/aljosa-logo.jpg"
+                            alt="Aljoša Ljubojević"
+                            class="h-auto w-full rounded-lg object-contain shadow-sm"
+                        />
                     </div>
-                    <div class="overflow-hidden md:overflow-visible flex flex-col">
-                        <h3 class="text-xl font-bold mb-1">Gdje se fura (ne)kultura</h3>
-                        <p class="text-radio-red text-sm mb-3 italic font-bold">Autor: Aljoša Ljubojević</p>
-                        <p class="text-gray-700 mb-3 leading-relaxed">
-                            Gdje se fura (ne)kultura je naša najbolja emisija gdje slušaoci i gledaoci mogu da prate odličan podkast serija koji vodi Aljoša Ljubojević, poznati novinar iz Bijeljine. Aljoša će razgovarati sa brojnim kulturnim radnicima, ali i poznavaocima filma, sporta, dobre muzike, stripova i mnogo toga.
+                    <div
+                        class="flex flex-col overflow-hidden md:overflow-visible"
+                    >
+                        <h3 class="mb-1 text-xl font-bold">
+                            Gdje se fura (ne)kultura
+                        </h3>
+                        <p class="text-radio-red mb-3 text-sm font-bold italic">
+                            Autor: Aljoša Ljubojević
+                        </p>
+                        <p class="mb-3 leading-relaxed text-gray-700">
+                            Gdje se fura (ne)kultura je naša najbolja emisija
+                            gdje slušaoci i gledaoci mogu da prate odličan
+                            podkast serija koji vodi Aljoša Ljubojević, poznati
+                            novinar iz Bijeljine. Aljoša će razgovarati sa
+                            brojnim kulturnim radnicima, ali i poznavaocima
+                            filma, sporta, dobre muzike, stripova i mnogo toga.
                         </p>
                         <div class="mt-0">
-                            <button class="text-radio-red font-bold hover:underline text-base">Pogledajte detaljnije &rarr;</button>
+                            <button
+                                class="text-radio-red text-base font-bold hover:underline"
+                            >
+                                Pogledajte detaljnije &rarr;
+                            </button>
                         </div>
                     </div>
                     <div class="clear-both"></div>
@@ -134,3 +214,25 @@ const dailyNews = [
         </section>
     </MainLayout>
 </template>
+
+<script setup lang="ts">
+import MainLayout from '@/Layouts/MainLayout.vue'
+import { Article } from '@/types'
+import { Head } from '@inertiajs/vue3'
+
+defineProps<{
+    kulturaArticles: Article[]
+}>()
+
+const dailyNews = [
+    {
+        date: '13.03.2026',
+        title: 'Sastanak Standard Classic Radio radne grupe',
+    },
+    { date: '12.03.2026', title: 'Kulturna dešavanja u Bijeljini' },
+    { date: '11.03.2026', title: 'Izveštaj o privrednom rastu u regionu' },
+    { date: '10.03.2026', title: 'Novi zakon o saobraćaju stupa na snagu' },
+    { date: '09.03.2026', title: 'Otvoren novi tehnološki park' },
+    { date: '08.03.2026', title: 'Međunarodni dan žena obeležen širom zemlje' },
+]
+</script>

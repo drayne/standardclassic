@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Category;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,8 +20,17 @@ return new class extends Migration
         });
 
         DB::table('categories')->insert([
-            ['name' => 'Vijesti iz kulture', 'slug' => 'vijesti-iz-kulture', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Vijesti iz dnevno-političkog života', 'slug' => 'vijesti-iz-dnevno-politickog-zivota', 'created_at' => now(), 'updated_at' => now()],
+            ['name'       => 'Vijesti iz kulture',
+             'slug'       => Category::KULTURA->value,
+             'created_at' => now(),
+             'updated_at' => now()
+            ],
+            [
+                'name'       => 'Vijesti iz dnevno-političkog života',
+                'slug'       => Category::DNEVNOPOLITICKE->value,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
         ]);
     }
 
