@@ -23,7 +23,7 @@
         </section>
 
         <!-- Welcome Section -->
-        <section>
+        <section class="mb-16">
             <h2
                 class="mb-2 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase"
             >
@@ -32,9 +32,7 @@
             </h2>
             <div class="mt-4 grid grid-cols-1 gap-12 lg:grid-cols-2">
                 <div class="lg:col-span-1">
-                    <div
-                        class="mb-4 flex aspect-square flex-col overflow-hidden"
-                    >
+                    <div class="mb-4 flex flex-col overflow-hidden">
                         <img
                             src="/images/gustavo-dudamel.jpg"
                             alt="Gustavo Dudamel"
@@ -68,7 +66,7 @@
         </section>
 
         <!-- Culture News Section -->
-        <section class="mb-20">
+        <section class="mb-16">
             <h2
                 class="mb-3 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase"
             >
@@ -121,10 +119,7 @@
         </section>
 
         <!-- Bottom Grid -->
-        <section
-            v-if="true"
-            class="grid grid-cols-1 gap-16 pb-12 lg:grid-cols-2"
-        >
+        <section class="grid grid-cols-1 gap-16 pb-12 lg:grid-cols-2">
             <!-- Daily News -->
             <div>
                 <h2
