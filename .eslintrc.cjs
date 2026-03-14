@@ -16,6 +16,6 @@ module.exports = {
         'vue/multi-word-component-names': 'off',
         'no-undef': 'off',
         '@typescript-eslint/semi': ['error', 'never'],
-        'prettier/prettier': ['error', { semi: false, singleQuote: true }],
+        'prettier/prettier': 'error',
     },
 }

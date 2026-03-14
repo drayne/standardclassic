@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\StaticController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,5 +19,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/', IndexController::class);
+Route::get('gdje-se-fura-nekultura', StaticController::class)->name('gdje-se-fura-nekultura');
+Route::get('zasto-postojimo', StaticController::class)->name('zasto-postojimo');
 
 require __DIR__.'/auth.php';

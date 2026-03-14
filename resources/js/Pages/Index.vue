@@ -109,7 +109,7 @@
                             ></div>
                         </div>
                         <button
-                            class="text-radio-red text-left text-sm font-bold hover:underline"
+                            class="text-radio-red text-left text-sm font-bold hover:cursor-pointer hover:underline"
                         >
                             Pročitaj više &rarr;
                         </button>
