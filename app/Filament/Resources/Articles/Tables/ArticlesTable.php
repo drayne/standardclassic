@@ -32,7 +32,8 @@ class ArticlesTable
                     ->label('Aktivna')
                     ->sortable(),
                 ImageColumn::make('image')
-                    ->label('Slika'),
+                    ->label('Slika')
+                    ->disk('article-images'),
                 TextColumn::make('published_at')
                     ->label('Objavljeno')
                     ->dateTime()

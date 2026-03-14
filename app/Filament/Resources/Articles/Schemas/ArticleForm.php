@@ -37,7 +37,7 @@ class ArticleForm
                         FileUpload::make('image')
                             ->label('Slika')
                             ->image()
-                            ->directory('articles')
+                            ->disk('article-images')
                             ->columnSpanFull(),
                     ]),
 

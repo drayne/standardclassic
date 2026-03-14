@@ -18,7 +18,7 @@ class IndexController extends Controller
         $kulturaArticles = $this->articleRepository->getLatestKulturaArticles();
         $dpArticles = $this->articleRepository->getLatestDpArticles();
 
-        return Inertia::render('RadioHome', [
+        return Inertia::render('Index', [
             'kulturaArticles' => ArticleResource::collection($kulturaArticles),
             'dpArticles' => ArticleResource::collection($dpArticles),
         ]);

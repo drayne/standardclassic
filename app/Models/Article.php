@@ -6,6 +6,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -17,6 +18,36 @@ use Illuminate\Support\Facades\Storage;
  */
 class Article extends Model
 {
+    protected static function booted(): void
+    {
+        static::saved(function (Article $article) {
+            if ($article->image && !str_starts_with($article->image, 'http')) {
+                $extension = pathinfo($article->image, PATHINFO_EXTENSION);
+
+                // Osiguravamo da imamo najsvježiji slug (ako je postavljen u ArticleTranslation)
+                $article->refresh();
+
+                $slug = $article->slug ?: 'article-' . $article->id;
+                $newName = "{$slug}-{$article->id}.{$extension}";
+
+                if ($article->image !== $newName) {
+                    $disk = Storage::disk('article-images');
+                    if ($disk->exists($article->image)) {
+                        if ($disk->exists($newName)) {
+                            $disk->delete($newName);
+                        }
+
+                        $disk->move($article->image, $newName);
+
+                        $article->withoutEvents(function () use ($article, $newName) {
+                            $article->updateQuietly(['image' => $newName]);
+                        });
+                    }
+                }
+            }
+        });
+    }
+
     protected $fillable = [
         'category_id',
         'slug',
@@ -36,7 +67,16 @@ class Article extends Model
 
     public function getImageUrlAttribute()
     {
-        return $this->image ? Storage::disk('article-images')->url($this->image) : null;
+        if (!$this->image) {
+            return null;
+        }
+
+        // If it starts with http, it's already a full URL (e.g. from a seeder)
+        if (str_starts_with($this->image, 'http')) {
+            return $this->image;
+        }
+
+        return Storage::disk('article-images')->url($this->image);
     }
 
     public function category(): BelongsTo

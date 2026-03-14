@@ -37,6 +37,7 @@ class ArticleInfolist
 
                         ImageEntry::make('image')
                             ->hiddenLabel()
+                            ->disk('article-images')
                             ->extraImgAttributes([
                                 'style' => 'width: 100%; height: auto; object-fit: cover; border-radius: 0.5rem;',
                             ])
