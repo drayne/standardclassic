@@ -1,5 +1,34 @@
 <script setup>
 import { Link } from '@inertiajs/vue3'
+import { onMounted, onUnmounted, ref } from 'vue'
+
+const currentTrack = ref({
+    title: 'Učitavanje...',
+    artist: '',
+})
+
+const fetchCurrentTrack = async () => {
+    try {
+        const response = await fetch('/api/radio/current')
+        if (response.ok) {
+            currentTrack.value = await response.json()
+        }
+    } catch (error) {
+        console.error('Greška pri dohvaćanju trenutne pjesme:', error)
+    }
+}
+
+let intervalId = null
+
+onMounted(() => {
+    fetchCurrentTrack()
+    // Osvježavaj svakih 10 sekundi
+    intervalId = setInterval(fetchCurrentTrack, 10000)
+})
+
+onUnmounted(() => {
+    if (intervalId) clearInterval(intervalId)
+})
 </script>
 
 <template>
@@ -29,10 +58,11 @@ import { Link } from '@inertiajs/vue3'
                             Trenutno na programu:
                         </p>
                         <p class="text-sm font-bold">
-                            J.S. Bach
+                            {{ currentTrack.artist }}
                             <span
+                                v-if="currentTrack.title"
                                 class="ml-2 text-xs font-normal text-gray-600 italic"
-                                >Opus B118</span
+                                >{{ currentTrack.title }}</span
                             >
                         </p>
                     </div>

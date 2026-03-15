@@ -7,11 +7,29 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\CurrentlyPlayingService;
 use App\Models\Playlist;
 use Cache;
+use App\Models\Media;
 use Illuminate\Support\Str;
 use Storage;
 
 class RadioController extends Controller
 {
+    public function getCurrentTrack()
+    {
+        $currentTrack = Cache::get(TrackOrder::CURRENT_TRACK);
+
+        if (!$currentTrack instanceof Media) {
+            return response()->json([
+                'title' => 'Standard',
+                'artist' => 'Classic'
+            ]);
+        }
+
+        return response()->json([
+            'title' => $currentTrack->title,
+            'artist' => $currentTrack->artist,
+        ]);
+    }
+
     public function getNextTrack()
     {
         // 1. Aktivna plejlista sa učitanim medijima (Eager Loading)
