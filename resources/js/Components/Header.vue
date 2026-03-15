@@ -53,7 +53,7 @@ import { Link } from '@inertiajs/vue3'
                 <!-- Donji red: Navigacioni meni -->
                 <nav class="hidden items-center gap-8 lg:flex">
                     <Link
-                        href="#"
+                        :href="route('program-radija')"
                         class="text-base font-normal transition hover:text-red-700"
                         >program</Link
                     >
@@ -68,7 +68,7 @@ import { Link } from '@inertiajs/vue3'
                         >podkasti</Link
                     >
                     <Link
-                        href="#"
+                        :href="route('zasto-postojimo')"
                         class="text-base font-normal transition hover:text-red-700"
                         >zašto postojimo</Link
                     >

@@ -21,5 +21,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/', IndexController::class);
 Route::get('gdje-se-fura-nekultura', StaticController::class)->name('gdje-se-fura-nekultura');
 Route::get('zasto-postojimo', StaticController::class)->name('zasto-postojimo');
+Route::get('program-radija', StaticController::class)->name('program-radija');
 
 require __DIR__.'/auth.php';
