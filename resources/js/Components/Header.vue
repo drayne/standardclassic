@@ -68,7 +68,7 @@ import { Link } from '@inertiajs/vue3'
                         >podkasti</Link
                     >
                     <Link
-                        href="#"
+                        :href="route('zasto-postojimo')"
                         class="text-base font-normal transition hover:text-red-700"
                         >zašto postojimo</Link
                     >

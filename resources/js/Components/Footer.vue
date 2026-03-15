@@ -46,7 +46,9 @@ import { Link } from '@inertiajs/vue3'
                             >
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline"
+                            <Link
+                                :href="route('zasto-postojimo')"
+                                class="transition hover:underline"
                                 >Zašto postojimo i ko smo mi?</Link
                             >
                         </li>
