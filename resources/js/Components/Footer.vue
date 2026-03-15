@@ -29,7 +29,9 @@ import { Link } from '@inertiajs/vue3'
                     </h3>
                     <ul class="space-y-0.5 text-sm opacity-90">
                         <li>
-                            <Link href="#" class="transition hover:underline"
+                            <Link
+                                :href="route('program-radija')"
+                                class="transition hover:underline"
                                 >Program radija</Link
                             >
                         </li>
