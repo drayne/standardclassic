@@ -6,7 +6,7 @@
                     <img
                         src="/images/logo.png"
                         alt="Standard Classic Radio"
-                        class="h-28 w-auto"
+                        class="h-32 w-auto"
                     />
                 </Link>
             </div>

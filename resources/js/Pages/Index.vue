@@ -183,7 +183,10 @@
                         </p>
                         <div class="mt-0">
                             <button
-                                class="text-radio-red text-base font-bold hover:underline"
+                                class="text-radio-red text-base font-bold hover:underline hover:cursor-pointer transition duration-300"
+                                @click="
+                                    $inertia.visit('/gdje-se-fura-nekultura')
+                                "
                             >
                                 Pogledajte detaljnije &rarr;
                             </button>
