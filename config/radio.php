@@ -7,4 +7,5 @@ return [
     'icecast_telnet_port' => env('ICECAST_TELNET_PORT', 1234),
     'icecast_password' => env('ICECAST_PASSWORD', ''),
     'icecast_mount' => env('ICECAST_MOUNT', 'radio.mp3'),
+    'icecast_stream_url' => env('ICECAST_STREAM_URL'),
 ];

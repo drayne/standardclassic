@@ -29,10 +29,7 @@ class RadioPlayerWidget extends Widget
         $nextTrack = Cache::get(TrackOrder::NEXT_TRACK);
 
 //        $playlist = \App\Models\Playlist::where('active', true)->first();
-        $source = app()->environment('local')
-            ? 'http://localhost:8000/radio.mp3'
-            : '/radio';
-
+        $source = config('radio.icecast_stream_url');
         return [
             'current' => $currentTrack,
             'next' => $nextTrack,
