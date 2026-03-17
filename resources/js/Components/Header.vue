@@ -1,83 +1,3 @@
-<script setup>
-import { Link, usePage } from '@inertiajs/vue3'
-import { computed, onMounted, onUnmounted, ref } from 'vue'
-
-const page = usePage()
-const streamUrl = computed(() => page.props.radio?.streamUrl)
-
-const currentTrack = ref({
-    title: 'Učitavanje...',
-    artist: '',
-})
-
-const isPlaying = ref(false)
-const audioRef = ref(null)
-const volume = ref(
-    localStorage.getItem('radioVolume')
-        ? parseFloat(localStorage.getItem('radioVolume'))
-        : 0.7,
-)
-
-const updateVolume = () => {
-    if (audioRef.value) {
-        audioRef.value.volume = volume.value
-        localStorage.setItem('radioVolume', volume.value.toString())
-    }
-}
-
-const togglePlay = () => {
-    if (!audioRef.value) return
-
-    if (isPlaying.value) {
-        audioRef.value.pause()
-        // Da bismo izbjegli kašnjenje pri ponovnom pokretanju (live stream),
-        // resetiramo izvor kako bi učitao svježi buffer kad se ponovno pokrene
-        audioRef.value.src = ''
-        audioRef.value.load()
-        isPlaying.value = false
-    } else {
-        audioRef.value.src = streamUrl.value
-        audioRef.value
-            .play()
-            .then(() => {
-                updateVolume()
-            })
-            .catch((error) => {
-                console.error('Greška pri pokretanju radija:', error)
-            })
-        isPlaying.value = true
-    }
-}
-
-const fetchCurrentTrack = async () => {
-    try {
-        const response = await fetch('/api/radio/current')
-        if (response.ok) {
-            currentTrack.value = await response.json()
-        }
-    } catch (error) {
-        console.error('Greška pri dohvaćanju trenutne pjesme:', error)
-    }
-}
-
-let intervalId = null
-
-onMounted(() => {
-    fetchCurrentTrack()
-    // Osvježavaj svakih 10 sekundi
-    intervalId = setInterval(fetchCurrentTrack, 10000)
-
-    // Inicijalizuj jačinu zvuka ako je plejer već aktivan (mada se u Headeru ponovo kreira pri reloadu)
-    if (audioRef.value) {
-        audioRef.value.volume = volume.value
-    }
-})
-
-onUnmounted(() => {
-    if (intervalId) clearInterval(intervalId)
-})
-</script>
-
 <template>
     <header class="bg-white py-6">
         <div class="mx-auto flex max-w-6xl items-end justify-between px-4">
@@ -105,11 +25,11 @@ onUnmounted(() => {
                             Trenutno na programu:
                         </p>
                         <p class="text-sm font-bold">
-                            {{ currentTrack.artist }}
+                            {{ radioStore.currentTrack.artist }}
                             <span
-                                v-if="currentTrack.title"
+                                v-if="radioStore.currentTrack.title"
                                 class="ml-2 text-xs font-normal text-gray-600 italic"
-                                >{{ currentTrack.title }}</span
+                                >{{ radioStore.currentTrack.title }}</span
                             >
                         </p>
                     </div>
@@ -149,13 +69,13 @@ onUnmounted(() => {
                         class="text-base font-normal transition hover:text-red-700"
                         >zašto postojimo</Link
                     >
-                    <div class="flex items-center gap-3">
+                    <div class="relative flex items-center gap-3">
                         <button
-                            @click="togglePlay"
-                            class="flex min-w-[140px] items-center justify-center gap-2 rounded-full bg-[#b31b1b] px-5 py-1 text-base font-medium text-white transition duration-300 hover:opacity-80"
+                            @click="radioStore.togglePlay"
+                            class="flex w-[160px] items-center justify-center gap-2 rounded-full bg-[#b31b1b] px-5 py-1 text-base font-medium text-white transition duration-300 hover:opacity-80 hover:cursor-pointer"
                         >
                             <span
-                                v-if="!isPlaying"
+                                v-if="!radioStore.isPlaying"
                                 class="flex items-center gap-2"
                             >
                                 <svg
@@ -184,41 +104,75 @@ onUnmounted(() => {
                         </button>
 
                         <div
-                            v-if="isPlaying"
-                            class="flex items-center gap-2 transition-opacity duration-300"
+                            v-if="radioStore.isPlaying"
+                            class="absolute top-full left-1/2 mt-1 flex -translate-x-1/2 items-center gap-2 rounded-lg bg-white p-2 transition-opacity duration-300 z-50"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
+                                width="14"
+                                height="14"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
                                 stroke-width="2"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                class="text-gray-500"
+                                class="cursor-pointer transition hover:text-red-700"
+                                :class="
+                                    radioStore.isMuted ||
+                                    radioStore.volume === 0
+                                        ? 'text-red-700'
+                                        : 'text-gray-500'
+                                "
+                                @click="radioStore.toggleMute"
                             >
                                 <polygon
                                     points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"
                                 ></polygon>
-                                <path
-                                    d="M19.07 4.93a10 10 0 0 1 0 14.14"
-                                ></path>
-                                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                <template
+                                    v-if="
+                                        !radioStore.isMuted &&
+                                        radioStore.volume > 0
+                                    "
+                                >
+                                    <path
+                                        d="M19.07 4.93a10 10 0 0 1 0 14.14"
+                                    ></path>
+                                    <path
+                                        d="M15.54 8.46a5 5 0 0 1 0 7.07"
+                                    ></path>
+                                </template>
+                                <line
+                                    v-else
+                                    x1="23"
+                                    y1="9"
+                                    x2="17"
+                                    y2="15"
+                                ></line>
+                                <line
+                                    v-if="
+                                        radioStore.isMuted ||
+                                        radioStore.volume === 0
+                                    "
+                                    x1="17"
+                                    y1="9"
+                                    x2="23"
+                                    y2="15"
+                                ></line>
                             </svg>
                             <input
                                 type="range"
                                 min="0"
                                 max="1"
                                 step="0.01"
-                                v-model="volume"
-                                @input="updateVolume"
-                                class="h-1.5 w-20 cursor-pointer appearance-none rounded-lg bg-gray-200 accent-red-700"
+                                v-model="radioStore.volume"
+                                @input="
+                                    radioStore.updateVolume(radioStore.volume)
+                                "
+                                class="h-1.5 w-24 cursor-pointer appearance-none rounded-lg bg-gray-200 accent-red-700"
                             />
                         </div>
                     </div>
-                    <audio ref="audioRef" preload="none"></audio>
                 </nav>
             </div>
         </div>
@@ -232,3 +186,34 @@ nav a {
     font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 }
 </style>
+
+<script setup>
+import { radioStore } from '@/stores/radio'
+import { Link, usePage } from '@inertiajs/vue3'
+import { computed, onMounted, onUnmounted, watch } from 'vue'
+
+const page = usePage()
+const streamUrl = computed(() => page.props.radio?.streamUrl)
+
+watch(
+    streamUrl,
+    (newUrl) => {
+        if (newUrl) {
+            radioStore.init(newUrl)
+        }
+    },
+    { immediate: true },
+)
+
+let intervalId = null
+
+onMounted(() => {
+    radioStore.fetchCurrentTrack()
+    // Osvježavaj svakih 10 sekundi
+    intervalId = setInterval(() => radioStore.fetchCurrentTrack(), 10000)
+})
+
+onUnmounted(() => {
+    if (intervalId) clearInterval(intervalId)
+})
+</script>
