@@ -65,7 +65,7 @@
                                 >
                                     <path d="M8 5v14l11-7z" />
                                 </svg>
-                                slušaj uživo
+                                <span class="pb-1">slušaj uživo</span>
                             </span>
                             <span v-else class="flex items-center gap-2">
                                 <svg
@@ -92,7 +92,7 @@
                                         height="16"
                                     ></rect>
                                 </svg>
-                                pauziraj
+                                <span class="pb-1">pauziraj</span>
                             </span>
                         </button>
 
