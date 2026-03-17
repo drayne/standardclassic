@@ -1,12 +1,14 @@
 <script setup>
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Head } from '@inertiajs/vue3'
+
+defineOptions({ layout: MainLayout })
 </script>
 
 <template>
     <Head title="Gdje se fura nekultura" />
 
-    <MainLayout>
+    <div>
         <div class="py-12">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 <img
@@ -62,5 +64,5 @@ import { Head } from '@inertiajs/vue3'
                 </div>
             </div>
         </div>
-    </MainLayout>
+    </div>
 </template>

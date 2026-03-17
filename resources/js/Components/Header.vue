@@ -1,11 +1,53 @@
 <script setup>
-import { Link } from '@inertiajs/vue3'
-import { onMounted, onUnmounted, ref } from 'vue'
+import { Link, usePage } from '@inertiajs/vue3'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+
+const page = usePage()
+const streamUrl = computed(() => page.props.radio?.streamUrl)
 
 const currentTrack = ref({
     title: 'Učitavanje...',
     artist: '',
 })
+
+const isPlaying = ref(false)
+const audioRef = ref(null)
+const volume = ref(
+    localStorage.getItem('radioVolume')
+        ? parseFloat(localStorage.getItem('radioVolume'))
+        : 0.7,
+)
+
+const updateVolume = () => {
+    if (audioRef.value) {
+        audioRef.value.volume = volume.value
+        localStorage.setItem('radioVolume', volume.value.toString())
+    }
+}
+
+const togglePlay = () => {
+    if (!audioRef.value) return
+
+    if (isPlaying.value) {
+        audioRef.value.pause()
+        // Da bismo izbjegli kašnjenje pri ponovnom pokretanju (live stream),
+        // resetiramo izvor kako bi učitao svježi buffer kad se ponovno pokrene
+        audioRef.value.src = ''
+        audioRef.value.load()
+        isPlaying.value = false
+    } else {
+        audioRef.value.src = streamUrl.value
+        audioRef.value
+            .play()
+            .then(() => {
+                updateVolume()
+            })
+            .catch((error) => {
+                console.error('Greška pri pokretanju radija:', error)
+            })
+        isPlaying.value = true
+    }
+}
 
 const fetchCurrentTrack = async () => {
     try {
@@ -24,6 +66,11 @@ onMounted(() => {
     fetchCurrentTrack()
     // Osvježavaj svakih 10 sekundi
     intervalId = setInterval(fetchCurrentTrack, 10000)
+
+    // Inicijalizuj jačinu zvuka ako je plejer već aktivan (mada se u Headeru ponovo kreira pri reloadu)
+    if (audioRef.value) {
+        audioRef.value.volume = volume.value
+    }
 })
 
 onUnmounted(() => {
@@ -102,12 +149,76 @@ onUnmounted(() => {
                         class="text-base font-normal transition hover:text-red-700"
                         >zašto postojimo</Link
                     >
-                    <Link
-                        href="#"
-                        class="rounded-full bg-[#b31b1b] px-5 py-1 text-base font-medium text-white transition duration-300 hover:opacity-80"
-                    >
-                        slušaj uživo
-                    </Link>
+                    <div class="flex items-center gap-3">
+                        <button
+                            @click="togglePlay"
+                            class="flex min-w-[140px] items-center justify-center gap-2 rounded-full bg-[#b31b1b] px-5 py-1 text-base font-medium text-white transition duration-300 hover:opacity-80"
+                        >
+                            <span
+                                v-if="!isPlaying"
+                                class="flex items-center gap-2"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                                slušaj uživo
+                            </span>
+                            <span v-else class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                                </svg>
+                                pauziraj
+                            </span>
+                        </button>
+
+                        <div
+                            v-if="isPlaying"
+                            class="flex items-center gap-2 transition-opacity duration-300"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="text-gray-500"
+                            >
+                                <polygon
+                                    points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"
+                                ></polygon>
+                                <path
+                                    d="M19.07 4.93a10 10 0 0 1 0 14.14"
+                                ></path>
+                                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                            </svg>
+                            <input
+                                type="range"
+                                min="0"
+                                max="1"
+                                step="0.01"
+                                v-model="volume"
+                                @input="updateVolume"
+                                class="h-1.5 w-20 cursor-pointer appearance-none rounded-lg bg-gray-200 accent-red-700"
+                            />
+                        </div>
+                    </div>
+                    <audio ref="audioRef" preload="none"></audio>
                 </nav>
             </div>
         </div>

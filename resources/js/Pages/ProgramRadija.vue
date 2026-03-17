@@ -1,12 +1,14 @@
 <script setup>
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Head } from '@inertiajs/vue3'
+
+defineOptions({ layout: MainLayout })
 </script>
 
 <template>
-    <Head title="Zašto postojimo" />
+    <Head title="Program Radija" />
 
-    <MainLayout>
+    <div>
         <div class="py-12">
             <div class="text-lg leading-relaxed text-gray-700">
                 <img
@@ -82,5 +84,5 @@ import { Head } from '@inertiajs/vue3'
                 </p>
             </div>
         </div>
-    </MainLayout>
+    </div>
 </template>
