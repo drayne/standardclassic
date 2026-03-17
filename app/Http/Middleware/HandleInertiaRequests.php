@@ -39,6 +39,9 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            'radio' => [
+                'streamUrl' => $request->getScheme() . '://' . $request->getHost() . ':' . config('radio.icecast_port') . '/' . env('ICECAST_MOUNT', 'radio.mp3'),
+            ],
         ];
     }
 }

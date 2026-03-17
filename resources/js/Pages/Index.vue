@@ -1,7 +1,7 @@
 <template>
     <Head title="Početna" />
 
-    <MainLayout>
+    <div>
         <!-- Hero Section -->
         <section
             class="mb-16 grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2"
@@ -193,13 +193,15 @@
                 </div>
             </div>
         </section>
-    </MainLayout>
+    </div>
 </template>
 
 <script setup lang="ts">
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Article } from '@/types'
 import { Head } from '@inertiajs/vue3'
+
+defineOptions({ layout: MainLayout })
 
 defineProps<{
     kulturaArticles: Article[]
