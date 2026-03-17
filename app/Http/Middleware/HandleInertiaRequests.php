@@ -40,7 +40,7 @@ class HandleInertiaRequests extends Middleware
                 'location' => $request->url(),
             ],
             'radio' => [
-                'streamUrl' => $request->getScheme() . '://' . $request->getHost() . ':' . config('radio.icecast_port') . '/' . config('radio.icecast_mount'),
+                'streamUrl' => config('radio.icecast_stream_url')
             ],
         ];
     }
