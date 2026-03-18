@@ -65,7 +65,7 @@
                                 >
                                     <path d="M8 5v14l11-7z" />
                                 </svg>
-                                <span class="pb-1">slušaj uživo</span>
+                                <span class="pb-0.5">slušaj uživo</span>
                             </span>
                             <span v-else class="flex items-center gap-2">
                                 <svg
@@ -92,7 +92,7 @@
                                         height="16"
                                     ></rect>
                                 </svg>
-                                <span class="pb-1">pauziraj</span>
+                                <span class="pb-0.5">pauziraj</span>
                             </span>
                         </button>
 
@@ -202,12 +202,12 @@
                         >zašto postojimo</Link
                     >
                     <Link
-                        :href="route('zasto-postojimo')"
+                        :href="route('vijesti-iz-kulture')"
                         class="text-base font-normal transition hover:text-red-700"
                         >vijesti iz kulture</Link
                     >
                     <Link
-                        :href="route('zasto-postojimo')"
+                        :href="route('vijesti-iz-dnevno-politickog-zivota')"
                         class="text-base font-normal transition hover:text-red-700"
                         >vijesti iz dnevno-političkog života</Link
                     >

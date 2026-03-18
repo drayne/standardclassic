@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaticController;
@@ -22,5 +23,8 @@ Route::get('/', IndexController::class);
 Route::get('gdje-se-fura-nekultura', StaticController::class)->name('gdje-se-fura-nekultura');
 Route::get('zasto-postojimo', StaticController::class)->name('zasto-postojimo');
 Route::get('program-radija', StaticController::class)->name('program-radija');
+
+Route::get('vijesti-iz-kulture', ArticlesController::class)->name('vijesti-iz-kulture');
+Route::get('vijesti-iz-dnevno-politickog-zivota', ArticlesController::class)->name('vijesti-iz-dnevno-politickog-zivota');
 
 require __DIR__.'/auth.php';
