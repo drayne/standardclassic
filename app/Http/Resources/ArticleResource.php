@@ -22,10 +22,11 @@ class ArticleResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'slug' => $this->slug,
             'title' => $translation?->title,
             'content' => $translation?->content,
             'image' => $this->image_url,
-            'published_at' => $this->published_at?->format('d.m.Y'),
+            'published_at' => $this->published_at?->translatedFormat('d. F Y.'),
         ];
     }
 }

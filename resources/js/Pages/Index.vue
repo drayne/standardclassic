@@ -77,7 +77,8 @@
                 <div
                     v-for="article in kulturaArticles"
                     :key="article.id"
-                    class="flex overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm transition hover:shadow-md"
+                    class="flex overflow-hidden rounded-md border border-gray-200 bg-white transition hover:shadow-md hover:cursor-pointer"
+                    @click="$inertia.visit(`/vijest/${article.slug}`)"
                 >
                     <div class="h-64 w-2/5 flex-shrink-0">
                         <img
@@ -97,10 +98,7 @@
                     </div>
                     <div class="flex w-full flex-col justify-between p-6">
                         <div>
-                            <h3
-                                class="mb-2 line-clamp-2 text-lg font-bold"
-                                :title="article.title"
-                            >
+                            <h3 class="mb-2 line-clamp-2 text-lg font-bold">
                                 {{ article.title }}
                             </h3>
                             <div
@@ -109,7 +107,7 @@
                             ></div>
                         </div>
                         <button
-                            class="text-radio-red text-left text-sm font-bold hover:cursor-pointer hover:underline"
+                            class="text-radio-red text-left text-sm font-bold hover:cursor-pointer"
                         >
                             Pročitaj više &rarr;
                         </button>
@@ -183,7 +181,10 @@
                         </p>
                         <div class="mt-0">
                             <button
-                                class="text-radio-red text-base font-bold hover:underline"
+                                class="text-radio-red text-base font-bold hover:underline hover:cursor-pointer transition duration-300"
+                                @click="
+                                    $inertia.visit('/gdje-se-fura-nekultura')
+                                "
                             >
                                 Pogledajte detaljnije &rarr;
                             </button>
