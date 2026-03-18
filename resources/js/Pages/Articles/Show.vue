@@ -3,15 +3,11 @@
 
     <div class="pb-6">
         <article>
-            <div
-                v-if="article.image"
-                class="mb-8 ml-12 w-full float-right sm:w-1/2 md:w-3/7"
-            >
+            <div v-if="article.image" class="mb-8 ml-12 w-full float-right sm:w-1/2 md:w-3/7">
                 <img
                     :src="article.image"
                     :alt="article.title || ''"
-                    class="h-auto w-full rounded-sm object-cover shadow-sm"
-                />
+                    class="h-auto w-full rounded-sm object-cover shadow-sm" />
             </div>
 
             <h1 class="mb-4 text-3xl font-bold leading-tight md:text-4xl">
@@ -23,16 +19,10 @@
                 {{ article.published_at }}
             </div>
 
-            <div
-                class="prose max-w-none text-gray-800"
-                v-html="article.content"
-            ></div>
+            <div class="prose max-w-none text-gray-800" v-html="article.content"></div>
 
             <div class="mt-12 border-t border-gray-300 pt-8">
-                <Link
-                    href="/"
-                    class="text-radio-red text-sm font-bold hover:underline"
-                >
+                <Link href="/" class="text-radio-red text-sm font-bold hover:underline">
                     &larr; Povratak na početnu
                 </Link>
             </div>

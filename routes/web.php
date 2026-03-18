@@ -25,6 +25,8 @@ Route::get('gdje-se-fura-nekultura', StaticController::class)->name('gdje-se-fur
 Route::get('zasto-postojimo', StaticController::class)->name('zasto-postojimo');
 Route::get('program-radija', StaticController::class)->name('program-radija');
 Route::get('emisije-na-nasem-radiju', StaticController::class)->name('emisije-na-nasem-radiju');
+Route::get('impressum', StaticController::class)->name('impressum');
+Route::get('podkasti-na-standardclassic-radiju', StaticController::class)->name('podkasti-na-standardclassic-radiju');
 
 Route::get('vijesti-iz-kulture', ArticlesController::class)->name('vijesti-iz-kulture');
 Route::get('vijesti-iz-dnevno-politickog-zivota', ArticlesController::class)->name('vijesti-iz-dnevno-politickog-zivota');
