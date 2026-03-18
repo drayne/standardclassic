@@ -28,12 +28,17 @@
                 </div>
                 <div class="flex w-full flex-col justify-between px-6 py-1">
                     <div>
-                        <h3
-                            class="mb-1 line-clamp-2 text-xl font-bold"
-                            :title="article.title"
+                        <Link
+                            :href="route('vijest', { slug: article.slug })"
+                            class="hover:text-radio-red text-base font-medium transition"
                         >
-                            {{ article.title }}
-                        </h3>
+                            <h3
+                                class="mb-1 line-clamp-2 text-xl font-bold"
+                                :title="article.title"
+                            >
+                                {{ article.title }}
+                            </h3>
+                        </Link>
                         <span class="text-xs text-gray-500">{{
                             article.published_at
                         }}</span>
@@ -43,11 +48,12 @@
                         ></div>
                     </div>
                     <div class="flex items-center">
-                        <button
+                        <Link
+                            :href="route('vijest', { slug: article.slug })"
                             class="text-radio-red text-left text-sm font-bold hover:cursor-pointer hover:underline"
                         >
                             Pročitaj više &rarr;
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -65,7 +71,7 @@
 <script setup lang="ts">
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Article } from '@/types'
-import { Head } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 
 defineOptions({ layout: MainLayout })
 
