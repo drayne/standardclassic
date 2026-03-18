@@ -15,10 +15,13 @@ class GetArticleTest extends TestCase
 
     public function test_can_view_single_article(): void
     {
-        $category = Category::create([
-            'name' => 'Vijesti iz kulture',
-            'slug' => 'vijesti-iz-kulture',
-        ]);
+        $category = Category::where('slug', 'vijesti-iz-kulture')->first();
+        if (!$category) {
+            $category = Category::create([
+                'name' => 'Vijesti iz kulture',
+                'slug' => 'vijesti-iz-kulture',
+            ]);
+        }
 
         $language = Language::where('code', 'sr')->first();
         if (!$language) {
@@ -38,7 +41,9 @@ class GetArticleTest extends TestCase
             'content' => 'Test Sadržaj',
         ]);
 
-        $response = $this->get(route('vijest', ['slug' => 'test-vijest']));
+        $slug = $article->fresh()->slug;
+
+        $response = $this->get(route('vijest', ['slug' => $slug]));
 
         $response->assertStatus(200);
         $response->assertInertia(fn (Assert $page) => $page
@@ -46,7 +51,7 @@ class GetArticleTest extends TestCase
             ->has('article', fn (Assert $page) => $page
                 ->where('title', 'Test Naslov')
                 ->where('content', 'Test Sadržaj')
-                ->where('slug', 'test-vijest')
+                ->where('slug', $slug)
                 ->etc()
             )
         );
@@ -54,10 +59,13 @@ class GetArticleTest extends TestCase
 
     public function test_cannot_view_inactive_article(): void
     {
-        $category = Category::create([
-            'name' => 'Vijesti iz kulture',
-            'slug' => 'vijesti-iz-kulture',
-        ]);
+        $category = Category::where('slug', 'vijesti-iz-kulture')->first();
+        if (!$category) {
+            $category = Category::create([
+                'name' => 'Vijesti iz kulture',
+                'slug' => 'vijesti-iz-kulture',
+            ]);
+        }
 
         Article::create([
             'category_id' => $category->id,
