@@ -75,7 +75,7 @@ defineOptions({ layout: MainLayout })
                 </p>
 
                 <div
-                    class="mt-12 border-t border-gray-300 pt-8 flex flex-col gap-64 lg:flex-row items-center align-middle"
+                    class="mt-12 border-t border-gray-300 pt-8 flex flex-col gap-8 lg:gap-64 lg:flex-row lg:items-center lg:align-middle"
                 >
                     <div class="flex flex-col gap-2">
                         <span class="font-bold">Emisija: KultExpress</span>
