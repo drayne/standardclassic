@@ -31,7 +31,11 @@ import { Link } from '@inertiajs/vue3'
                             </Link>
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline">Podkasti</Link>
+                            <Link
+                                :href="route('podkasti-na-standardclassic-radiju')"
+                                class="transition hover:underline">
+                                Podkasti
+                            </Link>
                         </li>
                         <li>
                             <Link :href="route('zasto-postojimo')" class="transition hover:underline">

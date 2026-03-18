@@ -122,7 +122,11 @@
                         class="text-base font-normal transition hover:text-red-700">
                         emisije
                     </Link>
-                    <Link href="#" class="text-base font-normal transition hover:text-red-700">podkasti</Link>
+                    <Link
+                        :href="route('podkasti-na-standardclassic-radiju')"
+                        class="text-base font-normal transition hover:text-red-700">
+                        podkasti
+                    </Link>
                     <Link :href="route('zasto-postojimo')" class="text-base font-normal transition hover:text-red-700">
                         zašto postojimo
                     </Link>
