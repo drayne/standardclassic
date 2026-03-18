@@ -3,9 +3,7 @@ import { reactive } from 'vue'
 export const radioStore = reactive({
     isPlaying: false,
     isMuted: false,
-    volume: localStorage.getItem('radioVolume')
-        ? parseFloat(localStorage.getItem('radioVolume'))
-        : 0.7,
+    volume: localStorage.getItem('radioVolume') ? parseFloat(localStorage.getItem('radioVolume')) : 0.7,
     previousVolume: 0.7,
     audio: null,
     streamUrl: null,
@@ -38,9 +36,7 @@ export const radioStore = reactive({
         if (!this.audio) return
 
         if (this.isMuted) {
-            this.updateVolume(
-                this.previousVolume > 0 ? this.previousVolume : 0.7,
-            )
+            this.updateVolume(this.previousVolume > 0 ? this.previousVolume : 0.7)
             this.isMuted = false
         } else {
             this.previousVolume = this.volume
