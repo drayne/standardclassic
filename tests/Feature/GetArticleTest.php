@@ -52,6 +52,7 @@ class GetArticleTest extends TestCase
                 ->where('title', 'Test Naslov')
                 ->where('content', 'Test Sadržaj')
                 ->where('slug', $slug)
+                ->where('published_at', $article->published_at->translatedFormat('d. F Y.'))
                 ->etc()
             )
         );
