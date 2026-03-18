@@ -36,7 +36,9 @@ import { Link } from '@inertiajs/vue3'
                             >
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline"
+                            <Link
+                                :href="route('emisije-na-nasem-radiju')"
+                                class="transition hover:underline"
                                 >Emisije</Link
                             >
                         </li>

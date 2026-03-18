@@ -187,7 +187,7 @@
                         >program</Link
                     >
                     <Link
-                        href="#"
+                        :href="route('emisije-na-nasem-radiju')"
                         class="text-base font-normal transition hover:text-red-700"
                         >emisije</Link
                     >
