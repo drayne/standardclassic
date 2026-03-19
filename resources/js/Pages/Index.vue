@@ -80,10 +80,10 @@
                     </div>
                     <div class="flex w-full flex-col justify-between p-6">
                         <div>
-                            <h3 class="mb-2 line-clamp-3 text-lg font-bold">
+                            <h3 class="mb-2 line-clamp-2 text-lg font-bold">
                                 {{ article.title }}
                             </h3>
-                            <div class="mb-4 line-clamp-5 text-sm text-gray-600" v-html="article.content"></div>
+                            <div class="mb-4 line-clamp-4 text-sm text-gray-600" v-html="article.content"></div>
                         </div>
                         <button class="text-radio-red text-left text-sm font-bold hover:cursor-pointer">
                             Pročitaj više &rarr;
@@ -105,13 +105,15 @@
                     <li
                         v-for="article in dpArticles"
                         :key="article.id"
-                        class="flex items-start gap-6 border-b border-gray-300 pb-4 last:border-0">
+                        class="flex items-center gap-6 border-b border-gray-300 pb-4 last:border-0">
                         <span class="text-radio-red block w-24 shrink-0 whitespace-nowrap text-sm font-bold">
                             {{ article.published_at }}
                         </span>
-                        <a href="#" class="hover:text-radio-red text-base font-medium transition">
+                        <Link
+                            :href="route('vijest', article.slug)"
+                            class="hover:text-radio-red truncate text-base font-medium transition">
                             {{ article.title }}
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>
