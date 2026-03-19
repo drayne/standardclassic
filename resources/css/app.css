@@ -3,3 +3,12 @@
 @theme {
     --color-radio-red: #b31b1b;
 }
+
+@layer base {
+    .prose p {
+        margin-bottom: 1.5rem;
+    }
+    .prose p:last-child {
+        margin-bottom: 0;
+    }
+}
