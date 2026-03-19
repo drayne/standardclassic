@@ -24,9 +24,14 @@
                         <img
                             src="/images/gustavo-dudamel.jpg"
                             alt="Gustavo Dudamel"
-                            class="h-64 w-full rounded-lg object-cover shadow-md" />
+                            @click="
+                                openExternalLink(
+                                    'https://sr.wikipedia.org/sr-ec/%D0%93%D1%83%D1%81%D1%82%D0%B0%D0%B2%D0%BE_%D0%94%D1%83%D0%B4%D0%B0%D0%BC%D0%B5%D0%BB',
+                                )
+                            "
+                            class="h-64 w-full rounded-lg object-cover hover:cursor-pointer hover:shadow-md transition duration-300" />
                         <span class="mt-2 text-sm text-gray-500 italic">
-                            Gustavo Dudamel - direktor Njujorške filharmonije
+                            🔗 Gustavo Dudamel - direktor Njujorške filharmonije
                         </span>
                     </div>
                 </div>
@@ -42,9 +47,11 @@
                         kroz priču o filmovima, stripu, starim gramofonskim pločama, slikarstvu, pozorištu, ali i da
                         pratimo svakodnevna dešavanja u redovnom životu.
                     </p>
-                    <p class="text-radio-red cursor-pointer text-lg font-bold hover:underline">
+                    <Link
+                        class="text-radio-red cursor-pointer text-lg font-bold hover:underline"
+                        :href="route('zasto-postojimo')">
                         Pročitajte više o nama i našim planovima &rarr;
-                    </p>
+                    </Link>
                 </div>
             </div>
         </section>
@@ -148,7 +155,7 @@
 <script setup lang="ts">
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Article } from '@/types'
-import { Head } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 import { computed } from 'vue'
 
 defineOptions({ layout: MainLayout })
@@ -174,6 +181,12 @@ const rightImage = computed(() => {
     const img = props.coverImages.find((img) => img.position === 'R')
     return img ? img.path : '/images/slika-andjeli.jpg'
 })
+
+const openExternalLink = (url: string) => {
+    if (typeof window !== 'undefined') {
+        window.open(url, '_blank')
+    }
+}
 </script>
 
 <style scoped>
