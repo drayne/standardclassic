@@ -44,11 +44,16 @@ class ArticlesTable
             ])
             ->recordActions([
                 ViewAction::make()->label('Detalji'),
-                EditAction::make()->label('Izmijeni'),
+                EditAction::make()
+                    ->label('Izmijeni')
+                    ->modalHeading('Izmijeni vijest')
+                    ->modalSubmitActionLabel('Sačuvaj'),
             ])
             ->columnToggleFormColumns(0)
             ->bulkActions([
-                DeleteBulkAction::make()->label('Izbriši izabrane'),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make()->label('Izbriši izabrane'),
+                ]),
             ]);
     }
 }

@@ -16,8 +16,8 @@ class EditArticle extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ViewAction::make(),
-            DeleteAction::make(),
+            ViewAction::make()->label('Detalji'),
+            DeleteAction::make()->label('Izbriši'),
         ];
     }
 

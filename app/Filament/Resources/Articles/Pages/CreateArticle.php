@@ -11,6 +11,8 @@ class CreateArticle extends CreateRecord
 
     protected ?string $heading = 'Nova vijest';
 
+    protected static bool $canCreateAnother = false;
+
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');

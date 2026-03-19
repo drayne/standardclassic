@@ -5,13 +5,10 @@
         <!-- Hero Section -->
         <section class="mb-16 grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2">
             <div class="flex items-center justify-center">
-                <img src="/images/klasicna-muzika.jpg" alt="Klasična muzika" class="h-auto w-full" />
+                <img :src="leftImage" alt="Klasična muzika" class="h-auto w-full" />
             </div>
             <div class="flex">
-                <img
-                    src="/images/slika-andjeli.jpg"
-                    alt="Umetnička ilustracija - Anđeli"
-                    class="w-full rounded-lg object-cover shadow-md" />
+                <img :src="rightImage" alt="Umetnička ilustracija - Anđeli" class="w-full rounded-lg object-cover" />
             </div>
         </section>
 
@@ -27,9 +24,14 @@
                         <img
                             src="/images/gustavo-dudamel.jpg"
                             alt="Gustavo Dudamel"
-                            class="h-64 w-full rounded-lg object-cover shadow-md" />
+                            @click="
+                                openExternalLink(
+                                    'https://sr.wikipedia.org/sr-ec/%D0%93%D1%83%D1%81%D1%82%D0%B0%D0%B2%D0%BE_%D0%94%D1%83%D0%B4%D0%B0%D0%BC%D0%B5%D0%BB',
+                                )
+                            "
+                            class="h-64 w-full rounded-lg object-cover hover:cursor-pointer hover:shadow-md transition duration-300" />
                         <span class="mt-2 text-sm text-gray-500 italic">
-                            Gustavo Dudamel - direktor Njujorške filharmonije
+                            🔗 Gustavo Dudamel - direktor Njujorške filharmonije
                         </span>
                     </div>
                 </div>
@@ -45,9 +47,11 @@
                         kroz priču o filmovima, stripu, starim gramofonskim pločama, slikarstvu, pozorištu, ali i da
                         pratimo svakodnevna dešavanja u redovnom životu.
                     </p>
-                    <p class="text-radio-red cursor-pointer text-lg font-bold hover:underline">
+                    <Link
+                        class="text-radio-red cursor-pointer text-lg font-bold hover:underline"
+                        :href="route('zasto-postojimo')">
                         Pročitajte više o nama i našim planovima &rarr;
-                    </p>
+                    </Link>
                 </div>
             </div>
         </section>
@@ -151,26 +155,38 @@
 <script setup lang="ts">
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Article } from '@/types'
-import { Head } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
+import { computed } from 'vue'
 
 defineOptions({ layout: MainLayout })
 
-defineProps<{
+interface CoverImage {
+    id: number
+    path: string
+    position: 'L' | 'R'
+}
+
+const props = defineProps<{
     kulturaArticles: Article[]
     dpArticles: Article[]
+    coverImages: CoverImage[]
 }>()
 
-const dailyNews = [
-    {
-        date: '13.03.2026',
-        title: 'Sastanak Standard Classic Radio radne grupe',
-    },
-    { date: '12.03.2026', title: 'Kulturna dešavanja u Bijeljini' },
-    { date: '11.03.2026', title: 'Izveštaj o privrednom rastu u regionu' },
-    { date: '10.03.2026', title: 'Novi zakon o saobraćaju stupa na snagu' },
-    { date: '09.03.2026', title: 'Otvoren novi tehnološki park' },
-    { date: '08.03.2026', title: 'Međunarodni dan žena obeležen širom zemlje' },
-]
+const leftImage = computed(() => {
+    const img = props.coverImages.find((img) => img.position === 'L')
+    return img ? img.path : '/images/klasicna-muzika.jpg'
+})
+
+const rightImage = computed(() => {
+    const img = props.coverImages.find((img) => img.position === 'R')
+    return img ? img.path : '/images/slika-andjeli.jpg'
+})
+
+const openExternalLink = (url: string) => {
+    if (typeof window !== 'undefined') {
+        window.open(url, '_blank')
+    }
+}
 </script>
 
 <style scoped>
