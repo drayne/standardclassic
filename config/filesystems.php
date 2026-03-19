@@ -79,6 +79,13 @@ return [
             'url' => env('APP_URL') . '/storage/articles',
             'visibility' => 'public',
         ],
+
+        'cover-images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/cover-images'),
+            'url' => env('APP_URL') . '/storage/cover-images',
+            'visibility' => 'public',
+        ],
     ],
 
     /*
@@ -94,8 +101,6 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-        public_path('covers') => storage_path('app/public/covers'),
-        public_path('articles') => storage_path('app/public/articles'),
     ],
 
 ];
