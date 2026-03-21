@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/', IndexController::class);
 Route::get('gdje-se-fura-nekultura', StaticController::class)->name('gdje-se-fura-nekultura');
+Route::get('Milos-Stevanovic-standard-classic-podcast', StaticController::class)->name('Milos-Stevanovic-standard-classic-podcast');
 Route::get('zasto-postojimo', StaticController::class)->name('zasto-postojimo');
 Route::get('program-radija', StaticController::class)->name('program-radija');
 Route::get('emisije-na-nasem-radiju', StaticController::class)->name('emisije-na-nasem-radiju');

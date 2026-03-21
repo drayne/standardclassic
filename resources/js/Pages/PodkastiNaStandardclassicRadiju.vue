@@ -68,7 +68,7 @@ defineOptions({ layout: MainLayout })
                     <img
                         src="/images/milos-stevanovic-podcast.jpg"
                         alt="milos-stevanovic-podcast"
-                        class="w-full h-auto rounded shadow-sm" />
+                        class="w-full h-auto rounded" />
                 </div>
                 <div class="lg:w-2/3 text-lg leading-relaxed text-gray-700">
                     <h2 class="text-xl font-medium text-black mb-4">Miloš Stevanović Standard Podkast</h2>
