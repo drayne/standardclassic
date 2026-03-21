@@ -1,12 +1,15 @@
 <script setup>
+import { useTrans } from '@/Composables/useTrans'
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Head } from '@inertiajs/vue3'
+
+const { t } = useTrans()
 
 defineOptions({ layout: MainLayout })
 </script>
 
 <template>
-    <Head title="Impressum" />
+    <Head :title="t('impressum_page.title')" />
 
     <div>
         <div class="py-6">
@@ -17,21 +20,21 @@ defineOptions({ layout: MainLayout })
                     class="w-full lg:w-1/2 h-auto float-none lg:float-right lg:ml-10 mb-10 lg:mb-5" />
                 <div class="mb-5 pt-4">
                     <span>
-                        StandardClassic.ba internet radio je vlasništvo korporacije "StandardPrva" d.o.o. Bijeljina.
+                        {{ t('impressum_page.text1') }}
                     </span>
                 </div>
                 <div class="mb-5">
                     <span>
-                        Direktor: Slaviša Lakić
+                        {{ t('impressum_page.director') }}
                         <br />
-                        Predsjednik Nadzornog odbora: Miloš Stevanović
+                        {{ t('impressum_page.chairman') }}
                     </span>
                 </div>
                 <div class="mb-5">
-                    <span>Glavni i odgovorni urednik: Miloš Stevanović</span>
+                    <span>{{ t('impressum_page.editor_in_chief') }}</span>
                 </div>
                 <div class="mb-5">
-                    <span>Urednik sajta: Danka Zakić</span>
+                    <span>{{ t('impressum_page.web_editor') }}</span>
                 </div>
                 <div class="mb-5">
                     <img src="/images/standardprva-logo.png" alt="standardprva logo" class="h-12 w-auto" />
