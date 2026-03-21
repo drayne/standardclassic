@@ -44,9 +44,11 @@ export default {
         read_more_about_us: 'Read more about us and our plans &rarr;',
         culture_news: 'Culture News',
         no_image: '[No image]',
-        read_more: 'Read more &rarr;',
+        read_more: 'Read more',
         daily_news: 'Daily Political News',
         podcasts_and_shows: 'Podcasts and Shows',
+        no_articles: 'There are currently no published news in this category.',
+        back_home: 'Back to home',
     },
     shows_page: {
         title: 'Shows on our radio',

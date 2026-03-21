@@ -79,7 +79,8 @@
                             <div class="mb-4 line-clamp-4 text-sm text-gray-600" v-html="article.content"></div>
                         </div>
                         <button class="text-radio-red text-left text-sm font-bold hover:cursor-pointer">
-                            <span v-html="t('index_page.read_more')"></span>
+                            <span>{{ t('index_page.read_more') }}</span>
+                            &rarr;
                         </button>
                     </div>
                 </div>

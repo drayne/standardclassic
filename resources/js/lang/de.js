@@ -44,9 +44,11 @@ export default {
         read_more_about_us: 'Lesen Sie mehr über uns und unsere Pläne &rarr;',
         culture_news: 'Kulturnachrichten',
         no_image: '[Kein Bild]',
-        read_more: 'Weiterlesen &rarr;',
+        read_more: 'Weiterlesen',
         daily_news: 'Nachrichten aus dem täglichen politischen Leben',
         podcasts_and_shows: 'Podcasts und Sendungen',
+        no_articles: 'In dieser Kategorie sind derzeit keine Nachrichten veröffentlicht.',
+        back_home: 'Zurück zur Startseite',
     },
     shows_page: {
         title: 'Sendungen auf unserem Radio',

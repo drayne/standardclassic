@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\GetArticleController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaticController;
 use Illuminate\Support\Facades\Route;
@@ -33,5 +34,7 @@ Route::get('vijesti-iz-kulture', ArticlesController::class)->name('vijesti-iz-ku
 Route::get('vijesti-iz-dnevno-politickog-zivota', ArticlesController::class)->name('vijesti-iz-dnevno-politickog-zivota');
 
 Route::get('vijest/{slug}', GetArticleController::class)->name('vijest');
+
+Route::post('language', LanguageController::class)->name('language');
 
 require __DIR__.'/auth.php';

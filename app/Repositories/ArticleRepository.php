@@ -31,7 +31,7 @@ class ArticleRepository
 
         return Article::with(['translations' => function ($query) {
             $query->whereHas('language', function ($q) {
-                $q->where('code', 'sr');
+                $q->where('code', app()->getLocale());
             });
         }, 'category'])
             ->where('category_id', $categoryId)

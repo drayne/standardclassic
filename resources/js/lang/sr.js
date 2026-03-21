@@ -44,9 +44,11 @@ export default {
         read_more_about_us: 'Pročitajte više o nama i našim planovima &rarr;',
         culture_news: 'Vijesti iz kulture',
         no_image: '[Nema slike]',
-        read_more: 'Pročitaj više &rarr;',
+        read_more: 'Pročitaj više',
         daily_news: 'Vijesti iz dnevno-političkog života',
         podcasts_and_shows: 'Podkasti i emisije',
+        no_articles: 'Trenutno nema objavljenih vijesti u ovoj kategoriji.',
+        back_home: 'Povratak na početnu',
     },
     shows_page: {
         title: 'Emisije na našem radiju',
