@@ -62,7 +62,7 @@ return [
 
         'radio' => [
             'driver' => 'local',
-            'root' => storage_path('app/radio'),
+            'root' => env('RADIO_STORAGE_PATH', storage_path('app/radio')),
             'visibility' => 'private',
         ],
 

@@ -74,10 +74,10 @@ class RadioController extends Controller
 
         \Log::info("Radio: Sledeća pesma spremna: " . $nextItem->title);
 
-        $projectRoot = config('radio.radio_project_root', base_path());
-        $relativePath = Str::after(Storage::disk('radio')->path($nextItem->file_path), base_path() . '/');
-        $fullPath = rtrim($projectRoot, '/') . '/' . $relativePath;
-
+        $fullPath = Storage::disk('radio')->path($nextItem->file_path);
+        if ($projectRoot = config('radio.radio_project_root')) {
+            $fullPath = str_replace(base_path(), $projectRoot, $fullPath);
+        }
 
         return response()->json([
             'title'  => $nextItem->title ?? 'Unknown Title',
@@ -90,6 +90,9 @@ class RadioController extends Controller
     private function fallbackResponse()
     {
         $fallbackPath = Storage::disk('radio')->path('fallback.mp3');
+        if ($projectRoot = config('radio.radio_project_root')) {
+            $fallbackPath = str_replace(base_path(), $projectRoot, $fallbackPath);
+        }
 
         return response()->json([
             'title'  => 'Fallback',

@@ -29,10 +29,10 @@ class ScheduledMediaController extends Controller
             CurrentlyPlayingService::setScheduledTrack($schedule->media);
             $schedule->update(['played' => true]);
 
-            $projectRoot = config('radio.radio_project_root', base_path());
-            $dockerPath = Storage::disk('radio')->path($schedule->media->file_path);
-            $relativePath = Str::after($dockerPath, base_path() . '/');
-            $fullPath = rtrim($projectRoot, '/') . '/' . $relativePath;
+            $fullPath = Storage::disk('radio')->path($schedule->media->file_path);
+            if ($projectRoot = config('radio.radio_project_root')) {
+                $fullPath = str_replace(base_path(), $projectRoot, $fullPath);
+            }
 
             return response()->json([
                 'status' => 'play_now',
