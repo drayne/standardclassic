@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\GetArticleController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaticController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/', IndexController::class);
 Route::get('gdje-se-fura-nekultura', StaticController::class)->name('gdje-se-fura-nekultura');
+Route::get('Milos-Stevanovic-standard-classic-podcast', StaticController::class)->name('Milos-Stevanovic-standard-classic-podcast');
 Route::get('zasto-postojimo', StaticController::class)->name('zasto-postojimo');
 Route::get('program-radija', StaticController::class)->name('program-radija');
 Route::get('emisije-na-nasem-radiju', StaticController::class)->name('emisije-na-nasem-radiju');
@@ -32,5 +34,7 @@ Route::get('vijesti-iz-kulture', ArticlesController::class)->name('vijesti-iz-ku
 Route::get('vijesti-iz-dnevno-politickog-zivota', ArticlesController::class)->name('vijesti-iz-dnevno-politickog-zivota');
 
 Route::get('vijest/{slug}', GetArticleController::class)->name('vijest');
+
+Route::post('language', LanguageController::class)->name('language');
 
 require __DIR__.'/auth.php';

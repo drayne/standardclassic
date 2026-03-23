@@ -1,5 +1,5 @@
 <template>
-    <Head title="Početna" />
+    <Head :title="t('index_page.title')" />
 
     <div>
         <!-- Hero Section -->
@@ -16,7 +16,7 @@
         <section class="mb-16">
             <h2 class="mb-2 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase">
                 <span class="bg-radio-red mr-3 h-1 w-8"></span>
-                O nama
+                {{ t('index_page.about_us') }}
             </h2>
             <div class="mt-4 grid grid-cols-1 gap-12 lg:grid-cols-2">
                 <div class="lg:col-span-1">
@@ -31,26 +31,19 @@
                             "
                             class="h-64 w-full rounded-lg object-cover hover:cursor-pointer hover:shadow-md transition duration-300" />
                         <span class="mt-2 text-sm text-gray-500 italic">
-                            🔗 Gustavo Dudamel - direktor Njujorške filharmonije
+                            {{ t('index_page.dudamel_desc') }}
                         </span>
                     </div>
                 </div>
                 <div class="prose max-w-none lg:col-span-1">
-                    <h1 class="mb-7 inline-block text-2xl">
-                        Dobro došli na
-                        <b>Standard</b>
-                        <span class="text-red-700">Classic</span>
-                        Radio
-                    </h1>
+                    <h1 class="mb-7 inline-block text-2xl" v-html="t('index_page.welcome_h1')"></h1>
                     <p class="mb-7 text-lg leading-relaxed text-gray-700">
-                        Naš cilj je da vratimo kulturu na velika vrata u regionu, ne samo kroz klasičnu muziku, nego i
-                        kroz priču o filmovima, stripu, starim gramofonskim pločama, slikarstvu, pozorištu, ali i da
-                        pratimo svakodnevna dešavanja u redovnom životu.
+                        {{ t('index_page.welcome_p') }}
                     </p>
                     <Link
                         class="text-radio-red cursor-pointer text-lg font-bold hover:underline"
                         :href="route('zasto-postojimo')">
-                        Pročitajte više o nama i našim planovima &rarr;
+                        <span v-html="t('index_page.read_more_about_us')"></span>
                     </Link>
                 </div>
             </div>
@@ -60,7 +53,7 @@
         <section class="mb-16">
             <h2 class="mb-3 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase">
                 <span class="bg-radio-red mr-3 h-1 w-8"></span>
-                Vijesti iz kulture
+                {{ t('index_page.culture_news') }}
             </h2>
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
                 <div
@@ -75,7 +68,7 @@
                             :alt="article.title || ''"
                             class="h-full w-full object-cover" />
                         <div v-else class="flex h-full items-center justify-center">
-                            <p class="text-xs text-gray-400 italic">[Nema slike]</p>
+                            <p class="text-xs text-gray-400 italic">{{ t('index_page.no_image') }}</p>
                         </div>
                     </div>
                     <div class="flex w-full flex-col justify-between p-6">
@@ -86,7 +79,8 @@
                             <div class="mb-4 line-clamp-4 text-sm text-gray-600" v-html="article.content"></div>
                         </div>
                         <button class="text-radio-red text-left text-sm font-bold hover:cursor-pointer">
-                            Pročitaj više &rarr;
+                            <span>{{ t('index_page.read_more') }}</span>
+                            &rarr;
                         </button>
                     </div>
                 </div>
@@ -99,7 +93,7 @@
             <div>
                 <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase">
                     <span class="bg-radio-red mr-3 h-1 w-8"></span>
-                    Vijesti iz dnevno-političkog života
+                    {{ t('index_page.daily_news') }}
                 </h2>
                 <ul class="mt-6 space-y-4">
                     <li
@@ -122,45 +116,26 @@
             <div>
                 <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase">
                     <span class="bg-radio-red mr-3 h-1 w-8"></span>
-                    Podkasti i emisije
+                    {{ t('index_page.podcasts_and_shows') }}
                 </h2>
-                <div class="mt-6">
-                    <div
-                        class="mb-6 flex h-auto w-full items-center justify-center overflow-hidden md:float-left md:mr-8 md:mb-4 md:ml-0 md:w-58">
-                        <img
-                            src="/images/aljosa-logo.jpg"
-                            alt="Aljoša Ljubojević"
-                            class="h-auto w-full rounded-lg object-contain shadow-sm" />
-                    </div>
-                    <div class="flex flex-col overflow-hidden md:overflow-visible">
-                        <h3 class="mb-1 text-xl font-bold">Gdje se fura (ne)kultura</h3>
-                        <p class="text-radio-red mb-3 text-sm font-bold italic">Autor: Aljoša Ljubojević</p>
-                        <p class="mb-3 leading-relaxed text-gray-700">
-                            Gdje se fura (ne)kultura je naša najbolja emisija gdje slušaoci i gledaoci mogu da prate
-                            odličan podkast serija koji vodi Aljoša Ljubojević, poznati novinar iz Bijeljine. Aljoša će
-                            razgovarati sa brojnim kulturnim radnicima, ali i poznavaocima filma, sporta, dobre muzike,
-                            stripova i mnogo toga.
-                        </p>
-                        <div class="mt-0">
-                            <button
-                                class="text-radio-red text-base font-bold hover:underline hover:cursor-pointer transition duration-300"
-                                @click="$inertia.visit('/gdje-se-fura-nekultura')">
-                                Pogledajte detaljnije &rarr;
-                            </button>
-                        </div>
-                    </div>
-                    <div class="clear-both"></div>
-                </div>
+                <PodcastAljosa v-if="randomPodcastIndex === 1" />
+                <PodcastMilos v-if="randomPodcastIndex === 2" />
+                <PodcastMilos v-if="randomPodcastIndex === 3" />
             </div>
         </section>
     </div>
 </template>
 
 <script setup lang="ts">
+import PodcastAljosa from '@/Components/PodcastAljosa.vue'
+import PodcastMilos from '@/Components/PodcastMilos.vue'
+import { useTrans } from '@/Composables/useTrans'
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Article } from '@/types'
 import { Head, Link } from '@inertiajs/vue3'
 import { computed } from 'vue'
+
+const { t } = useTrans()
 
 defineOptions({ layout: MainLayout })
 
@@ -191,6 +166,10 @@ const openExternalLink = (url: string) => {
         window.open(url, '_blank')
     }
 }
+
+const randomPodcastIndex = computed(() => {
+    return Math.floor(Math.random() * 3) + 1
+})
 </script>
 
 <style scoped>

@@ -18,7 +18,7 @@ class ArticlesController extends Controller
         $articles = $category->articles()
             ->with(['translations' => function ($query) {
                 $query->whereHas('language', function ($q) {
-                    $q->where('code', 'sr');
+                    $q->where('code', app()->getLocale());
                 });
             }])
             ->where('active', true)

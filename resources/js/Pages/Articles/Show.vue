@@ -23,7 +23,7 @@
 
             <div class="mt-12 border-t border-gray-300 pt-8">
                 <Link href="/" class="text-radio-red text-sm font-bold hover:underline">
-                    &larr; Povratak na početnu
+                    &larr; {{ t('back_home') }}
                 </Link>
             </div>
         </article>
@@ -31,9 +31,12 @@
 </template>
 
 <script setup lang="ts">
+import { useTrans } from '@/Composables/useTrans'
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Article } from '@/types'
 import { Head, Link } from '@inertiajs/vue3'
+
+const { t } = useTrans()
 
 defineOptions({ layout: MainLayout })
 

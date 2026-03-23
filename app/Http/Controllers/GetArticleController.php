@@ -11,7 +11,7 @@ class GetArticleController extends Controller
         $article = \App\Models\Article::where('slug', $slug)
             ->with(['translations' => function ($query) {
                 $query->whereHas('language', function ($q) {
-                    $q->where('code', 'sr');
+                    $q->where('code', app()->getLocale());
                 });
             }])
             ->where('active', true)

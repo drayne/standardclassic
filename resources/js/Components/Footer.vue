@@ -1,5 +1,8 @@
 <script setup>
+import { useTrans } from '@/Composables/useTrans'
 import { Link } from '@inertiajs/vue3'
+
+const { t } = useTrans()
 </script>
 
 <template>
@@ -13,7 +16,7 @@ import { Link } from '@inertiajs/vue3'
                             <img src="/images/logo-red.png" alt="Standard Classic Radio" class="h-48 w-auto" />
                         </Link>
                     </div>
-                    <p class="text-sm leading-relaxed font-bold opacity-90">Muzika koja inspiriše i povezuje</p>
+                    <p class="text-sm leading-relaxed font-bold opacity-90">{{ t('footer.slogan') }}</p>
                 </div>
 
                 <!-- Radio Links -->
@@ -22,37 +25,39 @@ import { Link } from '@inertiajs/vue3'
                     <ul class="space-y-0.5 text-sm opacity-90">
                         <li>
                             <Link :href="route('program-radija')" class="transition hover:underline">
-                                Program radija
+                                {{ t('footer.radio_program') }}
                             </Link>
                         </li>
                         <li>
                             <Link :href="route('emisije-na-nasem-radiju')" class="transition hover:underline">
-                                Emisije
+                                {{ t('footer.shows') }}
                             </Link>
                         </li>
                         <li>
                             <Link
                                 :href="route('podkasti-na-standardclassic-radiju')"
                                 class="transition hover:underline">
-                                Podkasti
+                                {{ t('footer.podcasts') }}
                             </Link>
                         </li>
                         <li>
                             <Link :href="route('zasto-postojimo')" class="transition hover:underline">
-                                Zašto postojimo i ko smo mi?
+                                {{ t('footer.why_we_exist') }}
                             </Link>
                         </li>
                         <li>
-                            <Link :href="route('impressum')" class="transition hover:underline">Impresum</Link>
+                            <Link :href="route('impressum')" class="transition hover:underline">
+                                {{ t('footer.impressum') }}
+                            </Link>
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline">Radio uživo</Link>
+                            <Link href="#" class="transition hover:underline">{{ t('footer.live_radio') }}</Link>
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline">Vijesti iz kulture</Link>
+                            <Link href="#" class="transition hover:underline">{{ t('footer.culture_news') }}</Link>
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline">Vijesti iz dnevno-političkog života</Link>
+                            <Link href="#" class="transition hover:underline">{{ t('footer.politics_news') }}</Link>
                         </li>
                     </ul>
                 </div>
@@ -60,29 +65,29 @@ import { Link } from '@inertiajs/vue3'
                 <!-- Corporate Info / Copyright -->
                 <div>
                     <img src="/images/sp-logo-red.png" alt="Standard Classic Radio" class="h-12 w-auto" />
-                    <span class="text-sm">Naša radio stanica ponosna je članica korporacije StandardPrva.</span>
+                    <span class="text-sm">{{ t('footer.corporate_info') }}</span>
                     <ul class="mt-4 mb-3 space-y-0.5 text-sm opacity-90">
                         <li>
-                            <Link href="#" class="transition hover:underline">O korporaciji</Link>
+                            <Link href="#" class="transition hover:underline">{{ t('footer.about_corp') }}</Link>
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline">Menadžment</Link>
+                            <Link href="#" class="transition hover:underline">{{ t('footer.management') }}</Link>
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline">Standard Plaza</Link>
+                            <Link href="#" class="transition hover:underline">{{ t('footer.standard_plaza') }}</Link>
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline">Our luxury alignment manifesto</Link>
+                            <Link href="#" class="transition hover:underline">{{ t('footer.luxury_manifesto') }}</Link>
                         </li>
                         <li>
                             <Link href="#" class="transition hover:underline">
-                                Fondacija Branislava i Vesne Stevanović
+                                {{ t('footer.foundation') }}
                             </Link>
                         </li>
                     </ul>
 
                     <span class="text-xs">
-                        Copyright © {{ new Date().getFullYear() }} StandardPrva LLC. Zabranjeno kopiranje.
+                        {{ t('footer.copyright').replace('{year}', new Date().getFullYear()) }}
                     </span>
                 </div>
             </div>

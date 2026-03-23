@@ -35,7 +35,7 @@
                         <Link
                             :href="route('vijest', { slug: article.slug })"
                             class="text-radio-red text-left text-sm font-bold hover:cursor-pointer hover:underline">
-                            Pročitaj više &rarr;
+                            {{ t('read_more') }} &rarr;
                         </Link>
                     </div>
                 </div>
@@ -43,15 +43,18 @@
         </div>
 
         <div v-if="articles.length === 0" class="text-center py-12 text-gray-500">
-            Trenutno nema objavljenih vijesti u ovoj kategoriji.
+            {{ t('no_articles') }}
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { useTrans } from '@/Composables/useTrans'
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Article } from '@/types'
 import { Head, Link } from '@inertiajs/vue3'
+
+const { t } = useTrans()
 
 defineOptions({ layout: MainLayout })
 

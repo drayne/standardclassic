@@ -42,6 +42,7 @@ class HandleInertiaRequests extends Middleware
             'radio' => [
                 'streamUrl' => config('radio.icecast_stream_url')
             ],
+            'locale' => app()->getLocale(),
         ];
     }
 }

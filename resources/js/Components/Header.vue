@@ -10,15 +10,30 @@
             <!-- Desni blok sa dva reda -->
             <div class="flex w-full flex-col items-end gap-4 pb-8">
                 <div class="flex gap-4 text-xs font-medium lowercase">
-                    <button class="transition hover:text-red-700">english</button>
-                    <button class="transition hover:text-red-700">deutsch</button>
-                    <button class="font-bold text-red-700 underline">srpski</button>
+                    <button
+                        @click="setLang('en')"
+                        class="transition hover:text-red-700 hover:cursor-pointer"
+                        :class="{ 'font-bold text-red-700 underline': currentLang === 'en' }">
+                        english
+                    </button>
+                    <button
+                        @click="setLang('de')"
+                        class="transition hover:text-red-700 hover:cursor-pointer"
+                        :class="{ 'font-bold text-red-700 underline': currentLang === 'de' }">
+                        deutsch
+                    </button>
+                    <button
+                        @click="setLang('sr')"
+                        class="transition hover:text-red-700 hover:cursor-pointer"
+                        :class="{ 'font-bold text-red-700 underline': currentLang === 'sr' }">
+                        srpski
+                    </button>
                 </div>
 
                 <!-- Gornji red: Trenutno na programu -->
                 <div class="flex w-full items-center justify-end gap-8 pb-2 pt-5">
                     <div class="border-r border-gray-200 pr-8 text-right leading-tight">
-                        <p class="text-[10px] tracking-wider text-gray-500 uppercase">Trenutno na programu:</p>
+                        <p class="text-[10px] tracking-wider text-gray-500 uppercase">{{ t('currently_on_air') }}:</p>
                         <p class="text-sm font-bold">
                             {{ radioStore.currentTrack.artist }}
                             <span
@@ -42,7 +57,7 @@
                                     fill="currentColor">
                                     <path d="M8 5v14l11-7z" />
                                 </svg>
-                                <span class="pb-0.5">slušaj uživo</span>
+                                <span class="pb-0.5">{{ t('listen_live') }}</span>
                             </span>
                             <span v-else class="flex items-center gap-2">
                                 <svg
@@ -58,7 +73,7 @@
                                     <rect x="6" y="4" width="4" height="16"></rect>
                                     <rect x="14" y="4" width="4" height="16"></rect>
                                 </svg>
-                                <span class="pb-0.5">pauziraj</span>
+                                <span class="pb-0.5">{{ t('pause') }}</span>
                             </span>
                         </button>
 
@@ -115,30 +130,30 @@
                 <!-- Donji red: Navigacioni meni -->
                 <nav class="hidden items-center gap-8 lg:flex pt-1">
                     <Link :href="route('program-radija')" class="text-base font-normal transition hover:text-red-700">
-                        program
+                        {{ t('program') }}
                     </Link>
                     <Link
                         :href="route('emisije-na-nasem-radiju')"
                         class="text-base font-normal transition hover:text-red-700">
-                        emisije
+                        {{ t('shows') }}
                     </Link>
                     <Link
                         :href="route('podkasti-na-standardclassic-radiju')"
                         class="text-base font-normal transition hover:text-red-700">
-                        podkasti
+                        {{ t('podcasts') }}
                     </Link>
                     <Link :href="route('zasto-postojimo')" class="text-base font-normal transition hover:text-red-700">
-                        zašto postojimo
+                        {{ t('why_we_exist') }}
                     </Link>
                     <Link
                         :href="route('vijesti-iz-kulture')"
                         class="text-base font-normal transition hover:text-red-700">
-                        vijesti iz kulture
+                        {{ t('culture_news') }}
                     </Link>
                     <Link
                         :href="route('vijesti-iz-dnevno-politickog-zivota')"
                         class="text-base font-normal transition hover:text-red-700">
-                        vijesti iz dnevno-političkog života
+                        {{ t('politics_news') }}
                     </Link>
                 </nav>
             </div>
@@ -155,10 +170,12 @@ nav a {
 </style>
 
 <script setup>
+import { useTrans } from '@/Composables/useTrans'
 import { radioStore } from '@/stores/radio'
 import { Link, usePage } from '@inertiajs/vue3'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
+const { t, setLang, currentLang } = useTrans()
 const page = usePage()
 const streamUrl = computed(() => page.props.radio?.streamUrl)
 
