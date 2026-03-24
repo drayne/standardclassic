@@ -19,21 +19,48 @@
                 {{ t('index_page.about_us') }}
             </h2>
             <div class="mt-4 grid grid-cols-1 gap-12 lg:grid-cols-2">
-                <div class="lg:col-span-1">
-                    <div class="mb-4 flex flex-col overflow-hidden">
-                        <img
-                            src="/images/gustavo-dudamel.jpg"
-                            alt="Gustavo Dudamel"
-                            @click="
-                                openExternalLink(
-                                    'https://sr.wikipedia.org/sr-ec/%D0%93%D1%83%D1%81%D1%82%D0%B0%D0%B2%D0%BE_%D0%94%D1%83%D0%B4%D0%B0%D0%BC%D0%B5%D0%BB',
-                                )
-                            "
-                            class="h-64 w-full rounded-lg object-cover hover:cursor-pointer hover:shadow-md transition duration-300" />
-                        <span class="mt-2 text-sm text-gray-500 italic">
-                            {{ t('index_page.dudamel_desc') }}
-                        </span>
-                    </div>
+                <div class="lg:col-span-1 min-h-100 relative">
+                    <Transition name="fade">
+                        <div
+                            :key="currentIndex"
+                            v-if="currentComposer"
+                            class="flex flex-col overflow-hidden absolute inset-0 w-full">
+                            <img
+                                v-if="currentComposer.image"
+                                :src="currentComposer.image"
+                                :alt="currentComposer.name"
+                                @click="currentComposer.url ? openExternalLink(currentComposer.url) : null"
+                                class="h-80 w-full rounded-lg object-cover object-top hover:cursor-pointer hover:shadow-md transition duration-300" />
+                            <div
+                                v-else
+                                class="h-80 w-full rounded-lg bg-gray-100 flex items-center justify-center text-gray-400">
+                                {{ t('index_page.no_image') }}
+                            </div>
+                            <span class="mt-2 text-sm text-gray-500 italic">
+                                <span
+                                    v-if="currentComposer.url"
+                                    class="hover:cursor-pointer hover:underline"
+                                    @click="openExternalLink(currentComposer.url)">
+                                    🔗 {{ currentComposer.name }} - {{ currentComposer.description }}
+                                </span>
+                                <span v-else>{{ currentComposer.name }} - {{ currentComposer.description }}</span>
+                            </span>
+                        </div>
+                        <div v-else class="flex flex-col overflow-hidden absolute inset-0 w-full">
+                            <img
+                                src="/images/gustavo-dudamel.jpg"
+                                alt="Gustavo Dudamel"
+                                @click="
+                                    openExternalLink(
+                                        'https://sr.wikipedia.org/sr-ec/%D0%93%D1%83%D1%81%D1%82%D0%B0%D0%B2%D0%BE_%D0%94%D1%83%D0%B4%D0%B0%D0%BC%D0%B5%D0%BB',
+                                    )
+                                "
+                                class="h-80 w-full rounded-lg object-cover object-top hover:cursor-pointer hover:shadow-md transition duration-300" />
+                            <span class="mt-2 text-sm text-gray-500 italic">
+                                {{ t('index_page.dudamel_desc') }}
+                            </span>
+                        </div>
+                    </Transition>
                 </div>
                 <div class="prose max-w-none lg:col-span-1">
                     <h1 class="mb-7 inline-block text-2xl" v-html="t('index_page.welcome_h1')"></h1>
@@ -131,9 +158,9 @@ import PodcastAljosa from '@/Components/PodcastAljosa.vue'
 import PodcastMilos from '@/Components/PodcastMilos.vue'
 import { useTrans } from '@/Composables/useTrans'
 import MainLayout from '@/Layouts/MainLayout.vue'
-import { Article } from '@/types'
+import { Article, Composer } from '@/types'
 import { Head, Link } from '@inertiajs/vue3'
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 const { t } = useTrans()
 
@@ -149,7 +176,34 @@ const props = defineProps<{
     kulturaArticles: Article[]
     dpArticles: Article[]
     coverImages: CoverImage[]
+    composers: Composer[]
 }>()
+
+const currentIndex = ref(0)
+const intervalId = ref<number | null>(null)
+
+const currentComposer = computed(() => {
+    if (props.composers.length === 0) return null
+    return props.composers[currentIndex.value]
+})
+
+const startRotation = () => {
+    if (props.composers.length > 1) {
+        intervalId.value = window.setInterval(() => {
+            currentIndex.value = (currentIndex.value + 1) % props.composers.length
+        }, 8000) // Change every 5 seconds
+    }
+}
+
+onMounted(() => {
+    startRotation()
+})
+
+onUnmounted(() => {
+    if (intervalId.value) {
+        clearInterval(intervalId.value)
+    }
+})
 
 const leftImage = computed(() => {
     const img = props.coverImages.find((img) => img.position === 'L')
@@ -178,5 +232,15 @@ const randomPodcastIndex = computed(() => {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 1s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 </style>

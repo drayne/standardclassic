@@ -27,7 +27,7 @@ class CoverImageResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Portal';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationLabel = 'Naslovne slike';
 
@@ -44,6 +44,7 @@ class CoverImageResource extends Resource
                 FileUpload::make('path')
                     ->label('Slika')
                     ->image()
+                    ->imageEditor()
                     ->disk('cover-images')
                     ->required(),
                 Select::make('position')

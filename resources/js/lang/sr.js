@@ -46,6 +46,8 @@ export default {
         no_image: '[Nema slike]',
         read_more: 'Pročitaj više',
         daily_news: 'Vijesti iz dnevno-političkog života',
+        composers: 'Kompozitori',
+        no_composers: 'Nema kompozitora.',
         podcasts_and_shows: 'Podkasti i emisije',
         no_articles: 'Trenutno nema objavljenih vijesti u ovoj kategoriji.',
         back_home: 'Povratak na početnu',

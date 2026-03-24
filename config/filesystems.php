@@ -86,6 +86,13 @@ return [
             'url' => env('APP_URL') . '/storage/cover-images',
             'visibility' => 'public',
         ],
+
+        'composer-images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/composer-images'),
+            'url' => env('APP_URL') . '/storage/composer-images',
+            'visibility' => 'public',
+        ],
     ],
 
     /*

@@ -8,6 +8,7 @@ export interface User {
 }
 
 export * from './article'
+export * from './composer'
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
