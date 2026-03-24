@@ -43,9 +43,16 @@ class ArticlesTable
                 //
             ])
             ->recordActions([
-                ViewAction::make()->label('Detalji'),
+                ViewAction::make()
+                    ->icon('heroicon-o-eye')
+                    ->iconButton()
+                    ->tooltip('Detalji')
+                    ->color('info'),
                 EditAction::make()
-                    ->label('Izmijeni')
+                    ->icon('heroicon-o-pencil')
+                    ->iconButton()
+                    ->tooltip('Izmijeni')
+                    ->color('warning')
                     ->modalHeading('Izmijeni vijest')
                     ->modalSubmitActionLabel('Sačuvaj'),
             ])

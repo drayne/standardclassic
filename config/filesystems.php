@@ -68,22 +68,29 @@ return [
 
         'radio-covers' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/covers'),
+            'root' => env('PUBLIC_STORAGE_PATH', storage_path('app/public')) . '/covers',
             'url' => env('APP_URL') . '/storage/covers',
             'visibility' => 'public',
         ],
 
         'article-images' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/articles'),
+            'root' => env('PUBLIC_STORAGE_PATH', storage_path('app/public')) . '/articles',
             'url' => env('APP_URL') . '/storage/articles',
             'visibility' => 'public',
         ],
 
         'cover-images' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/cover-images'),
+            'root' => env('PUBLIC_STORAGE_PATH', storage_path('app/public')) . '/cover-images',
             'url' => env('APP_URL') . '/storage/cover-images',
+            'visibility' => 'public',
+        ],
+
+        'composer-images' => [
+            'driver' => 'local',
+            'root' => env('PUBLIC_STORAGE_PATH', storage_path('app/public')) . '/composer-images',
+            'url' => env('APP_URL') . '/storage/composer-images',
             'visibility' => 'public',
         ],
     ],
@@ -100,7 +107,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => env('PUBLIC_STORAGE_PATH', storage_path('app/public')),
     ],
 
 ];

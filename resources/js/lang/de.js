@@ -46,6 +46,8 @@ export default {
         no_image: '[Kein Bild]',
         read_more: 'Weiterlesen',
         daily_news: 'Nachrichten aus dem täglichen politischen Leben',
+        composers: 'Komponisten',
+        no_composers: 'Keine Komponisten',
         podcasts_and_shows: 'Podcasts und Sendungen',
         no_articles: 'In dieser Kategorie sind derzeit keine Nachrichten veröffentlicht.',
         back_home: 'Zurück zur Startseite',

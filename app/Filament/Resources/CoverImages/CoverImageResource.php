@@ -9,6 +9,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
@@ -26,7 +27,7 @@ class CoverImageResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Portal';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationLabel = 'Naslovne slike';
 
@@ -43,6 +44,7 @@ class CoverImageResource extends Resource
                 FileUpload::make('path')
                     ->label('Slika')
                     ->image()
+                    ->imageEditor()
                     ->disk('cover-images')
                     ->required(),
                 Select::make('position')
@@ -85,11 +87,17 @@ class CoverImageResource extends Resource
             ])
             ->recordActions([
                 EditAction::make()
-                    ->label('Izmijeni')
+                    ->icon('heroicon-o-pencil')
+                    ->iconButton()
+                    ->tooltip('Izmijeni')
+                    ->color('warning')
                     ->modalHeading('Izmijeni naslovnu sliku')
-                    ->modalSubmitActionLabel('Sačuvaj')
-                    ->color('warning'),
-                DeleteAction::make(),
+                    ->modalSubmitActionLabel('Sačuvaj'),
+                DeleteAction::make()
+                    ->icon('heroicon-o-trash')
+                    ->iconButton()
+                    ->tooltip('Izbriši')
+                    ->color('danger'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

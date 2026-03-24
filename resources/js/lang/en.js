@@ -46,6 +46,8 @@ export default {
         no_image: '[No image]',
         read_more: 'Read more',
         daily_news: 'Daily Political News',
+        composers: 'Composers',
+        no_composers: 'No composers',
         podcasts_and_shows: 'Podcasts and Shows',
         no_articles: 'There are currently no published news in this category.',
         back_home: 'Back to home',

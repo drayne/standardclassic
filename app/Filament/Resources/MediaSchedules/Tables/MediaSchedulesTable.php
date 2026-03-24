@@ -45,8 +45,16 @@ class MediaSchedulesTable
                 // Ovde kasnije možemo dodati filter za "Samo buduća emitovanja"
             ])
             ->recordActions([
-                EditAction::make()->label('Izmijeni'),
-                DeleteAction::make(),
+                EditAction::make()
+                    ->icon('heroicon-o-pencil')
+                    ->iconButton()
+                    ->tooltip('Izmijeni')
+                    ->color('warning'),
+                DeleteAction::make()
+                    ->icon('heroicon-o-trash')
+                    ->iconButton()
+                    ->tooltip('Izbriši')
+                    ->color('danger'),
             ])
             ->emptyStateHeading('Nema zakazanih emisija');
     }

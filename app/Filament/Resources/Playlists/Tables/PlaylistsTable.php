@@ -34,7 +34,11 @@ class PlaylistsTable
                 //
             ])
             ->recordActions([
-                EditAction::make()->label('Izmijeni'),
+                EditAction::make()
+                    ->icon('heroicon-o-pencil')
+                    ->iconButton()
+                    ->tooltip('Izmijeni')
+                    ->color('warning'),
             ])
             ->columnToggleFormColumns(0)
             ->bulkActions([
