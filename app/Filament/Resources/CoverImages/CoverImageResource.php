@@ -9,6 +9,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
@@ -85,11 +86,17 @@ class CoverImageResource extends Resource
             ])
             ->recordActions([
                 EditAction::make()
-                    ->label('Izmijeni')
+                    ->icon('heroicon-o-pencil')
+                    ->iconButton()
+                    ->tooltip('Izmijeni')
+                    ->color('warning')
                     ->modalHeading('Izmijeni naslovnu sliku')
-                    ->modalSubmitActionLabel('Sačuvaj')
-                    ->color('warning'),
-                DeleteAction::make(),
+                    ->modalSubmitActionLabel('Sačuvaj'),
+                DeleteAction::make()
+                    ->icon('heroicon-o-trash')
+                    ->iconButton()
+                    ->tooltip('Izbriši')
+                    ->color('danger'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
