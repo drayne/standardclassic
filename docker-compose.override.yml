@@ -3,3 +3,4 @@ services:
   laravel.test:
     volumes:
       - ~/projects/standardclassic/storage/app/radio:/home/vedran/projects/standardclassic/storage/app/radio
+      - ~/projects/standardclassic/storage/app/public:/home/vedran/projects/standardclassic/storage/app/public
