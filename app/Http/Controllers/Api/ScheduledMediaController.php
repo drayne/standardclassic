@@ -30,9 +30,6 @@ class ScheduledMediaController extends Controller
             $schedule->update(['played' => true]);
 
             $fullPath = Storage::disk('radio')->path($schedule->media->file_path);
-            if ($projectRoot = config('radio.radio_project_root')) {
-                $fullPath = str_replace(base_path(), $projectRoot, $fullPath);
-            }
 
             return response()->json([
                 'status' => 'play_now',
