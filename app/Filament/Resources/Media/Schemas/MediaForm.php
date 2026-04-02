@@ -19,35 +19,6 @@ class MediaForm
     {
         return $schema
             ->components([
-                Section::make('Osnovne Informacije')
-                    ->description('Unesite naslov, autora i tip medija.')
-                    ->schema([
-                        Grid::make(2)
-                            ->schema([
-                                TextInput::make('title')
-                                    ->label('Naziv')
-                                    ->required()
-                                    ->placeholder('npr. Mesečeva Sonata'),
-
-                                Select::make('media_type_id')
-                                    ->label('Tip medija')
-                                    ->relationship('type', 'name')
-                                    ->required()
-                                    ->native(false)
-                                    ->preload(),
-
-                                TextInput::make('artist')
-                                    ->label('Izvođač / Kompozitor')
-                                    ->placeholder('npr. Ludwig van Beethoven'),
-
-                                TextInput::make('duration')
-                                    ->label('Trajanje')
-                                    ->numeric()
-                                    ->suffix('s')
-                                    ->helperText('Ovo će biti automatski izračunato'),
-                            ]),
-                    ]),
-
                 Section::make('Multimedija')
                     ->description('Otpremite audio fajl i prateću sliku za plejer.')
                     ->schema([
@@ -57,7 +28,8 @@ class MediaForm
                                     ->label('Audio fajl')
                                     ->disk('radio')
                                     ->directory('audio')
-                                    ->acceptedFileTypes(['audio/mpeg'])
+                                    ->acceptedFileTypes(['audio/mpeg', 'audio/mp4', 'audio/x-m4a'])
+                                    ->maxSize(204800) // 200MB
                                     ->live()
                                     // Slugifikacija naziva audio fajla sa timestampom
                                     ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
@@ -127,6 +99,35 @@ class MediaForm
                                         return (string) str($name)->slug()->append('-' . time() . '.' . $file->getClientOriginalExtension());
                                     })
                                     ->columnSpan(1),
+                            ]),
+                    ]),
+
+                Section::make('Osnovne Informacije')
+                    ->description('Unesite naslov, autora i tip medija.')
+                    ->schema([
+                        Grid::make(2)
+                            ->schema([
+                                TextInput::make('title')
+                                    ->label('Naziv')
+                                    ->required()
+                                    ->placeholder('npr. Mesečeva Sonata'),
+
+                                Select::make('media_type_id')
+                                    ->label('Tip medija')
+                                    ->relationship('type', 'name')
+                                    ->required()
+                                    ->native(false)
+                                    ->preload(),
+
+                                TextInput::make('artist')
+                                    ->label('Izvođač / Kompozitor')
+                                    ->placeholder('npr. Ludwig van Beethoven'),
+
+                                TextInput::make('duration')
+                                    ->label('Trajanje')
+                                    ->numeric()
+                                    ->suffix('s')
+                                    ->helperText('Ovo će biti automatski izračunato'),
                             ]),
                     ]),
             ]);
