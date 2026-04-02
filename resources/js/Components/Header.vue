@@ -35,11 +35,16 @@
                     <div class="border-r border-gray-200 pr-8 text-right leading-tight">
                         <p class="text-[10px] tracking-wider text-gray-500 uppercase">{{ t('currently_on_air') }}:</p>
                         <p class="text-sm font-bold">
-                            {{ radioStore.currentTrack.artist }}
+                            {{ radioStore.currentTrack.composer_name }}
                             <span
                                 v-if="radioStore.currentTrack.title"
                                 class="ml-2 text-xs font-normal text-gray-600 italic">
                                 {{ radioStore.currentTrack.title }}
+                            </span>
+                            <span
+                                v-if="radioStore.currentTrack.artist"
+                                class="text-xs font-normal text-gray-400 italic">
+                                ({{ radioStore.currentTrack.artist }})
                             </span>
                         </p>
                     </div>

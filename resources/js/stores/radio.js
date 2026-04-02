@@ -10,6 +10,7 @@ export const radioStore = reactive({
     currentTrack: {
         title: 'Učitavanje...',
         artist: '',
+        composer_name: '',
     },
 
     init(streamUrl) {
