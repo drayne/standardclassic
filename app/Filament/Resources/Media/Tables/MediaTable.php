@@ -21,6 +21,12 @@ class MediaTable
             ->columns([
                 IconColumn::make('type.name')
                     ->label('Tip')
+                    ->formatStateUsing(fn (string $state): string => match (strtolower($state)) {
+                        'song' => 'Pjesma',
+                        'show' => 'Emisija',
+                        'podcast' => 'Podkast',
+                        default => $state,
+                    })
                     ->icon(fn (string $state): string => match (strtolower($state)) {
                         'song' => 'heroicon-o-musical-note',
                         'show' => 'heroicon-o-microphone',
