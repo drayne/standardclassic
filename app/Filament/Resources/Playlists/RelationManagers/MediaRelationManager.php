@@ -44,7 +44,7 @@ class MediaRelationManager extends RelationManager
                     ->label('Dodaj na plejlistu')
                     ->preloadRecordSelect()
                     ->multiple()
-                    ->mutateAttachFormDataUsing(function (array $data, RelationManager $livewire): array {
+                    ->mutateDataUsing(function (array $data, RelationManager $livewire): array {
                         $maxOrder = $livewire->getRelationship()->max('sort_order') ?? 0;
                         $data['sort_order'] = $maxOrder + 1;
                         return $data;
