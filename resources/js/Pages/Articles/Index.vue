@@ -2,8 +2,8 @@
     <Head :title="category.name" />
 
     <div class="py-12">
-        <h2 class="mb-8 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase">
-            <span class="bg-radio-red mr-3 h-1 w-8"></span>
+        <h2 class="mb-8 flex items-center text-lg font-bold tracking-wide uppercase">
+            <span class="bg-radio-red mr-3 h-1 w-8 shrink-0"></span>
             {{ category.name }}
         </h2>
 
@@ -19,7 +19,7 @@
                         <p class="text-xs text-gray-400 italic">[Nema slike]</p>
                     </div>
                 </div>
-                <div class="flex w-full flex-col justify-between px-6 py-1">
+                <div class="flex w-full flex-col justify-between lg:px-6 py-2 lg:py-1">
                     <div>
                         <Link
                             :href="route('vijest', { slug: article.slug })"

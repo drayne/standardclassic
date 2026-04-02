@@ -8,6 +8,8 @@ export default {
     why_we_exist: 'zašto postojimo',
     culture_news: 'vijesti iz kulture',
     politics_news: 'vijesti iz dnevno-političkog života',
+    read_more: 'Pročitaj više',
+    back_home: 'Povratak na početnu',
     language: {
         sr: 'srpski',
         en: 'english',
@@ -44,13 +46,11 @@ export default {
         read_more_about_us: 'Pročitajte više o nama i našim planovima &rarr;',
         culture_news: 'Vijesti iz kulture',
         no_image: '[Nema slike]',
-        read_more: 'Pročitaj više',
         daily_news: 'Vijesti iz dnevno-političkog života',
         composers: 'Kompozitori',
         no_composers: 'Nema kompozitora.',
         podcasts_and_shows: 'Podkasti i emisije',
-        no_articles: 'Trenutno nema objavljenih vijesti u ovoj kategoriji.',
-        back_home: 'Povratak na početnu',
+        no_articles: 'Trenutno nema objavljenih vijesti i ovoj kategoriji.',
     },
     shows_page: {
         title: 'Emisije na našem radiju',
