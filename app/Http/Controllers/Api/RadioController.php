@@ -40,27 +40,51 @@ class RadioController extends Controller
             return $this->fallbackResponse();
         }
 
-        // 2. Odredi sort_order
+        // 2. Odredi sort_order i ID zadnje pjesme
         $lastTrackInQueue = Cache::get(TrackOrder::NEXT_TRACK);
-        $lastPlayedSortOrder = -1; // Počinjemo od -1 da bi prva pesma sa 0 bila validna
+        $lastPlayedSortOrder = -1;
+        $lastPlayedId = -1;
 
         if ($lastTrackInQueue) {
-            // Koristimo kolekciju iz memorije umesto novog upita za brzinu i sigurnost
             $found = $playlist->media->firstWhere('id', $lastTrackInQueue->id);
             if ($found && isset($found->pivot->sort_order)) {
                 $lastPlayedSortOrder = $found->pivot->sort_order;
+                $lastPlayedId = $found->id;
             }
         }
 
         // 3. Pronađi sledeću pesmu
+        // Prvo tražimo pesmu sa većim sort_orderom
+        // Ili sa istim sort_orderom ali većim ID-jem (da pokrijemo slučaj kada su svi 0)
         $nextItem = $playlist->media
-            ->where('pivot.sort_order', '>', $lastPlayedSortOrder)
-            ->sortBy('pivot.sort_order')
+            ->filter(function ($item) use ($lastPlayedSortOrder, $lastPlayedId) {
+                $currentSortOrder = $item->pivot->sort_order;
+                $currentId = $item->id;
+
+                if ($currentSortOrder > $lastPlayedSortOrder) {
+                    return true;
+                }
+
+                if ($currentSortOrder == $lastPlayedSortOrder && $currentId > $lastPlayedId) {
+                    return true;
+                }
+
+                return false;
+            })
+            ->sortBy([
+                ['pivot.sort_order', 'asc'],
+                ['id', 'asc'],
+            ])
             ->first();
 
-        // 4. Cirkularna logika - ako nema sledeće, uzmi prvu
+        // 4. Cirkularna logika - ako nema sledeće, uzmi prvu po sort_orderu i ID-u
         if (!$nextItem) {
-            $nextItem = $playlist->media->sortBy('pivot.sort_order')->first();
+            $nextItem = $playlist->media
+                ->sortBy([
+                    ['pivot.sort_order', 'asc'],
+                    ['id', 'asc'],
+                ])
+                ->first();
         }
 
         // 5. Finalna provera pre bilo kakvog pristupa propertijima
