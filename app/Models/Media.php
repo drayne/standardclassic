@@ -10,16 +10,21 @@ class Media extends Model
 {
     protected $fillable = [
         'media_type_id',
+        'composer_id',
         'title',
         'artist',
         'file_path',
-        'image_path',
         'duration',
     ];
 
     public function type(): BelongsTo
     {
         return $this->belongsTo(MediaType::class, 'media_type_id');
+    }
+
+    public function composer(): BelongsTo
+    {
+        return $this->belongsTo(Composer::class);
     }
 
     public function playlists(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -34,11 +39,6 @@ class Media extends Model
             // Brišemo audio fajl
             if ($media->file_path) {
                 Storage::disk('radio')->delete($media->file_path);
-            }
-
-            // Brišemo cover sliku
-            if ($media->image_path) {
-                Storage::disk('radio-covers')->delete($media->image_path);
             }
         });
     }

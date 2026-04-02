@@ -23,9 +23,10 @@ class MediaRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('title')
             ->columns([
-                Tables\Columns\ImageColumn::make('image_path')
-                    ->label('Slika')
-                    ->disk('radio-covers')
+                Tables\Columns\ImageColumn::make('composer.image')
+                    ->label('Slika kompozitora')
+                    ->disk('composer-images')
+                    ->circular()
                     ->defaultImageUrl(url('https://ui-avatars.com/api/?name=?&color=7F9CF5&background=EBF4FF&format=svg&icon=heroicon-s-musical-note')),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Naziv')

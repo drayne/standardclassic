@@ -27,10 +27,10 @@ class LatestPlayedTracksWidget extends BaseWidget
             )
             ->columns([
                 Tables\Columns\Layout\Split::make([
-                    Tables\Columns\ImageColumn::make('media.image_path')
+                    Tables\Columns\ImageColumn::make('media.composer.image')
                         ->circular()
                         ->defaultImageUrl(url('https://ui-avatars.com/api/?name=?&color=7F9CF5&background=EBF4FF&format=svg&icon=heroicon-s-musical-note'))
-                        ->disk('radio-covers')
+                        ->disk('composer-images')
                         ->grow(false),
                     Tables\Columns\IconColumn::make('media.type.name')
                         ->label('Tip')

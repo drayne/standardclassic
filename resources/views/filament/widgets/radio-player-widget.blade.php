@@ -21,9 +21,9 @@
                         'bg-gradient-to-tr from-primary-600 to-primary-400 animate-[spin_8s_linear_infinite]' => $isLive,
                         'bg-gray-300 dark:bg-gray-700 opacity-50' => !$isLive,
                     ])>
-                        @if($current?->image_path)
-                            <img src="{{ Storage::disk('radio-covers')->url($current->image_path) }}"
-                                 alt="{{ $current->title }}"
+                        @if($current?->composer?->image)
+                            <img src="{{ $current->composer->imageUrl }}"
+                                 alt="{{ $current->composer->name }}"
                                  class="w-full h-full object-cover opacity-90 rounded-full">
                         @else
                             <div class="w-full h-full flex items-center justify-center bg-gradient-to-tr from-gray-800 to-gray-950">
