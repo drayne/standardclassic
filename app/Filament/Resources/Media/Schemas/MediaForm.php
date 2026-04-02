@@ -20,7 +20,7 @@ class MediaForm
         return $schema
             ->components([
                 Section::make('Multimedija')
-                    ->description('Otpremite audio fajl i prateću sliku za plejer.')
+                    ->description('Otpremite audio fajl.')
                     ->schema([
                         Grid::make(2)
                             ->schema([
@@ -58,47 +58,9 @@ class MediaForm
 
                                         if ($title) $set('title', $title);
                                         if ($artist) $set('artist', $artist);
-
-                                        // 2. Izvlačenje Cover Art-a
-                                        $picture = null;
-                                        if (!empty($fileInfo['comments']['picture'][0]['data'])) {
-                                            $picture = $fileInfo['comments']['picture'][0];
-                                        } elseif (!empty($fileInfo['id3v2']['APIC'][0]['data'])) {
-                                            $picture = $fileInfo['id3v2']['APIC'][0];
-                                        }
-
-                                        if ($picture && isset($picture['data'])) {
-                                            try {
-                                                $mime = $picture['image_mime'] ?? $picture['mime'] ?? 'image/jpeg';
-                                                $extension = str_replace('image/', '', $mime);
-                                                $extension = $extension === 'jpeg' ? 'jpg' : $extension;
-
-                                                // Generisanje naziva slike na osnovu naslova (iz tagova ili unesenog) + timestamp
-                                                $baseName = $title ?? pathinfo($state->getClientOriginalName(), PATHINFO_FILENAME);
-                                                $imageName = (string) str($baseName)->slug()->append('-' . time() . '.' . $extension);
-
-                                                Storage::disk('radio-covers')->put($imageName, $picture['data']);
-
-                                                $set('image_path', $imageName);
-                                            } catch (\Exception $e) {
-                                                \Illuminate\Support\Facades\Log::error("Greška pri čuvanju cover arta: " . $e->getMessage());
-                                            }
-                                        }
                                     })
                                     ->required()
-                                    ->columnSpan(1),
-
-                                FileUpload::make('image_path')
-                                    ->label('Slika')
-                                    ->image()
-                                    ->disk('radio-covers')
-                                    ->imageEditor()
-                                    // Slugifikacija naziva slike sa timestampom pri ručnom uploadu
-                                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
-                                        $name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                                        return (string) str($name)->slug()->append('-' . time() . '.' . $file->getClientOriginalExtension());
-                                    })
-                                    ->columnSpan(1),
+                                    ->columnSpanFull(),
                             ]),
                     ]),
 
@@ -119,9 +81,17 @@ class MediaForm
                                     ->native(false)
                                     ->preload(),
 
+                                Select::make('composer_id')
+                                    ->label('Kompozitor')
+                                    ->relationship('composer', 'name')
+                                    ->searchable()
+                                    ->placeholder('Pretraži kompozitora...')
+                                    ->preload()
+                                    ->columnSpan(1),
+
                                 TextInput::make('artist')
-                                    ->label('Izvođač / Kompozitor')
-                                    ->placeholder('npr. Ludwig van Beethoven'),
+                                    ->label('Izvođač')
+                                    ->placeholder('npr. Artur Rubinštajn'),
 
                                 TextInput::make('duration')
                                     ->label('Trajanje')

@@ -27,6 +27,7 @@ class RadioController extends Controller
         return response()->json([
             'title' => $currentTrack->title,
             'artist' => $currentTrack->artist,
+            'composer_image' => $currentTrack->composer?->imageUrl,
         ]);
     }
 

@@ -23,6 +23,11 @@ class Composer extends Model
         return $this->hasMany(ComposerTranslation::class);
     }
 
+    public function media(): HasMany
+    {
+        return $this->hasMany(Media::class);
+    }
+
     public function translation(string $languageCode = 'sr'): ?ComposerTranslation
     {
         return $this->translations()->whereHas('language', function ($query) use ($languageCode) {

@@ -113,6 +113,10 @@ class ComposerResource extends Resource
                     ->label('Ime i prezime')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('media_count')
+                    ->label('Broj medija')
+                    ->counts('media')
+                    ->sortable(),
                 TextColumn::make('url')
                     ->label('URL')
                     ->limit(30),

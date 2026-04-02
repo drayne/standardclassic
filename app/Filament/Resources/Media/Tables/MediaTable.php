@@ -37,13 +37,13 @@ class MediaTable
                 TextColumn::make('title')
                     ->label('Naziv')
                     ->searchable(),
+                TextColumn::make('composer.name')
+                    ->label('Kompozitor')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('artist')
                     ->label('Izvođač')
                     ->searchable(),
-                ImageColumn::make('image_path')
-                    ->label('Slika')
-                    ->disk('radio-covers')
-                    ->defaultImageUrl(url('https://ui-avatars.com/api/?name=?&color=7F9CF5&background=EBF4FF&format=svg&icon=heroicon-s-musical-note')),
                 TextColumn::make('duration')
                     ->label('Trajanje')
                     ->numeric()
