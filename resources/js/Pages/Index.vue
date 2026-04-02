@@ -14,7 +14,7 @@
 
         <!-- Welcome Section -->
         <section class="mb-16">
-            <h2 class="mb-2 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase">
+            <h2 class="mb-2 flex items-center text-lg font-bold tracking-wide uppercase">
                 <span class="bg-radio-red mr-3 h-1 w-8"></span>
                 {{ t('index_page.about_us') }}
             </h2>
@@ -78,7 +78,7 @@
 
         <!-- Culture News Section -->
         <section class="mb-16">
-            <h2 class="mb-3 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase">
+            <h2 class="mb-3 flex items-center text-lg font-bold tracking-wide uppercase">
                 <span class="bg-radio-red mr-3 h-1 w-8"></span>
                 {{ t('index_page.culture_news') }}
             </h2>
@@ -118,7 +118,7 @@
         <section class="grid grid-cols-1 gap-16 pb-12 lg:grid-cols-2">
             <!-- Daily News -->
             <div>
-                <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase">
+                <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide uppercase">
                     <span class="bg-radio-red mr-3 h-1 w-8"></span>
                     {{ t('index_page.daily_news') }}
                 </h2>
@@ -141,7 +141,7 @@
 
             <!-- Podcasts & Shows -->
             <div>
-                <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide whitespace-nowrap uppercase">
+                <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide uppercase">
                     <span class="bg-radio-red mr-3 h-1 w-8"></span>
                     {{ t('index_page.podcasts_and_shows') }}
                 </h2>
