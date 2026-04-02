@@ -1,8 +1,8 @@
 <template>
     <header class="bg-white py-2">
         <div class="mx-auto max-w-6xl px-4">
-            <!-- Jezici na vrhu za mobilni i desktop -->
-            <div class="flex justify-end gap-4 text-xs font-medium lowercase py-1">
+            <!-- Jezici na vrhu - sakriveni na mobilnom jer idu u meni -->
+            <div class="hidden lg:flex justify-end gap-4 text-xs font-medium lowercase py-1">
                 <button
                     @click="setLang('en')"
                     class="transition hover:text-red-700 hover:cursor-pointer"
@@ -23,12 +23,135 @@
                 </button>
             </div>
 
-            <div class="flex flex-col lg:flex-row items-center lg:items-end justify-between">
-                <!-- Logo -->
-                <div class="pb-4 lg:pb-8 shrink-0">
+            <div class="flex flex-col lg:flex-row items-center lg:items-end justify-between relative">
+                <!-- Logo i Hamburger -->
+                <div class="flex w-full items-center justify-between lg:w-auto pb-4 lg:pb-8 shrink-0">
                     <Link href="/" class="block">
                         <img src="/images/logo.png" alt="Standard Classic Radio" class="h-24 lg:h-34 w-auto" />
                     </Link>
+
+                    <!-- Hamburger Button -->
+                    <button
+                        @click="isMenuOpen = !isMenuOpen"
+                        class="lg:hidden p-2 text-gray-600 hover:text-red-700 focus:outline-none">
+                        <svg
+                            v-if="!isMenuOpen"
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-8 w-8"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg
+                            v-else
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-8 w-8"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Mobilni Meni -->
+                <div
+                    v-if="isMenuOpen"
+                    class="lg:hidden absolute top-full left-0 right-0 z-[100] bg-white border-t border-gray-100 shadow-xl px-4 py-6 space-y-6">
+                    <!-- Jezici u meniju (u istom redu) -->
+                    <div class="flex justify-center gap-6 text-sm font-medium lowercase border-b border-gray-100 pb-4">
+                        <button
+                            @click="
+                                () => {
+                                    setLang('en')
+                                    isMenuOpen = false
+                                }
+                            "
+                            class="transition hover:text-red-700 hover:cursor-pointer"
+                            :class="{ 'font-bold text-red-700 underline': currentLang === 'en' }">
+                            english
+                        </button>
+                        <button
+                            @click="
+                                () => {
+                                    setLang('de')
+                                    isMenuOpen = false
+                                }
+                            "
+                            class="transition hover:text-red-700 hover:cursor-pointer"
+                            :class="{ 'font-bold text-red-700 underline': currentLang === 'de' }">
+                            deutsch
+                        </button>
+                        <button
+                            @click="
+                                () => {
+                                    setLang('sr')
+                                    isMenuOpen = false
+                                }
+                            "
+                            class="transition hover:text-red-700 hover:cursor-pointer"
+                            :class="{ 'font-bold text-red-700 underline': currentLang === 'sr' }">
+                            srpski
+                        </button>
+                    </div>
+
+                    <nav class="flex flex-col items-center gap-5 capitalize">
+                        <Link
+                            :href="route('program-radija')"
+                            @click="isMenuOpen = false"
+                            class="transition hover:text-red-700"
+                            :class="{ 'text-red-700 font-bold': isActive('program-radija') }">
+                            {{ t('program') }}
+                        </Link>
+                        <Link
+                            :href="route('emisije-na-nasem-radiju')"
+                            @click="isMenuOpen = false"
+                            class="transition hover:text-red-700"
+                            :class="{ 'text-red-700 font-bold': isActive('emisije-na-nasem-radiju') }">
+                            {{ t('shows') }}
+                        </Link>
+                        <Link
+                            :href="route('podkasti-na-standardclassic-radiju')"
+                            @click="isMenuOpen = false"
+                            class="transition hover:text-red-700"
+                            :class="{
+                                'text-red-700 font-bold': isActive('podkasti-na-standardclassic-radiju'),
+                            }">
+                            {{ t('podcasts') }}
+                        </Link>
+                        <Link
+                            :href="route('zasto-postojimo')"
+                            @click="isMenuOpen = false"
+                            class="transition hover:text-red-700"
+                            :class="{ 'text-red-700 font-bold': isActive('zasto-postojimo') }">
+                            {{ t('why_we_exist') }}
+                        </Link>
+                        <Link
+                            :href="route('vijesti-iz-kulture')"
+                            @click="isMenuOpen = false"
+                            class="transition hover:text-red-700"
+                            :class="{ 'text-red-700 font-bold': isActive('vijesti-iz-kulture') }">
+                            {{ t('culture_news') }}
+                        </Link>
+                        <Link
+                            :href="route('vijesti-iz-dnevno-politickog-zivota')"
+                            @click="isMenuOpen = false"
+                            class="transition hover:text-red-700"
+                            :class="{
+                                'text-red-700 font-bold': isActive('vijesti-iz-dnevno-politickog-zivota'),
+                            }">
+                            {{ t('politics_news') }}
+                        </Link>
+                    </nav>
                 </div>
 
                 <!-- Desni blok -->
@@ -141,36 +264,45 @@
                         </div>
                     </div>
 
-                    <nav class="hidden items-center gap-4 xl:gap-8 lg:flex pt-3 font-medium capitalize">
+                    <nav class="hidden items-center gap-4 xl:gap-8 lg:flex pt-3 capitalize">
                         <Link
                             :href="route('program-radija')"
-                            :active="route().current('program-radija')"
-                            class="text-sm xl:text-base transition hover:text-red-700 active:text-red-700">
+                            class="text-sm xl:text-base transition hover:text-red-700"
+                            :class="{ 'text-red-700': isActive('program-radija') }">
                             {{ t('program') }}
                         </Link>
                         <Link
                             :href="route('emisije-na-nasem-radiju')"
-                            class="text-sm xl:text-base transition hover:text-red-700">
+                            class="text-sm xl:text-base transition hover:text-red-700"
+                            :class="{ 'text-red-700': isActive('emisije-na-nasem-radiju') }">
                             {{ t('shows') }}
                         </Link>
                         <Link
                             :href="route('podkasti-na-standardclassic-radiju')"
-                            class="text-sm xl:text-base transition hover:text-red-700">
+                            class="text-sm xl:text-base transition hover:text-red-700"
+                            :class="{
+                                'text-red-700': isActive('podkasti-na-standardclassic-radiju'),
+                            }">
                             {{ t('podcasts') }}
                         </Link>
                         <Link
                             :href="route('zasto-postojimo')"
-                            class="text-sm xl:text-base transition hover:text-red-700">
+                            class="text-sm xl:text-base transition hover:text-red-700"
+                            :class="{ 'text-red-700': isActive('zasto-postojimo') }">
                             {{ t('why_we_exist') }}
                         </Link>
                         <Link
                             :href="route('vijesti-iz-kulture')"
-                            class="text-sm xl:text-base transition hover:text-red-700">
+                            class="text-sm xl:text-base transition hover:text-red-700"
+                            :class="{ 'text-red-700': isActive('vijesti-iz-kulture') }">
                             {{ t('culture_news') }}
                         </Link>
                         <Link
                             :href="route('vijesti-iz-dnevno-politickog-zivota')"
-                            class="text-sm xl:text-base transition hover:text-red-700">
+                            class="text-sm xl:text-base transition hover:text-red-700"
+                            :class="{
+                                'text-red-700': isActive('vijesti-iz-dnevno-politickog-zivota'),
+                            }">
                             {{ t('politics_news') }}
                         </Link>
                     </nav>
@@ -188,7 +320,17 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
 const { t, setLang, currentLang } = useTrans()
 const page = usePage()
+
+const isActive = (routeName) => {
+    // Referenciramo page.url kako bi funkcija postala reaktivna u Vue templateu
+    // i ponovo se izračunala na svaku promjenu Inertia stranice
+    const _ = page.url
+    return route().current(routeName)
+}
+
 const streamUrl = computed(() => page.props.radio?.streamUrl)
+
+const isMenuOpen = ref(false)
 
 watch(
     streamUrl,
