@@ -61,8 +61,14 @@
                     </h2>
                     <p class="text-lg font-medium text-primary-600 dark:text-primary-400 flex items-center gap-2">
                         <x-heroicon-m-user class="w-4 h-4" />
-                        {{ $current?->artist ?? 'StandardClassic' }}
+                        {{ $current?->composer?->name ?? 'Nepoznat kompozitor' }}
                     </p>
+                    @if($current?->artist)
+                        <p class="text-[13px] font-normal text-gray-500 dark:text-gray-400 flex items-center gap-3">
+                            <x-heroicon-m-musical-note class="w-3.5 h-3.5 text-gray-400" />
+                            {{ $current->artist }}
+                        </p>
+                    @endif
                 </div>
             </div>
 
@@ -77,7 +83,7 @@
                             <span class="text-sm font-bold text-gray-700 dark:text-gray-200 line-clamp-1">
                                 {{ $next?->title ?? 'Kraj liste' }}
                             </span>
-                            <span class="text-xs text-gray-500">{{ $next?->artist }}</span>
+                            <span class="text-xs text-gray-500">{{ $next?->composer?->name ?? $next?->artist }}</span>
                         </div>
                     </div>
                 </div>

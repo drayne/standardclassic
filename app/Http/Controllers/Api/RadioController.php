@@ -24,9 +24,14 @@ class RadioController extends Controller
             ]);
         }
 
+        if ($currentTrack instanceof \App\Models\Media) {
+            $currentTrack->load('composer');
+        }
+
         return response()->json([
             'title' => $currentTrack->title,
             'artist' => $currentTrack->artist,
+            'composer_name' => $currentTrack->composer?->name,
             'composer_image' => $currentTrack->composer?->imageUrl,
         ]);
     }
