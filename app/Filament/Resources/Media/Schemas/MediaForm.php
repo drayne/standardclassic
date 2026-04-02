@@ -76,10 +76,14 @@ class MediaForm
 
                                 Select::make('media_type_id')
                                     ->label('Tip medija')
-                                    ->relationship('type', 'name')
+                                    ->options([
+                                        1 => 'Pjesma',
+                                        2 => 'Emisija',
+                                        3 => 'Podkast',
+                                    ])
+                                    ->default(1)
                                     ->required()
-                                    ->native(false)
-                                    ->preload(),
+                                    ->native(false),
 
                                 Select::make('composer_id')
                                     ->label('Kompozitor')
