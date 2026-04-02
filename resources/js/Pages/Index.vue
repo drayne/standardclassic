@@ -106,7 +106,7 @@
                             <div class="mb-4 line-clamp-4 text-sm text-gray-600" v-html="article.content"></div>
                         </div>
                         <button class="text-radio-red text-left text-sm font-bold hover:cursor-pointer">
-                            <span>{{ t('index_page.read_more') }}</span>
+                            <span>{{ t('read_more') }}</span>
                             &rarr;
                         </button>
                     </div>
@@ -119,7 +119,7 @@
             <!-- Daily News -->
             <div>
                 <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide uppercase">
-                    <span class="bg-radio-red mr-3 h-1 w-8"></span>
+                    <span class="bg-radio-red mr-3 h-1 w-8 shrink-0"></span>
                     {{ t('index_page.daily_news') }}
                 </h2>
                 <ul class="mt-6 space-y-4">
@@ -142,7 +142,7 @@
             <!-- Podcasts & Shows -->
             <div>
                 <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide uppercase">
-                    <span class="bg-radio-red mr-3 h-1 w-8"></span>
+                    <span class="bg-radio-red mr-3 h-1 w-8 shrink-0"></span>
                     {{ t('index_page.podcasts_and_shows') }}
                 </h2>
                 <PodcastAljosa v-if="randomPodcastIndex === 1" />

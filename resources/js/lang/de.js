@@ -8,6 +8,8 @@ export default {
     why_we_exist: 'warum wir existieren',
     culture_news: 'Kulturnachrichten',
     politics_news: 'Politiknachrichten',
+    read_more: 'Weiterlesen',
+    back_home: 'Zurück zur Startseite',
     language: {
         sr: 'srpski',
         en: 'english',
@@ -44,13 +46,11 @@ export default {
         read_more_about_us: 'Lesen Sie mehr über uns und unsere Pläne &rarr;',
         culture_news: 'Kulturnachrichten',
         no_image: '[Kein Bild]',
-        read_more: 'Weiterlesen',
         daily_news: 'Nachrichten aus dem täglichen politischen Leben',
         composers: 'Komponisten',
         no_composers: 'Keine Komponisten',
         podcasts_and_shows: 'Podcasts und Sendungen',
         no_articles: 'In dieser Kategorie sind derzeit keine Nachrichten veröffentlicht.',
-        back_home: 'Zurück zur Startseite',
     },
     shows_page: {
         title: 'Sendungen auf unserem Radio',
