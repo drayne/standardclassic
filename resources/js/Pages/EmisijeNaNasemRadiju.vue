@@ -36,15 +36,15 @@ defineOptions({ layout: MainLayout })
                 <div
                     class="mt-12 border-t border-gray-300 pt-8 flex flex-col gap-8 lg:gap-64 lg:flex-row lg:items-center lg:align-middle">
                     <div class="flex flex-col gap-2">
-                        <span class="font-bold">Emisija: Popodne sa Acom Informacijom</span>
+                        <span class="font-bold">{{ t('shows_page.aca_show_name') }}</span>
                         <Link :href="route('popodne-sa-Acom-Informacijom')" class="hover:underline">
                             <span class="font-bold underline">{{ t('shows_page.archive_link') }}</span>
                         </Link>
                     </div>
                     <img
                         src="/images/popodne-sa-acom-informacijom.jpg"
-                        alt="Popodne sa Acom Informacijom"
-                        class="h-72 w-auto" />
+                        :alt="t('aca_podcast.title')"
+                        class="h-auto w-full lg:h-72 lg:w-auto" />
                 </div>
             </div>
         </div>

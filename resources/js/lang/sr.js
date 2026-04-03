@@ -62,6 +62,17 @@ export default {
         p5: '<b>Standard</b> <span class="text-red-700">Classic</span> Radio - <b>Informacija sa mjerom.</b><br />Kultura sa stavom.<br /><b>Program koji raste zajedno sa svojim slušaocima.</b>',
         show_name: 'Emisija: KultExpress',
         archive_link: 'Pogledajte link emisije sa arhivom snimaka',
+        aca_show_name: 'Emisija: Popodne sa Acom Informacijom',
+    },
+    aca_podcast: {
+        title: 'Popodne sa Acom Informacijom',
+        author: 'Autor i voditelj: Aleksandar Stojanović',
+        p1: 'Jedan od prvih autorskih programa koji će se naći u programu radija biće emisija <b>„Popodne sa Acom Informacijom“</b>, koju vodi poznati radijski glas Aca Informacija, odnosno Aleksandar Stojanović iz Beograda. Emisija će se emitovati svakog četvrtka, u opuštenom popodnevnom terminu, namijenjenom svima koji žele da nakon radnog dana čuju zanimljive priče iz svijeta sporta, ali i uživaju u dobroj muzici.',
+        p2: '„Popodne sa Acom Informacijom“ donosi spoj <b>sportskih tema, komentara i analize</b>, ali i lagane atmosfere kroz pažljivo odabranu muziku. Ideja emisije je da sport približi slušaocima na zanimljiv i razgovoran način – bez pretjerane formalnosti, ali uz dovoljno informacija i zanimljivih detalja koji prate domaća i međunarodna sportska dešavanja.',
+        p3: 'Pokretanjem ove emisije, StandardClassic pokazuje namjeru da stvori <b>radio koji je istovremeno informativan, kulturan i zabavan</b>, sa autorima koji imaju prepoznatljiv stil i energiju. U narednom periodu očekuje se i pokretanje drugih autorskih emisija koje će obogatiti program radija i donijeti raznovrsne sadržaje – od kulture i ekonomije do sporta i savremenog društva.',
+        p4: 'Četvrtak popodne biće rezervisan za „Popodne sa Acom Informacijom“ – emisiju o sportu, muzici i dobrim pričama.',
+        short_p:
+            'Svakog četvrtka u opuštenom popodnevnom terminu emituje se emisija koja spaja sportske priče, analize i pažljivo odabranu muziku, pružajući slušaocima informativan i zabavan sadržaj nakon radnog dana.',
     },
     culture_podcast: {
         title: 'Gdje se fura nekultura',
