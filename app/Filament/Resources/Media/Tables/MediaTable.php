@@ -21,7 +21,7 @@ class MediaTable
             ->columns([
                 IconColumn::make('type.name')
                     ->label('Tip')
-                    ->formatStateUsing(fn (string $state): string => match (strtolower($state)) {
+                    ->tooltip(fn (string $state): string => match (strtolower($state)) {
                         'song' => 'Pjesma',
                         'show' => 'Emisija',
                         'podcast' => 'Podkast',
