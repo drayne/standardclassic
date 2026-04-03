@@ -147,13 +147,14 @@
                 </h2>
                 <PodcastAljosa v-if="randomPodcastIndex === 1" />
                 <PodcastMilos v-if="randomPodcastIndex === 2" />
-                <PodcastMilos v-if="randomPodcastIndex === 3" />
+                <PodcastAca v-if="randomPodcastIndex === 3" />
             </div>
         </section>
     </div>
 </template>
 
 <script setup lang="ts">
+import PodcastAca from '@/Components/PodcastAca.vue'
 import PodcastAljosa from '@/Components/PodcastAljosa.vue'
 import PodcastMilos from '@/Components/PodcastMilos.vue'
 import { useTrans } from '@/Composables/useTrans'
