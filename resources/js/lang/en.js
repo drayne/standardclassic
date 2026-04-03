@@ -62,6 +62,17 @@ export default {
         p5: '<b>Standard</b> <span class="text-red-700">Classic</span> Radio - <b>Information with measure.</b><br />Culture with attitude.<br /><b>A program that grows together with its listeners.</b>',
         show_name: 'Show: KultExpress',
         archive_link: 'View the show link with the recordings archive',
+        aca_show_name: 'Show: Popodne sa Acom Informacijom',
+    },
+    aca_podcast: {
+        title: 'Afternoon with Aca Informacija',
+        author: 'Author and host: Aleksandar Stojanović',
+        p1: 'One of the first author programs to be included in the radio schedule will be the show <b>"Afternoon with Aca Informacija"</b>, hosted by the well-known radio voice Aca Informacija, or Aleksandar Stojanović from Belgrade. The show will be broadcast every Thursday, in a relaxed afternoon slot, intended for everyone who wants to hear interesting stories from the world of sports after their workday, but also enjoy good music.',
+        p2: '"Afternoon with Aca Informacija" brings a mix of <b>sports topics, comments, and analysis</b>, but also a relaxed atmosphere through carefully selected music. The idea of the show is to bring sports closer to listeners in an interesting and conversational way – without excessive formality, but with enough information and interesting details that follow domestic and international sports events.',
+        p3: 'By launching this show, StandardClassic shows its intention to create a <b>radio that is simultaneously informative, cultural, and entertaining</b>, with authors who have a recognizable style and energy. In the coming period, the launch of other author shows is expected, which will enrich the radio program and bring diverse content – from culture and economy to sports and contemporary society.',
+        p4: 'Thursday afternoon will be reserved for "Afternoon with Aca Informacija" – a show about sports, music, and good stories.',
+        short_p:
+            'Every Thursday in a relaxed afternoon slot, a show is broadcast that combines sports stories, analysis, and carefully selected music, providing listeners with informative and entertaining content after their workday.',
     },
     culture_podcast: {
         title: 'Where culture meets non-culture',

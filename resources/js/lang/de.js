@@ -62,6 +62,17 @@ export default {
         p5: '<b>Standard</b> <span class="text-red-700">Classic</span> Radio - <b>Information mit Maß.</b><br />Kultur mit Haltung.<br /><b>Ein Programm, das mit seinen Hörern wächst.</b>',
         show_name: 'Sendung: KultExpress',
         archive_link: 'Link zur Sendung mit dem Aufnahmearchiv ansehen',
+        aca_show_name: 'Sendung: Popodne sa Acom Informacijom',
+    },
+    aca_podcast: {
+        title: 'Nachmittag mit Aca Informacija',
+        author: 'Autor und Moderator: Aleksandar Stojanović',
+        p1: 'Eines der ersten Autorenprogramme, die in das Radioprogramm aufgenommen werden, ist die Sendung <b>"Nachmittag mit Aca Informacija"</b>, moderiert von der bekannten Radiostimme Aca Informacija, bzhw. Aleksandar Stojanović aus Belgrad. Die Sendung wird jeden Donnerstag in einem entspannten Nachmittagstermin ausgestrahlt, gedacht für alle, die nach dem Arbeitstag interessante Geschichten aus der Welt des Sports hören, aber auch gute Musik genießen möchten.',
+        p2: '"Nachmittag mit Aca Informacija" bringt eine Mischung aus <b>Sportthemen, Kommentaren und Analysen</b>, aber auch eine entspannte Atmosphäre durch sorgfältig ausgewählte Musik. Die Idee der Sendung ist es, den Sport den Zuhörern auf interessante und gesprächige Weise näher zu bringen – ohne übermäßige Formalität, aber mit genügend Informationen und interessanten Details, die nationale und internationale Sportereignisse begleiten.',
+        p3: 'Mit dem Start dieser Sendung zeigt StandardClassic die Absicht, ein <b>Radio zu schaffen, das gleichzeitig informativ, kulturell und unterhaltsam ist</b>, mit Autoren, die einen erkennbaren Stil und Energie haben. In der kommenden Zeit wird der Start weiterer Autorensendungen erwartet, die das Radioprogramm bereichern i vielfältige Inhalte bringen werden – von Kultur und Wirtschaft bis hin zu Sport und moderner Gesellschaft.',
+        p4: 'Der Donnerstagnachmittag ist für "Nachmittag mit Aca Informacija" reserviert – eine Sendung über Sport, Musik und gute Geschichten.',
+        short_p:
+            'Jeden Donnerstag wird in einem entspannten Nachmittagstermin eine Sendung ausgestrahlt, die Sportgeschichten, Analysen und sorgfältig ausgewählte Musik kombiniert und den Zuhörern nach dem Arbeitstag informative und unterhaltsame Inhalte bietet.',
     },
     culture_podcast: {
         title: 'Wo Kultur auf Unkultur trifft',
