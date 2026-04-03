@@ -56,7 +56,15 @@ class MediaForm
                                         $title = $fileInfo['tags']['id3v2']['title'][0] ?? null;
                                         $artist = $fileInfo['tags']['id3v2']['artist'][0] ?? null;
 
-                                        if ($title) $set('title', $title);
+                                        if ($title) {
+                                            $set('title', $title);
+                                        } else {
+                                            $filename = pathinfo($state->getClientOriginalName(), PATHINFO_FILENAME);
+                                            // Zamjena donjih crta i povlaka razmacima radi ljepšeg prikaza
+                                            $cleanName = str_replace(['_', '-'], ' ', $filename);
+                                            $set('title', ucfirst($cleanName));
+                                        }
+
                                         if ($artist) $set('artist', $artist);
                                     })
                                     ->required()
