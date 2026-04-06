@@ -22,7 +22,11 @@ class IndexController extends Controller
         $kulturaArticles = $this->articleRepository->getLatestKulturaArticles();
         $dpArticles = $this->articleRepository->getLatestDpArticles();
         $coverImages = CoverImage::whereIn('position', ['L', 'R'])->get();
-        $composers = Composer::with(['translations.language'])->inRandomOrder()->get();
+        $composers = Composer::whereNotNull('image')
+            ->whereNotNull('url')
+            ->with(['translations.language'])
+            ->inRandomOrder()
+            ->get();
 
         return Inertia::render('Index', [
             'kulturaArticles' => ArticleResource::collection($kulturaArticles),
