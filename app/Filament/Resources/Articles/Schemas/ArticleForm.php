@@ -72,6 +72,7 @@ class ArticleForm
                                             ->live(onBlur: true),
                                         RichEditor::make('content')
                                             ->label('Sadržaj')
+                                            ->fileAttachmentsDisk('article-images')
                                             ->required()
                                             ->columnSpanFull(),
                                     ])
