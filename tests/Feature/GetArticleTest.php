@@ -43,6 +43,7 @@ class GetArticleTest extends TestCase
 
         $slug = $article->fresh()->slug;
 
+        $this->app->setLocale('sr');
         $response = $this->get(route('vijest', ['slug' => $slug]));
 
         $response->assertStatus(200);
@@ -76,6 +77,28 @@ class GetArticleTest extends TestCase
         ]);
 
         $response = $this->get(route('vijest', ['slug' => 'inactive-vijest']));
+
+        $response->assertStatus(404);
+    }
+
+    public function test_cannot_view_future_article(): void
+    {
+        $category = Category::where('slug', 'vijesti-iz-kulture')->first();
+        if (!$category) {
+            $category = Category::create([
+                'name' => 'Vijesti iz kulture',
+                'slug' => 'vijesti-iz-kulture',
+            ]);
+        }
+
+        Article::create([
+            'category_id' => $category->id,
+            'slug' => 'future-vijest',
+            'active' => true,
+            'published_at' => now()->addDay(),
+        ]);
+
+        $response = $this->get(route('vijest', ['slug' => 'future-vijest']));
 
         $response->assertStatus(404);
     }

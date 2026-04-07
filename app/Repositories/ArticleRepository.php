@@ -37,6 +37,7 @@ class ArticleRepository
             ->where('category_id', $categoryId)
             ->where('active', true)
             ->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
             ->orderBy('published_at', 'desc')
             ->take($count)
             ->get();
