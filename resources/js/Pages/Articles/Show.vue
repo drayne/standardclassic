@@ -54,15 +54,14 @@ defineProps<{
 }
 
 .prose :where(h2):not(:where([class~='not-prose'] *)) {
-    font-size: 1.5em;
+    font-size: 1.3em;
     font-weight: 700;
     margin-top: 2em;
-    margin-bottom: 1em;
     line-height: 1.3333333;
 }
 
 .prose :where(h3):not(:where([class~='not-prose'] *)) {
-    font-size: 1.25em;
+    font-size: 1.1em;
     font-weight: 600;
     margin-top: 1.6em;
     margin-bottom: 0.6em;
