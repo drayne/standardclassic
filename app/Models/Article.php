@@ -22,13 +22,15 @@ class Article extends Model
     {
         static::saved(function (Article $article) {
             if ($article->image && !str_starts_with($article->image, 'http')) {
-                $extension = pathinfo($article->image, PATHINFO_EXTENSION);
+                $pathInfo = pathinfo($article->image);
+                $extension = $pathInfo['extension'] ?? '';
+                $directory = ($pathInfo['dirname'] === '.') ? '' : $pathInfo['dirname'] . '/';
 
                 // Osiguravamo da imamo najsvježiji slug (ako je postavljen u ArticleTranslation)
                 $article->refresh();
 
                 $slug = $article->slug ?: 'article-' . $article->id;
-                $newName = "{$slug}-{$article->id}.{$extension}";
+                $newName = "{$directory}{$slug}-{$article->id}.{$extension}";
 
                 if ($article->image !== $newName) {
                     $disk = Storage::disk('article-images');

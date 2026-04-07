@@ -16,6 +16,7 @@ class GetArticleController extends Controller
             }])
             ->where('active', true)
             ->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
             ->firstOrFail();
 
         return \Inertia\Inertia::render('Articles/Show', [

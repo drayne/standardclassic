@@ -39,6 +39,7 @@ class ArticleForm
                             ->image()
                             ->imageEditor()
                             ->disk('article-images')
+                            ->directory(date('Y/m'))
                             ->columnSpanFull(),
                     ]),
 
@@ -72,6 +73,8 @@ class ArticleForm
                                             ->live(onBlur: true),
                                         RichEditor::make('content')
                                             ->label('Sadržaj')
+                                            ->fileAttachmentsDisk('article-images')
+                                            ->fileAttachmentsDirectory(date('Y/m'))
                                             ->required()
                                             ->columnSpanFull(),
                                     ])

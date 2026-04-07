@@ -23,6 +23,7 @@ class ArticlesController extends Controller
             }])
             ->where('active', true)
             ->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
             ->orderBy('published_at', 'desc')
             ->get();
 
