@@ -78,14 +78,19 @@ class ArticleForm
                                             ->required()
                                             ->columnSpanFull(),
                                     ])
-                                    ->extraAttributes(fn(array $state): array =>
-                                        match(\App\Models\Language::find($state['language_id'] ?? null)?->code) {
-                                            'sr' => ['style' => 'background-color: #f0f7ff; border-left: 4px solid #3b82f6; padding: 1rem; border-radius: 0.5rem;'],
-                                            'de' => ['style' => 'background-color: #fffbeb; border-left: 4px solid #f59e0b; padding: 1rem; border-radius: 0.5rem;'],
-                                            'en' => ['style' => 'background-color: #fef2f2; border-left: 4px solid #ef4444; padding: 1rem; border-radius: 0.5rem;'],
+                                    ->columns(1)
+                                    ->extraAttributes(function (array $state): array {
+                                        $languageId = $state['language_id'] ?? null;
+                                        if (!$languageId) return [];
+
+                                        $language = \App\Models\Language::find($languageId);
+                                        return match($language?->code) {
+                                            'sr' => ['style' => 'background-color: #f0f7ff; border-left: 4px solid #3b82f6; padding: 0.5rem; border-radius: 0.5rem;'],
+                                            'de' => ['style' => 'background-color: #fffbeb; border-left: 4px solid #f59e0b; padding: 0.5rem; border-radius: 0.5rem;'],
+                                            'en' => ['style' => 'background-color: #fef2f2; border-left: 4px solid #ef4444; padding: 0.5rem; border-radius: 0.5rem;'],
                                             default => [],
-                                        }
-                                    ),
+                                        };
+                                    }),
                             ])
                             ->columns(1)
                             ->itemLabel(function (array $state): ?string {
