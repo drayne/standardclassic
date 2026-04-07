@@ -25,10 +25,6 @@ defineOptions({ layout: MainLayout })
                     {{ t('shows_page.p2') }}
                 </p>
 
-                <p class="mb-5">
-                    {{ t('shows_page.p3') }}
-                </p>
-
                 <p class="mb-5" v-html="t('shows_page.p4')"></p>
 
                 <p class="mb-5" v-html="t('shows_page.p5')"></p>
