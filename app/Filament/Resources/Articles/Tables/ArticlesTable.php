@@ -20,7 +20,11 @@ class ArticlesTable
                 TextColumn::make('title')
                     ->label('Naslov')
                     ->getStateUsing(fn ($record) => $record->translations->where('language.code', 'sr')->first()?->title ?? '-')
-                    ->searchable()
+                    ->searchable(query: function ($query, string $search) {
+                        return $query->whereHas('translations', function ($query) use ($search) {
+                            $query->where('title', 'like', "%{$search}%");
+                        });
+                    })
                     ->sortable(),
                 TextColumn::make('category.name')
                     ->label('Kategorija')
