@@ -39,7 +39,7 @@ class ArticleForm
                             ->image()
                             ->imageEditor()
                             ->disk('article-images')
-                            ->directory(date('Y/m'))
+                            ->directory(fn () => date('Y/m'))
                             ->columnSpanFull(),
                     ]),
 
@@ -74,7 +74,7 @@ class ArticleForm
                                         RichEditor::make('content')
                                             ->label('Sadržaj')
                                             ->fileAttachmentsDisk('article-images')
-                                            ->fileAttachmentsDirectory(date('Y/m'))
+                                            ->fileAttachmentsDirectory(fn () => date('Y/m'))
                                             ->required()
                                             ->columnSpanFull(),
                                     ])

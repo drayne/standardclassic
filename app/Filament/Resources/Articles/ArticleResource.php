@@ -34,6 +34,11 @@ class ArticleResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'Vijest';
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['translations.title', 'category.name'];
+    }
+
     public static function form(Schema $schema): Schema
     {
         return ArticleForm::configure($schema);
