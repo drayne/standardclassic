@@ -21,7 +21,7 @@
 
             <div class="prose max-w-none text-gray-800" v-html="article.content"></div>
 
-            <div class="mt-12 border-t border-gray-300 pt-8">
+            <div class="mt-12 clear-both border-t border-gray-300 pt-8">
                 <Link href="/" class="text-radio-red text-sm font-bold hover:underline">
                     &larr; {{ t('back_home') }}
                 </Link>
