@@ -44,3 +44,56 @@ defineProps<{
     article: Article
 }>()
 </script>
+<style scoped>
+.prose :where(h1):not(:where([class~='not-prose'] *)) {
+    font-size: 2.25em;
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 0.8888889em;
+    line-height: 1.1111111;
+}
+
+.prose :where(h2):not(:where([class~='not-prose'] *)) {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    line-height: 1.3333333;
+}
+
+.prose :where(h3):not(:where([class~='not-prose'] *)) {
+    font-size: 1.25em;
+    font-weight: 600;
+    margin-top: 1.6em;
+    margin-bottom: 0.6em;
+    line-height: 1.6;
+}
+
+.prose :where(p):not(:where([class~='not-prose'] *)) {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+}
+
+.prose :where(ul):not(:where([class~='not-prose'] *)) {
+    list-style-type: disc;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    padding-left: 1.625em;
+}
+
+.prose :where(ol):not(:where([class~='not-prose'] *)) {
+    list-style-type: decimal;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    padding-left: 1.625em;
+}
+
+.prose :where(li):not(:where([class~='not-prose'] *)) {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.prose :where(strong):not(:where([class~='not-prose'] *)) {
+    font-weight: 700;
+}
+</style>
