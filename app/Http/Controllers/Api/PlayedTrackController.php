@@ -15,7 +15,7 @@ class PlayedTrackController extends Controller
 {
     public function report(Request $request)
     {
-        Log::info('report');
+        Log::info('Report pustene pjesme');
         $mediaId = $request->get('media_id');
         $typeName = $request->get('type');
 
