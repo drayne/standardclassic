@@ -13,17 +13,24 @@ class ScheduledMediaController extends Controller
 {
     public function check()
     {
-        $now = Carbon::now('UTC')->addHour(); // na silu - jer pogresno cita zonu
+//        $now = Carbon::now('UTC')->addHour(); // na silu - jer pogresno cita zonu
+        $now = Carbon::now(config('app.timezone'));
+
         $startOfWindow = $now->copy()->subMinute();
         $endOfWindow = $now->copy()->addMinute();
 
+        // najranije ce se pustiti minut ranije $endOfWinddow
+        // a pustice i "eventualno" zaostale emisije unazad do 1min
+        // liquidsoap provjerava svakih 10 sekundi
         $schedule = MediaSchedule::whereBetween('scheduled_at', [$startOfWindow, $endOfWindow])
             ->where('played', false)
             ->with('media')
             ->first();
 
-        \Log::info('Provjera sada: ' . $startOfWindow . ' - ' . $endOfWindow);
-        \Log::info($schedule);
+        \Log::info('Provjera scheduled u rasponu: ' . $startOfWindow . ' - ' . $endOfWindow);
+        if ($schedule) {
+            \Log::info($schedule);
+        }
 
         if ($schedule && $schedule->media) {
             CurrentlyPlayingService::setScheduledTrack($schedule->media);
