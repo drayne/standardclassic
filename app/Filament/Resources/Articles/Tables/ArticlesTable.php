@@ -43,6 +43,10 @@ class ArticlesTable
                     ->dateTime()
                     ->sortable(),
             ])
+            ->defaultSort(fn ($query) => $query
+                ->orderByRaw('published_at IS NULL DESC')
+                ->orderBy('published_at', 'desc')
+            )
             ->filters([
                 //
             ])

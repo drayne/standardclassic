@@ -51,13 +51,16 @@ const { t } = useTrans()
                             </Link>
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline">{{ t('footer.live_radio') }}</Link>
+                            <Link :href="route('vijesti-iz-kulture')" class="transition hover:underline">
+                                {{ t('footer.culture_news') }}
+                            </Link>
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline">{{ t('footer.culture_news') }}</Link>
-                        </li>
-                        <li>
-                            <Link href="#" class="transition hover:underline">{{ t('footer.politics_news') }}</Link>
+                            <Link
+                                :href="route('vijesti-iz-dnevno-politickog-zivota')"
+                                class="transition hover:underline">
+                                {{ t('footer.politics_news') }}
+                            </Link>
                         </li>
                     </ul>
                 </div>
