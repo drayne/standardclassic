@@ -16,6 +16,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Width;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -40,6 +41,7 @@ class AdminPanelProvider extends PanelProvider
             ->darkMode(false)
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login(Login::class)
+            ->maxContentWidth(Width::Full)
             ->colors([
                 'primary' => Color::Red,
             ])
