@@ -49,6 +49,17 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        $user = Auth::user();
+        $allowedEmails = explode(',', config('auth.allowed_admin_emails'));
+
+        if (! in_array($user->email, $allowedEmails)) {
+            Auth::logout();
+
+            throw ValidationException::withMessages([
+                'email' => 'Vaš nalog nema dozvolu za pristup.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 
