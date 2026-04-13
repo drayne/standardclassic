@@ -50,7 +50,7 @@ class LoginRequest extends FormRequest
         }
 
         $user = Auth::user();
-        $allowedEmails = explode(',', env('ALLOWED_ADMIN_EMAILS', ''));
+        $allowedEmails = explode(',', config('auth.allowed_admin_emails'));
 
         if (! in_array($user->email, $allowedEmails)) {
             Auth::logout();
