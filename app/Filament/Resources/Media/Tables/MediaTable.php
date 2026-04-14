@@ -2,16 +2,19 @@
 
 namespace App\Filament\Resources\Media\Tables;
 
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 
 class MediaTable
 {
@@ -59,6 +62,25 @@ class MediaTable
                 //
             ])
             ->recordActions([
+                Action::make('play')
+                    ->label('')
+                    ->icon('heroicon-o-play-circle')
+                    ->color('primary')
+                    ->tooltip('Preslušaj')
+                    ->iconButton()
+                    ->modalHeading(fn ($record) => "Preslušavanje: {$record->title}")
+                    ->modalSubmitAction(false)
+                    ->modalCancelActionLabel('Zatvori')
+                    ->modalContent(fn ($record) => new HtmlString(
+                        Blade::render('
+                            <div class="flex flex-col items-center justify-center p-4">
+                                <audio controls autoplay class="w-full">
+                                    <source src="{{ route(\'media.stream\', $record) }}" type="audio/mpeg">
+                                    Vaš pretraživač ne podržava audio element.
+                                </audio>
+                            </div>
+                        ', ['record' => $record])
+                    )),
                 ViewAction::make()
                     ->icon('heroicon-o-eye')
                     ->iconButton()
