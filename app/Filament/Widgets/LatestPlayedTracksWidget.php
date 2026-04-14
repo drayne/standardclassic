@@ -4,8 +4,11 @@ namespace App\Filament\Widgets;
 
 use App\Models\PlayedTrack;
 use Filament\Tables;
+use Filament\Actions\Action;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 
 class LatestPlayedTracksWidget extends BaseWidget
 {
@@ -67,7 +70,24 @@ class LatestPlayedTracksWidget extends BaseWidget
                             ->badge()
                             ->color('gray')
                             ->icon('heroicon-m-play')
-                            ->alignEnd(),
+                            ->iconColor('danger')
+                            ->alignEnd()
+                            ->action(
+                                Action::make('play_column')
+                                    ->modalHeading(fn ($record) => "Preslušavanje: {$record->media->title}")
+                                    ->modalSubmitAction(false)
+                                    ->modalCancelActionLabel('Zatvori')
+                                    ->modalContent(fn ($record) => new HtmlString(
+                                        Blade::render('
+                                            <div class="flex flex-col items-center justify-center p-4">
+                                                <audio controls autoplay class="w-full">
+                                                    <source src="{{ route(\'media.stream\', $record->media) }}" type="audio/mpeg">
+                                                    Vaš pretraživač ne podržava audio element.
+                                                </audio>
+                                            </div>
+                                        ', ['record' => $record])
+                                    )),
+                            ),
                     ])->grow(false),
                 ]),
             ])
