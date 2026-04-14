@@ -60,6 +60,8 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        $user->logActivity('Prijavljen u sistem');
+
         RateLimiter::clear($this->throttleKey());
     }
 

@@ -11,9 +11,14 @@ class LatestPlayedTracksWidget extends BaseWidget
 {
     protected static ?string $pollingInterval = '10s';
 
-    protected static ?int $sort = 1;
+    protected static ?int $sort = 3;
 
     protected int | string | array $columnSpan = 2;
+
+    protected function getTableContentHeight(): ?string
+    {
+        return '450px';
+    }
 
     public function table(Table $table): Table
     {
@@ -69,6 +74,12 @@ class LatestPlayedTracksWidget extends BaseWidget
             ->paginated(false)
             ->header(null)
             ->heading('Poslednje reprodukovano')
-            ->emptyStateHeading('Nema reprodukovanih');
+            ->emptyStateHeading('Nema reprodukovanih')
+            ->extraAttributes([
+                'class' => 'h-full flex-1 flex flex-col [&_div.fi-ta-content]:flex-1 [&_div.fi-ta-content]:flex [&_div.fi-ta-content]:flex-col [&_div.fi-ta-ctn]:flex-1 [&_div.fi-ta-ctn]:flex [&_div.fi-ta-ctn]:flex-col',
+            ])
+            ->contentGrid([
+                'default' => 1,
+            ]);
     }
 }

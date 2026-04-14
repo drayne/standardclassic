@@ -3,7 +3,7 @@
 
     <div class="pb-6">
         <article>
-            <div v-if="article.image" class="mb-8 ml-12 w-full float-right sm:w-1/2 md:w-3/7">
+            <div v-if="article.image" class="mb-8 ml-12 hidden w-full float-right sm:block sm:w-1/2 md:w-3/7">
                 <img
                     :src="article.image"
                     :alt="article.title || ''"
@@ -17,6 +17,13 @@
             <div class="mb-6 flex items-center text-sm text-gray-600">
                 <span class="bg-radio-red mr-3 h-1 w-8"></span>
                 {{ article.published_at }}
+            </div>
+
+            <div v-if="article.image" class="mb-6 w-full sm:hidden">
+                <img
+                    :src="article.image"
+                    :alt="article.title || ''"
+                    class="h-auto w-full rounded-sm object-cover shadow-sm" />
             </div>
 
             <div class="prose max-w-none text-gray-800" v-html="article.content"></div>

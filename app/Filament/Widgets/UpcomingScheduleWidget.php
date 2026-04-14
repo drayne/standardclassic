@@ -15,6 +15,11 @@ class UpcomingScheduleWidget extends BaseWidget
 
     protected int | string | array $columnSpan = 2;
 
+    protected function getTableContentHeight(): ?string
+    {
+        return '450px';
+    }
+
     public function table(Table $table): Table
     {
         return $table
@@ -72,6 +77,13 @@ class UpcomingScheduleWidget extends BaseWidget
             ->paginated(false)
             ->header(null)
             ->heading('Predstojeće zakazane emisije')
-            ->emptyStateHeading('Nema zakazanih emisija');
+            ->emptyStateHeading('Nema zakazanih emisija')
+            ->emptyStateDescription('Trenutno nema emisija u rasporedu.')
+            ->extraAttributes([
+                'class' => 'h-full flex-1 flex flex-col [&_div.fi-ta-content]:flex-1 [&_div.fi-ta-content]:flex [&_div.fi-ta-content]:flex-col [&_div.fi-ta-ctn]:flex-1 [&_div.fi-ta-ctn]:flex [&_div.fi-ta-ctn]:flex-col',
+            ])
+            ->contentGrid([
+                'default' => 1,
+            ]);
     }
 }

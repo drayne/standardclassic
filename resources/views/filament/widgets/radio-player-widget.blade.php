@@ -1,5 +1,5 @@
-<x-filament-widgets::widget>
-    <x-filament::section class="overflow-hidden">
+<x-filament-widgets::widget class="h-full flex flex-col">
+    <x-filament::section class="flex-1 flex flex-col" content-class="flex-1 flex flex-col justify-center min-h-[450px]">
         @php
             // Provjera da li je Liquidsoap aktivan (koristimo istu logiku kao u ServiceStatusWidget-u)
             // Timeout je postavljen na veoma nisko (0.2s) da ne bi kočio renderovanje stranice
@@ -11,7 +11,7 @@
         @endphp
 
         {{-- Glavni kontejner sa pollingom na 5 sekundi --}}
-        <div class="flex flex-col lg:flex-row items-center justify-between gap-8 py-4 px-2" wire:poll.5s>
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-8 py-4 px-2 flex-1 w-full" wire:poll.5s>
 
             <div class="flex items-center gap-6 flex-1 w-full lg:w-auto">
                 <div class="relative group">

@@ -14,8 +14,9 @@ class Dashboard extends \Filament\Pages\Dashboard
         return [
             \App\Filament\Widgets\ServiceStatusWidget::class,
             \App\Filament\Widgets\RadioPlayerWidget::class,
-            \App\Filament\Widgets\LatestPlayedTracksWidget::class,
             \App\Filament\Widgets\UpcomingScheduleWidget::class,
+            \App\Filament\Widgets\LatestPlayedTracksWidget::class,
+            \App\Filament\Widgets\ActivityLogWidget::class,
         ];
     }
 

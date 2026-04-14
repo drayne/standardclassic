@@ -10,6 +10,8 @@ class ServiceStatusWidget extends StatsOverviewWidget
 {
     protected ?string $pollingInterval = 'everyMinute';
 
+    protected static ?int $sort = 0;
+
     protected int | string | array $columnSpan = [
         'lg' => 4,
     ];

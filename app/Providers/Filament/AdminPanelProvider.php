@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Dashboard;
+use App\Filament\Widgets\ActivityLogWidget;
 use App\Filament\Widgets\LatestPlayedTracksWidget;
 use App\Filament\Widgets\RadioPlayerWidget;
 use App\Filament\Widgets\RadioStatusWidget;
@@ -60,6 +61,7 @@ class AdminPanelProvider extends PanelProvider
                 RadioPlayerWidget::class,
                 LatestPlayedTracksWidget::class,
                 UpcomingScheduleWidget::class,
+                ActivityLogWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
