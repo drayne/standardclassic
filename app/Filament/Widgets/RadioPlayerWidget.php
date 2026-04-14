@@ -13,12 +13,15 @@ use Filament\Notifications\Notification;
 class RadioPlayerWidget extends Widget
 {
     protected string $view = 'filament.widgets.radio-player-widget';
-    protected int | string | array $columnSpan = [
-        'md' => 4,
-        'xl' => 4,
-    ];
+    protected int | string | array $columnSpan = 2;
 
-    // Ovo će natjerati widget da se osvježi bez reload-a stranice
+    protected static ?int $sort = 1;
+
+    protected function getTableContentHeight(): ?string
+    {
+        return '450px';
+    }
+
     protected static ?string $pollingInterval = '5s';
 
     // Koristićemo javna polja ili getData metodu

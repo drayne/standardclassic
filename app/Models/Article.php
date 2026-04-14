@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\LogsActivity;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,6 +19,8 @@ use Illuminate\Support\Str;
  */
 class Article extends Model
 {
+    use LogsActivity;
+
     protected static function booted(): void
     {
         static::saved(function (Article $article) {
