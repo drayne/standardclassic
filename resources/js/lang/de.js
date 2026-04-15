@@ -6,7 +6,7 @@ export default {
     program: 'Programm',
     shows: 'Sendungen',
     podcasts: 'Podcasts',
-    why_we_exist: 'warum wir existieren',
+    why_we_exist: 'Warum wir existieren',
     culture_news: 'Kulturnachrichten',
     politics_news: 'Politiknachrichten',
     read_more: 'Weiterlesen',
