@@ -30,6 +30,30 @@ class MediaRelationManager extends RelationManager
             ->recordTitleAttribute('title')
 
             ->columns([
+                Tables\Columns\IconColumn::make('type.name')
+                    ->label('Tip')
+                    ->tooltip(fn (string $state): string => match (strtolower($state)) {
+                        'song' => 'Pjesma',
+                        'show' => 'Emisija',
+                        'podcast' => 'Podkast',
+                        'jingle' => 'Džingl',
+                        default => $state,
+                    })
+                    ->icon(fn (string $state): string => match (strtolower($state)) {
+                        'song' => 'heroicon-o-musical-note',
+                        'show' => 'heroicon-o-microphone',
+                        'podcast' => 'heroicon-o-megaphone',
+                        'jingle' => 'heroicon-o-bolt',
+                        default => 'heroicon-o-question-mark-circle',
+                    })
+                    ->color(fn (string $state): string => match (strtolower($state)) {
+                        'song' => 'primary',
+                        'show' => 'success',
+                        'podcast' => 'warning',
+                        'jingle' => 'info',
+                        default => 'gray',
+                    }),
+
                 Tables\Columns\ImageColumn::make('composer.image')
                     ->label('Slika kompozitora')
                     ->disk('composer-images')

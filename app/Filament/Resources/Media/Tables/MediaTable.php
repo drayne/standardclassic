@@ -35,7 +35,7 @@ class MediaTable
                         'song' => 'heroicon-o-musical-note',
                         'show' => 'heroicon-o-microphone',
                         'podcast' => 'heroicon-o-megaphone',
-                        'jingle' => 'heroicon-o-sparkles',
+                        'jingle' => 'heroicon-o-bolt',
                         default => 'heroicon-o-question-mark-circle',
                     })
                     ->color(fn (string $state): string => match (strtolower($state)) {
