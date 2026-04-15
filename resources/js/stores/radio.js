@@ -2,6 +2,8 @@ import { reactive } from 'vue'
 
 export const radioStore = reactive({
     isPlaying: false,
+    isLoading: false,
+    isFetching: false,
     isMuted: false,
     volume: localStorage.getItem('radioVolume') ? parseFloat(localStorage.getItem('radioVolume')) : 0.7,
     previousVolume: 0.7,
@@ -33,6 +35,18 @@ export const radioStore = reactive({
                 if (this.isPlaying) {
                     console.error('Greška na audio strimu, pokušavam ponovno povezivanje za 3s...')
                     setTimeout(() => this.recover(), 3000)
+                }
+            })
+
+            // Kada audio zapravo počne da se emituje (baferovanje završeno)
+            this.audio.addEventListener('playing', () => {
+                this.isLoading = false
+            })
+
+            // Alternativni događaj ako 'playing' kasni
+            this.audio.addEventListener('canplay', () => {
+                if (this.isLoading && this.isPlaying) {
+                    this.isLoading = false
                 }
             })
         }
@@ -84,29 +98,37 @@ export const radioStore = reactive({
             this.audio.src = ''
             this.audio.load()
             this.isPlaying = false
+            this.isLoading = false
         } else {
+            this.isLoading = true
+            this.isPlaying = true // Odmah mijenjamo stanje da UI reaguje
             this.audio.src = this.streamUrl
             this.audio
                 .play()
                 .then(() => {
                     this.audio.volume = this.volume
-                    this.isPlaying = true
                 })
                 .catch((error) => {
                     console.error('Autoplay blokiran ili greška:', error)
                     this.isPlaying = false
+                    this.isLoading = false
                 })
         }
     },
 
     async fetchCurrentTrack() {
+        if (this.isFetching) return
+
+        this.isFetching = true
         try {
             const response = await fetch('/api/radio/current')
             if (response.ok) {
                 this.currentTrack = await response.json()
             }
         } catch (error) {
-            console.error('Greška pri dohvaćanju trenutne pjesme:', error)
+            console.error('Greška pri pribavljanju informacija o trenutnoj pjesmi:', error)
+        } finally {
+            this.isFetching = false
         }
     },
 })
