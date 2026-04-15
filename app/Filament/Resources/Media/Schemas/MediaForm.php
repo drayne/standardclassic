@@ -88,6 +88,7 @@ class MediaForm
                                         1 => 'Pjesma',
                                         2 => 'Emisija',
                                         3 => 'Podkast',
+                                        4 => 'Džingl',
                                     ])
                                     ->default(1)
                                     ->required()

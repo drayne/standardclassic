@@ -28,18 +28,21 @@ class MediaTable
                         'song' => 'Pjesma',
                         'show' => 'Emisija',
                         'podcast' => 'Podkast',
+                        'jingle' => 'Džingl',
                         default => $state,
                     })
                     ->icon(fn (string $state): string => match (strtolower($state)) {
                         'song' => 'heroicon-o-musical-note',
                         'show' => 'heroicon-o-microphone',
                         'podcast' => 'heroicon-o-megaphone',
+                        'jingle' => 'heroicon-o-bolt',
                         default => 'heroicon-o-question-mark-circle',
                     })
                     ->color(fn (string $state): string => match (strtolower($state)) {
                         'song' => 'primary',
                         'show' => 'success',
                         'podcast' => 'warning',
+                        'jingle' => 'info',
                         default => 'gray',
                     })
                     ->sortable(),

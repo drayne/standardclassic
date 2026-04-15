@@ -33,7 +33,8 @@ class Media extends Model
     public function playlists(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Playlist::class, 'playlist_media')
-            ->withPivot('sort_order');
+            ->using(PlaylistMedia::class)
+            ->withPivot(['id', 'sort_order']);
     }
 
     protected static function booted(): void

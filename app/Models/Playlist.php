@@ -15,8 +15,9 @@ class Playlist extends Model
     public function media(): BelongsToMany
     {
         return $this->belongsToMany(Media::class, 'playlist_media')
-            ->withPivot('sort_order')
-            ->orderBy('playlist_media.sort_order');
+            ->using(PlaylistMedia::class)
+            ->withPivot(['id', 'sort_order'])
+            ->orderBy('sort_order');
     }
 
     protected function casts(): array
