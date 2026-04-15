@@ -49,6 +49,21 @@ export const radioStore = reactive({
                     this.isLoading = false
                 }
             })
+
+            // Sinhronizacija sa sistemskim kontrolama (tastatura, bluetooth, itd.)
+            this.audio.addEventListener('pause', () => {
+                // Ako je audio pauziran van togglePlay funkcije (npr. tastaturom)
+                if (this.isPlaying) {
+                    this.isPlaying = false
+                }
+            })
+
+            this.audio.addEventListener('play', () => {
+                // Ako je audio pokrenut van togglePlay funkcije
+                if (!this.isPlaying) {
+                    this.isPlaying = true
+                }
+            })
         }
     },
 
