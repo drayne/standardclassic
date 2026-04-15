@@ -1,6 +1,7 @@
 export default {
     currently_on_air: 'trenutno na programu',
     listen_live: 'slušaj uživo',
+    starting: 'pokrećemo',
     pause: 'pauziraj',
     program: 'program',
     shows: 'emisije',

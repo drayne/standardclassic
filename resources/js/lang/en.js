@@ -1,6 +1,7 @@
 export default {
     currently_on_air: 'currently on air',
     listen_live: 'listen live',
+    starting: 'starting',
     pause: 'pause',
     program: 'program',
     shows: 'shows',

@@ -1,6 +1,7 @@
 export default {
     currently_on_air: 'aktuell auf Sendung',
     listen_live: 'live hören',
+    starting: 'starten',
     pause: 'pause',
     program: 'Programm',
     shows: 'Sendungen',
