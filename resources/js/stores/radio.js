@@ -19,6 +19,36 @@ export const radioStore = reactive({
             this.audio = new Audio()
             this.audio.preload = 'none'
             this.audio.volume = this.volume
+
+            // Ako strim stane zbog baferovanja
+            this.audio.addEventListener('stalled', () => {
+                if (this.isPlaying) {
+                    console.warn('Strim je stao (stalled), pokušavam oporavak...')
+                    this.recover()
+                }
+            })
+
+            // U slučaju bilo kakve greške na mreži/izvoru
+            this.audio.addEventListener('error', () => {
+                if (this.isPlaying) {
+                    console.error('Greška na audio strimu, pokušavam ponovno povezivanje za 3s...')
+                    setTimeout(() => this.recover(), 3000)
+                }
+            })
+        }
+    },
+
+    recover() {
+        if (!this.audio || !this.streamUrl) return
+        const wasPlaying = this.isPlaying
+
+        this.audio.pause()
+        this.audio.src = '' // Čišćenje bafera
+        this.audio.load()
+
+        if (wasPlaying) {
+            this.audio.src = this.streamUrl
+            this.audio.play().catch((e) => console.error('Oporavak nije uspio:', e))
         }
     },
 
@@ -60,11 +90,12 @@ export const radioStore = reactive({
                 .play()
                 .then(() => {
                     this.audio.volume = this.volume
+                    this.isPlaying = true
                 })
                 .catch((error) => {
-                    console.error('Greška pri pokretanju radija:', error)
+                    console.error('Autoplay blokiran ili greška:', error)
+                    this.isPlaying = false
                 })
-            this.isPlaying = true
         }
     },
 
