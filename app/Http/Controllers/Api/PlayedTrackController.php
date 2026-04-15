@@ -31,7 +31,11 @@ class PlayedTrackController extends Controller
             ]);
 
             // 3. Ažuriranje keša (za "Now Playing" widget)
-            Cache::put(TrackOrder::CURRENT_TRACK, $media);
+            $trackData = [
+                'id' => $media->id,
+                'pivot_id' => null, // Ovdje nemamo pivot_id jer je report sa radija
+            ];
+            Cache::put(TrackOrder::CURRENT_TRACK, $trackData);
 
             \Log::info("Radio: Potvrđeno puštanje - {$media->title} [Tip: {$type->name}]");
 

@@ -15,17 +15,23 @@ class RadioController extends Controller
 {
     public function getCurrentTrack()
     {
-        $currentTrack = Cache::get(TrackOrder::CURRENT_TRACK);
+        $currentTrackData = Cache::get(TrackOrder::CURRENT_TRACK);
 
-        if (!$currentTrack instanceof Media) {
+        if (!$currentTrackData) {
             return response()->json([
                 'title' => 'Standard',
                 'artist' => 'Classic'
             ]);
         }
 
-        if ($currentTrack instanceof \App\Models\Media) {
-            $currentTrack->load('composer');
+        $mediaId = is_array($currentTrackData) ? $currentTrackData['id'] : $currentTrackData->id;
+        $currentTrack = Media::with('composer')->find($mediaId);
+
+        if (!$currentTrack) {
+            return response()->json([
+                'title' => 'Standard',
+                'artist' => 'Classic'
+            ]);
         }
 
         return response()->json([
@@ -46,32 +52,36 @@ class RadioController extends Controller
             return $this->fallbackResponse();
         }
 
-        // 2. Odredi sort_order i ID zadnje pjesme
-        $lastTrackInQueue = Cache::get(TrackOrder::NEXT_TRACK);
+        // 2. Odredi sort_order i pivot_id zadnje pjesme
+        $lastTrackData = Cache::get(TrackOrder::NEXT_TRACK);
         $lastPlayedSortOrder = -1;
-        $lastPlayedId = -1;
+        $lastPlayedPivotId = -1;
 
-        if ($lastTrackInQueue) {
-            $found = $playlist->media->firstWhere('id', $lastTrackInQueue->id);
-            if ($found && isset($found->pivot->sort_order)) {
-                $lastPlayedSortOrder = $found->pivot->sort_order;
-                $lastPlayedId = $found->id;
+        if ($lastTrackData && is_array($lastTrackData)) {
+            $pivotId = $lastTrackData['pivot_id'] ?? null;
+
+            if ($pivotId) {
+                $found = $playlist->media->first(fn($item) => $item->pivot->id == $pivotId);
+                if ($found) {
+                    $lastPlayedSortOrder = $found->pivot->sort_order;
+                    $lastPlayedPivotId = $found->pivot->id;
+                }
             }
         }
 
         // 3. Pronađi sledeću pesmu
         // Prvo tražimo pesmu sa većim sort_orderom
-        // Ili sa istim sort_orderom ali većim ID-jem (da pokrijemo slučaj kada su svi 0)
+        // Ili sa istim sort_orderom ali većim pivot ID-jem (da pokrijemo slučaj kada su svi 0)
         $nextItem = $playlist->media
-            ->filter(function ($item) use ($lastPlayedSortOrder, $lastPlayedId) {
+            ->filter(function ($item) use ($lastPlayedSortOrder, $lastPlayedPivotId) {
                 $currentSortOrder = $item->pivot->sort_order;
-                $currentId = $item->id;
+                $currentPivotId = $item->pivot->id;
 
                 if ($currentSortOrder > $lastPlayedSortOrder) {
                     return true;
                 }
 
-                if ($currentSortOrder == $lastPlayedSortOrder && $currentId > $lastPlayedId) {
+                if ($currentSortOrder == $lastPlayedSortOrder && $currentPivotId > $lastPlayedPivotId) {
                     return true;
                 }
 
@@ -79,16 +89,16 @@ class RadioController extends Controller
             })
             ->sortBy([
                 ['pivot.sort_order', 'asc'],
-                ['id', 'asc'],
+                ['pivot.id', 'asc'],
             ])
             ->first();
 
-        // 4. Cirkularna logika - ako nema sledeće, uzmi prvu po sort_orderu i ID-u
+        // 4. Cirkularna logika - ako nema sledeće, uzmi prvu po sort_orderu i pivot ID-u
         if (!$nextItem) {
             $nextItem = $playlist->media
                 ->sortBy([
                     ['pivot.sort_order', 'asc'],
-                    ['id', 'asc'],
+                    ['pivot.id', 'asc'],
                 ])
                 ->first();
         }

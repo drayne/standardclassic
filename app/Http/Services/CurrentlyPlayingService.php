@@ -12,11 +12,17 @@ class CurrentlyPlayingService
     {
         $wasNext = Cache::get(TrackOrder::NEXT_TRACK);
 
-        if ($wasNext instanceof Media) {
+        if ($wasNext) {
             Cache::put(TrackOrder::CURRENT_TRACK, $wasNext);
         }
 
-        Cache::put(TrackOrder::NEXT_TRACK, $newTrack);
+        // Čuvamo media_id i pivot_id (id u playlist_media tabeli)
+        $trackData = [
+            'id' => $newTrack->id,
+            'pivot_id' => $newTrack->pivot?->id,
+        ];
+
+        Cache::put(TrackOrder::NEXT_TRACK, $trackData);
     }
 
     /**
@@ -27,6 +33,11 @@ class CurrentlyPlayingService
      */
     public static function setScheduledTrack(Media $media): void
     {
-        Cache::put(TrackOrder::CURRENT_TRACK, $media);
+        $trackData = [
+            'id' => $media->id,
+            'pivot_id' => $media->pivot?->id,
+        ];
+
+        Cache::put(TrackOrder::CURRENT_TRACK, $trackData);
     }
 }

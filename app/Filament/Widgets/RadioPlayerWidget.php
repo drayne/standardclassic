@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Enums\TrackOrder;
+use App\Models\Media;
 use App\Models\Playlist;
 use App\Http\Services\RadioService;
 use Filament\Widgets\Widget;
@@ -27,19 +28,22 @@ class RadioPlayerWidget extends Widget
     // Koristićemo javna polja ili getData metodu
     protected function getViewData(): array
     {
-        // Samo čitamo trenutne vrijednosti, ne mijenjamo ih!
-        $currentTrack = Cache::get(TrackOrder::CURRENT_TRACK);
-        $nextTrack = Cache::get(TrackOrder::NEXT_TRACK);
+        // Sada su u kešu asocijativni nizovi [id => ..., pivot_id => ...]
+        $currentTrackData = Cache::get(TrackOrder::CURRENT_TRACK);
+        $nextTrackData = Cache::get(TrackOrder::NEXT_TRACK);
 
-        if ($currentTrack instanceof \App\Models\Media) {
-            $currentTrack->load('composer');
+        $currentTrack = null;
+        if ($currentTrackData) {
+            $currentId = is_array($currentTrackData) ? $currentTrackData['id'] : $currentTrackData->id;
+            $currentTrack = Media::with('composer')->find($currentId);
         }
 
-        if ($nextTrack instanceof \App\Models\Media) {
-            $nextTrack->load('composer');
+        $nextTrack = null;
+        if ($nextTrackData) {
+            $nextId = is_array($nextTrackData) ? $nextTrackData['id'] : $nextTrackData->id;
+            $nextTrack = Media::with('composer')->find($nextId);
         }
 
-//        $playlist = \App\Models\Playlist::where('active', true)->first();
         $source = config('radio.icecast_stream_url');
         return [
             'current' => $currentTrack,
