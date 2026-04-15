@@ -73,7 +73,14 @@ class MediaRelationManager extends RelationManager
 
             ->headerActions([
                 AttachAction::make()
-                    ->label('Dodaj na plejlistu')
+                    ->label('Dodaj na listu')
+                    ->modalHeading('Dodaj na listu')
+                    ->modalSubmitActionLabel('Dodaj')
+                    ->attachAnother()
+                    ->extraModalFooterActions(fn (AttachAction $action): array => [
+                        $action->makeModalSubmitAction('attachAnother', arguments: ['another' => true])
+                            ->label('Dodaj i dodaj još jedan'),
+                    ])
                     ->modalWidth('xl')
                     ->preloadRecordSelect()
                     ->form(fn (AttachAction $action): array => [
