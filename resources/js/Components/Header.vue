@@ -104,7 +104,7 @@
                         </button>
                     </div>
 
-                    <nav class="flex flex-col items-center gap-5 capitalize">
+                    <nav class="flex flex-col items-center gap-5">
                         <Link
                             :href="route('program-radija')"
                             @click="isMenuOpen = false"
@@ -285,7 +285,7 @@
                         </div>
                     </div>
 
-                    <nav class="hidden items-center gap-4 xl:gap-8 lg:flex pt-3 capitalize">
+                    <nav class="hidden items-center gap-4 xl:gap-8 lg:flex pt-3">
                         <Link
                             :href="route('program-radija')"
                             class="text-sm xl:text-base transition hover:text-red-700"
