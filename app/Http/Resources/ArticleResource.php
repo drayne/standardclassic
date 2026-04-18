@@ -26,6 +26,8 @@ class ArticleResource extends JsonResource
             'title' => $translation?->title,
             'content' => $translation?->content,
             'image' => $this->image_url,
+            'image_source' => $this->image_source,
+            'article_source' => $this->article_source,
             'published_at' => $this->published_at?->translatedFormat('d. F Y.'),
         ];
     }

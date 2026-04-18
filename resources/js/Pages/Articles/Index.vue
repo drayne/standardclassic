@@ -9,12 +9,13 @@
 
         <div class="grid grid-cols-1 gap-12">
             <div v-for="article in articles" :key="article.id" class="flex flex-col md:flex-row overflow-hidden">
-                <div class="h-64 md:w-2/5 shrink-0">
+                <div class="h-64 md:w-2/5 shrink-0 overflow-hidden">
                     <img
                         v-if="article.image"
                         :src="article.image"
                         :alt="article.title || ''"
-                        class="h-full w-full object-cover" />
+                        class="h-full w-full object-cover hover:scale-105 transition-transform duration-600 hover:cursor-pointer"
+                        @click="$inertia.visit(route('vijest', { slug: article.slug }))" />
                     <div v-else class="flex h-full items-center justify-center">
                         <p class="text-xs text-gray-400 italic">[Nema slike]</p>
                     </div>
@@ -24,7 +25,7 @@
                         <Link
                             :href="route('vijest', { slug: article.slug })"
                             class="hover:text-radio-red text-base font-medium transition">
-                            <h3 class="mb-1 line-clamp-2 text-xl font-bold" :title="article.title">
+                            <h3 class="mb-1 line-clamp-2 text-xl font-bold" :title="article.title || ''">
                                 {{ article.title }}
                             </h3>
                         </Link>
