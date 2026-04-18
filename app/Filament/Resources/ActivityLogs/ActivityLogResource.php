@@ -61,6 +61,9 @@ class ActivityLogResource extends Resource
                     ->formatStateUsing(function (string $state): string {
                         $resource = str_replace('App\\Models\\', '', $state);
                         return match ($resource) {
+                            'Article' => 'Vijest',
+                            'Category' => 'Kategorija',
+                            'Composer' => 'Kompozitor',
                             'Media' => 'Medij',
                             'MediaSchedule' => 'Zakazana emisija',
                             'Playlist' => 'Plejlista',
@@ -86,6 +89,9 @@ class ActivityLogResource extends Resource
                             ->mapWithKeys(function ($type) {
                                 $resource = str_replace('App\\Models\\', '', $type);
                                 $translated = match ($resource) {
+                                    'Article' => 'Vijest',
+                                    'Category' => 'Kategorija',
+                                    'Composer' => 'Kompozitor',
                                     'Media' => 'Medij',
                                     'MediaSchedule' => 'Zakazana emisija',
                                     'Playlist' => 'Plejlista',

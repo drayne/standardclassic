@@ -60,6 +60,9 @@ class ActivityLogWidget extends BaseWidget
                             ->formatStateUsing(function (string $state): string {
                                 $resource = str_replace('App\\Models\\', '', $state);
                                 $translated = match ($resource) {
+                                    'Article' => 'Vijest',
+                                    'Category' => 'Kategorija',
+                                    'Composer' => 'Kompozitor',
                                     'Media' => 'Medij',
                                     'MediaSchedule' => 'Zakazana emisija',
                                     'Playlist' => 'Plejlista',
