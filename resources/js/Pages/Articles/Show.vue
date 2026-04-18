@@ -8,6 +8,9 @@
                     :src="article.image"
                     :alt="article.title || ''"
                     class="h-auto w-full rounded-sm object-cover shadow-sm" />
+                <div v-if="article.image_source" class="mt-1 text-right text-xs font-bold text-gray-500 italic">
+                    {{ t('photo') }}: {{ article.image_source }}
+                </div>
             </div>
 
             <h1 class="mb-4 text-3xl font-bold leading-tight md:text-4xl">
@@ -24,9 +27,16 @@
                     :src="article.image"
                     :alt="article.title || ''"
                     class="h-auto w-full rounded-sm object-cover shadow-sm" />
+                <div v-if="article.image_source" class="mt-1 text-right text-xs font-bold text-gray-500 italic">
+                    {{ t('photo') }}: {{ article.image_source }}
+                </div>
             </div>
 
             <div class="prose max-w-none text-gray-800" v-html="article.content"></div>
+
+            <div v-if="article.article_source" class="mt-4 text-sm font-bold text-gray-600 italic">
+                {{ t('source') }}: {{ article.article_source }}
+            </div>
 
             <div class="mt-12 clear-both border-t border-gray-300 pt-8">
                 <Link href="/" class="text-radio-red text-sm font-bold hover:underline">

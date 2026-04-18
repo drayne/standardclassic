@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
  * @property int $category_id
  * @property string $slug
  * @property string $image
+ * @property string $image_source
+ * @property string $article_source
  * @property bool $active
  * @property DateTime published_at
  */
@@ -58,6 +60,8 @@ class Article extends Model
         'slug',
         'published_at',
         'image',
+        'image_source',
+        'article_source',
         'active',
     ];
 

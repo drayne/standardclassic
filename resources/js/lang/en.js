@@ -11,6 +11,8 @@ export default {
     politics_news: 'Politics news',
     read_more: 'Read more',
     back_home: 'Back to home',
+    source: 'Source',
+    photo: 'Photo',
     language: {
         sr: 'srpski',
         en: 'english',

@@ -41,6 +41,10 @@ class ArticleForm
                             ->disk('article-images')
                             ->directory(fn () => date('Y/m'))
                             ->columnSpanFull(),
+                        TextInput::make('image_source')
+                            ->label('Izvor slike'),
+                        TextInput::make('article_source')
+                            ->label('Izvor vijesti'),
                     ]),
 
                 Section::make('Prevodi')
