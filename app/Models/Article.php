@@ -101,5 +101,9 @@ class Article extends Model
         })->first();
     }
 
+    public function getDisplayName()
+    {
+        return $this->translation('sr')?->title ?? $this->slug;
+    }
 
 }

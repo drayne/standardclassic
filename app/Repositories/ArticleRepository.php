@@ -34,6 +34,8 @@ class ArticleRepository
                 $q->where('code', app()->getLocale());
             });
         }, 'category'])
+            ->whereNotNull('slug')
+            ->where('slug', '!=', '')
             ->where('category_id', $categoryId)
             ->where('active', true)
             ->whereNotNull('published_at')
