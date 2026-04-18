@@ -17,7 +17,7 @@ class ArticleTranslation extends Model
 
     protected static function booted(): void
     {
-        static::saving(function ($translation) {
+        static::saved(function ($translation) {
             // Slug se generiše isključivo iz naslova na srpskom jeziku ('sr')
             $language = $translation->language;
 
@@ -34,9 +34,8 @@ class ArticleTranslation extends Model
                     $counter++;
                 }
 
-                $translation->article->update([
-                    'slug' => $slug
-                ]);
+                $translation->article->slug = $slug;
+                $translation->article->save();
             }
         });
     }

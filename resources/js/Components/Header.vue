@@ -349,6 +349,38 @@ const isActive = (routeName) => {
     return route().current(routeName)
 }
 
+const radioTitle = computed(() => {
+    if (!radioStore.isPlaying) return null
+
+    const parts = []
+    if (radioStore.currentTrack.composer_name) {
+        parts.push(radioStore.currentTrack.composer_name)
+    }
+    if (radioStore.currentTrack.title) {
+        parts.push(radioStore.currentTrack.title)
+    }
+
+    const trackInfo = parts.join(' ')
+    const radioSuffix = ' - StandardClassic Radio'
+    return trackInfo ? `${trackInfo}${radioSuffix}` : `Radio${radioSuffix}`
+})
+
+// Prati promjenu naslova i ažuriraj document.title
+watch(
+    [radioTitle, () => page.props.title],
+    ([newTitle, inertiaTitle]) => {
+        if (newTitle) {
+            document.title = newTitle
+        } else {
+            // Vraćamo originalni naslov koristeći appName i prop naslov
+            const appName = 'StandardClassic Radio'
+            const title = inertiaTitle || page.props.title
+            document.title = title ? `${title} - ${appName}` : appName
+        }
+    },
+    { immediate: true },
+)
+
 const streamUrl = computed(() => page.props.radio?.streamUrl)
 
 const isMenuOpen = ref(false)

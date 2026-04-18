@@ -21,6 +21,8 @@ class ArticlesController extends Controller
                     $q->where('code', app()->getLocale());
                 });
             }])
+            ->whereNotNull('slug')
+            ->where('slug', '!=', '')
             ->where('active', true)
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())

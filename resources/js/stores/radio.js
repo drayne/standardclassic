@@ -56,6 +56,7 @@ export const radioStore = reactive({
                 if (this.isPlaying) {
                     this.isPlaying = false
                 }
+                this.updateMediaSession()
             })
 
             this.audio.addEventListener('play', () => {
@@ -63,6 +64,7 @@ export const radioStore = reactive({
                 if (!this.isPlaying) {
                     this.isPlaying = true
                 }
+                this.updateMediaSession()
             })
         }
     },
@@ -79,6 +81,7 @@ export const radioStore = reactive({
             this.audio.src = this.streamUrl
             this.audio.play().catch((e) => console.error('Oporavak nije uspio:', e))
         }
+        this.updateMediaSession()
     },
 
     updateVolume(val) {
@@ -114,6 +117,7 @@ export const radioStore = reactive({
             this.audio.load()
             this.isPlaying = false
             this.isLoading = false
+            this.updateMediaSession()
         } else {
             this.isLoading = true
             this.isPlaying = true // Odmah mijenjamo stanje da UI reaguje
@@ -122,6 +126,7 @@ export const radioStore = reactive({
                 .play()
                 .then(() => {
                     this.audio.volume = this.volume
+                    this.updateMediaSession()
                 })
                 .catch((error) => {
                     console.error('Autoplay blokiran ili greška:', error)
@@ -139,11 +144,51 @@ export const radioStore = reactive({
             const response = await fetch('/api/radio/current')
             if (response.ok) {
                 this.currentTrack = await response.json()
+                this.updateMediaSession()
             }
         } catch (error) {
             console.error('Greška pri pribavljanju informacija o trenutnoj pjesmi:', error)
         } finally {
             this.isFetching = false
+        }
+    },
+
+    updateMediaSession() {
+        if ('mediaSession' in navigator) {
+            const track = this.currentTrack
+            const title = track.title || 'Uživo'
+            const artist = track.composer_name || track.artist || 'StandardClassic Radio'
+            const album = 'StandardClassic Radio'
+            const logoUrl = window.location.origin + '/images/logo.png'
+
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: title,
+                artist: artist,
+                album: album,
+                artwork: [
+                    { src: logoUrl, sizes: '96x96', type: 'image/png' },
+                    { src: logoUrl, sizes: '128x128', type: 'image/png' },
+                    { src: logoUrl, sizes: '192x192', type: 'image/png' },
+                    { src: logoUrl, sizes: '256x256', type: 'image/png' },
+                    { src: logoUrl, sizes: '384x384', type: 'image/png' },
+                    { src: logoUrl, sizes: '512x512', type: 'image/png' },
+                ],
+            })
+
+            // Ažuriranje stanja reprodukcije za sistem
+            navigator.mediaSession.playbackState = this.isPlaying ? 'playing' : 'paused'
+
+            // Postavljanje kontrola
+            navigator.mediaSession.setActionHandler('play', () => this.togglePlay())
+            navigator.mediaSession.setActionHandler('pause', () => this.togglePlay())
+            navigator.mediaSession.setActionHandler('stop', () => {
+                this.audio.pause()
+                this.audio.src = ''
+                this.audio.load()
+                this.isPlaying = false
+                this.isLoading = false
+                this.updateMediaSession()
+            })
         }
     },
 })
