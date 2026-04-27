@@ -64,6 +64,12 @@ export default {
         show_name: 'Sendung: KultExpress',
         archive_link: 'Link zur Sendung mit dem Aufnahmearchiv ansehen',
         aca_show_name: 'Sendung: Popodne sa Acom Informacijom',
+        danka_show_name: 'Nachrichten mit Danka - aus dem Land und der Welt',
+    },
+    danka_podcast: {
+        title: 'Nachrichten mit Danka - aus dem Land und der Welt',
+        author: 'Autorin und Moderatorin: Danka Zakić',
+        p1: '„Nachrichten mit Danka“ bietet einen klaren und zuverlässigen Überblick über die wichtigsten kulturellen, politischen, geschäftlichen und gesellschaftlichen Ereignisse aus dem Land und der Welt. In kurzer und dynamischer Form vermittelt die Sendung die Essenz der Informationen mit einem professionellen und analytischen Ansatz, ganz im Sinne der Standards eines seriösen Mediums.',
     },
     aca_podcast: {
         title: 'Nachmittag mit Aca Informacija',

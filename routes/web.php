@@ -32,6 +32,7 @@ Route::get('emisije-na-nasem-radiju', StaticController::class)->name('emisije-na
 Route::get('impressum', StaticController::class)->name('impressum');
 Route::get('podkasti-na-standardclassic-radiju', StaticController::class)->name('podkasti-na-standardclassic-radiju');
 Route::get('popodne-sa-Acom-Informacijom', StaticController::class)->name('popodne-sa-Acom-Informacijom');
+Route::get('vijesti-sa-dankom', StaticController::class)->name('vijesti-sa-dankom');
 
 Route::get('vijesti-iz-kulture', ArticlesController::class)->name('vijesti-iz-kulture');
 Route::get('vijesti-iz-dnevno-politickog-zivota', ArticlesController::class)->name('vijesti-iz-dnevno-politickog-zivota');
