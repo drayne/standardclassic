@@ -42,6 +42,20 @@ defineOptions({ layout: MainLayout })
                         :alt="t('aca_podcast.title')"
                         class="h-auto w-full lg:h-72 lg:w-auto" />
                 </div>
+
+                <div
+                    class="mt-12 border-t border-gray-300 pt-8 flex flex-col gap-8 lg:gap-64 lg:flex-row lg:items-center lg:align-middle">
+                    <div class="flex flex-col gap-2">
+                        <span class="font-bold">{{ t('shows_page.danka_show_name') }}</span>
+                        <Link :href="route('vijesti-sa-dankom')" class="hover:underline">
+                            <span class="font-bold underline">{{ t('shows_page.archive_link') }}</span>
+                        </Link>
+                    </div>
+                    <img
+                        src="/images/vijesti-sa-dankom.jpg"
+                        :alt="t('danka_podcast.title')"
+                        class="h-auto w-full lg:h-72 lg:w-auto" />
+                </div>
             </div>
         </div>
     </div>

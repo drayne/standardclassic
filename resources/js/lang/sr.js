@@ -66,6 +66,12 @@ export default {
         show_name: 'Emisija: KultExpress',
         archive_link: 'Pogledajte link emisije sa arhivom snimaka',
         aca_show_name: 'Emisija: Popodne sa Acom Informacijom',
+        danka_show_name: 'Vijesti sa Dankom - iz zemlje i svijeta',
+    },
+    danka_podcast: {
+        title: 'Vijesti sa Dankom - iz zemlje i svijeta',
+        author: 'Autor i voditelj: Danka Zakić',
+        p1: '„Vijesti sa Dankom“ donose jasan i pouzdan pregled najvažnijih kulturnih, političkih, poslovnih i društvenih dešavanja iz zemlje i svijeta. U kratkoj i dinamičnoj formi, emisija pruža suštinu informacija uz profesionalan i analitičan pristup, u skladu sa standardima ozbiljnog medija.',
     },
     aca_podcast: {
         title: 'Popodne sa Acom Informacijom',
