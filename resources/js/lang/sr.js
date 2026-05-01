@@ -72,6 +72,8 @@ export default {
         title: 'Vijesti sa Dankom - iz zemlje i svijeta',
         author: 'Autor i voditelj: Danka Zakić',
         p1: '„Vijesti sa Dankom“ donose jasan i pouzdan pregled najvažnijih kulturnih, političkih, poslovnih i društvenih dešavanja iz zemlje i svijeta. U kratkoj i dinamičnoj formi, emisija pruža suštinu informacija uz profesionalan i analitičan pristup, u skladu sa standardima ozbiljnog medija.',
+        short_p:
+            'Jasan i pouzdan pregled najvažnijih kulturnih, političkih, poslovnih i društvenih dešavanja iz zemlje i svijeta.',
     },
     aca_podcast: {
         title: 'Popodne sa Acom Informacijom',

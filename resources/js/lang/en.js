@@ -72,6 +72,8 @@ export default {
         title: 'News with Danka - from the country and the world',
         author: 'Author and host: Danka Zakić',
         p1: '"News with Danka" brings a clear and reliable overview of the most important cultural, political, business, and social events from the country and the world. In a short and dynamic form, the show provides the essence of information with a professional and analytical approach, in accordance with the standards of a serious media.',
+        short_p:
+            'Clear and reliable overview of the most important cultural, political, business, and social events from the country and the world.',
     },
     aca_podcast: {
         title: 'Afternoon with Aca Informacija',

@@ -70,6 +70,8 @@ export default {
         title: 'Nachrichten mit Danka - aus dem Land und der Welt',
         author: 'Autorin und Moderatorin: Danka Zakić',
         p1: '„Nachrichten mit Danka“ bietet einen klaren und zuverlässigen Überblick über die wichtigsten kulturellen, politischen, geschäftlichen und gesellschaftlichen Ereignisse aus dem Land und der Welt. In kurzer und dynamischer Form vermittelt die Sendung die Essenz der Informationen mit einem professionellen und analytischen Ansatz, ganz im Sinne der Standards eines seriösen Mediums.',
+        short_p:
+            'Jener klare und zuverlässige Überblick über die wichtigsten kulturellen, politischen, geschäftlichen und gesellschaftlichen Ereignisse aus dem Land und der Welt.',
     },
     aca_podcast: {
         title: 'Nachmittag mit Aca Informacija',
@@ -79,7 +81,7 @@ export default {
         p3: 'Mit dem Start dieser Sendung zeigt StandardClassic die Absicht, ein <b>Radio zu schaffen, das gleichzeitig informativ, kulturell und unterhaltsam ist</b>, mit Autoren, die einen erkennbaren Stil und Energie haben. In der kommenden Zeit wird der Start weiterer Autorensendungen erwartet, die das Radioprogramm bereichern i vielfältige Inhalte bringen werden – von Kultur und Wirtschaft bis hin zu Sport und moderner Gesellschaft.',
         p4: 'Der Donnerstagnachmittag ist für "Nachmittag mit Aca Informacija" reserviert – eine Sendung über Sport, Musik und gute Geschichten.',
         short_p:
-            'Jeden Donnerstag wird in einem entspannten Nachmittagstermin eine Sendung ausgestrahlt, die Sportgeschichten, Analysen und sorgfältig ausgewählte Musik kombiniert und den Zuhörern nach dem Arbeitstag informative und unterhaltsame Inhalte bietet.',
+            'Ein klarer und zuverlässiger Überblick über die wichtigsten kulturellen, politischen, wirtschaftlichen und gesellschaftlichen Ereignisse aus dem Inland und der ganzen Welt.',
     },
     culture_podcast: {
         title: 'Wo Kultur auf Unkultur trifft',
