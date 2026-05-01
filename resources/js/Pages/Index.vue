@@ -148,12 +148,14 @@
                 <PodcastAljosa v-if="randomPodcastIndex === 1" />
                 <PodcastMilos v-if="randomPodcastIndex === 2" />
                 <PodcastAca v-if="randomPodcastIndex === 3" />
+                <EmisijeDanka v-if="randomPodcastIndex === 4" />
             </div>
         </section>
     </div>
 </template>
 
 <script setup lang="ts">
+import EmisijeDanka from '@/Components/EmisijeDanka.vue'
 import PodcastAca from '@/Components/PodcastAca.vue'
 import PodcastAljosa from '@/Components/PodcastAljosa.vue'
 import PodcastMilos from '@/Components/PodcastMilos.vue'
@@ -223,7 +225,7 @@ const openExternalLink = (url: string) => {
 }
 
 const randomPodcastIndex = computed(() => {
-    return Math.floor(Math.random() * 3) + 1
+    return Math.floor(Math.random() * 4) + 1
 })
 </script>
 

@@ -40,6 +40,7 @@ class AdminPanelProvider extends PanelProvider
             ->breadcrumbs(false)
             ->globalSearch(false)
             ->darkMode(false)
+            ->unsavedChangesAlerts()
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login(Login::class)
             ->maxContentWidth(Width::Full)
