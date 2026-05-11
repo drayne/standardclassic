@@ -82,7 +82,7 @@ const { t } = useTrans()
                             <a href="https://standardplaza.ba/" target="_blank" rel="noopener noreferrer" class="transition hover:underline">{{ t('footer.standard_plaza') }}</a>
                         </li>
                         <li>
-                            <a href="http://standardprva.ba/the-luxury-alignment-manifesto" target="_blank" rel="noopener noreferrer" class="transition hover:underline">{{ t('footer.luxury_manifesto') }}</a>
+                            <a href="https://standardprva.ba/the-luxury-alignment-manifesto" target="_blank" rel="noopener noreferrer" class="transition hover:underline">{{ t('footer.luxury_manifesto') }}</a>
                         </li>
                         <li>
                             <a href="https://fondacijastevanovic.ba/" target="_blank" rel="noopener noreferrer" class="transition hover:underline">
