@@ -67,25 +67,27 @@ const { t } = useTrans()
 
                 <!-- Corporate Info / Copyright -->
                 <div>
-                    <img src="/images/sp-logo-red.png" alt="Standard Classic Radio" class="h-12 w-auto" />
+                    <a href="https://standardprva.ba" target="_blank" rel="noopener noreferrer">
+                        <img src="/images/sp-logo-red.png" alt="Standard Classic Radio" class="h-12 w-auto object-contain" />
+                    </a>
                     <span class="text-sm">{{ t('footer.corporate_info') }}</span>
                     <ul class="mt-4 mb-3 space-y-0.5 text-sm opacity-90">
                         <li>
-                            <Link href="https://standardprva.ba/o-nasoj-korporaciji" target="_blank" class="transition hover:underline">{{ t('footer.about_corp') }}</Link>
+                            <a href="https://standardprva.ba/o-nasoj-korporaciji" target="_blank" rel="noopener noreferrer" class="transition hover:underline">{{ t('footer.about_corp') }}</a>
                         </li>
                         <li>
-                            <Link href="https://standardprva.ba/menadzment-tim" target="_blank" class="transition hover:underline">{{ t('footer.management') }}</Link>
+                            <a href="https://standardprva.ba/menadzment-tim" target="_blank" rel="noopener noreferrer" class="transition hover:underline">{{ t('footer.management') }}</a>
                         </li>
                         <li>
-                            <Link href="https://standardplaza.ba/" target="_blank" class="transition hover:underline">{{ t('footer.standard_plaza') }}</Link>
+                            <a href="https://standardplaza.ba/" target="_blank" rel="noopener noreferrer" class="transition hover:underline">{{ t('footer.standard_plaza') }}</a>
                         </li>
                         <li>
-                            <Link href="http://standardprva.ba/the-luxury-alignment-manifesto" target="_blank" class="transition hover:underline">{{ t('footer.luxury_manifesto') }}</Link>
+                            <a href="http://standardprva.ba/the-luxury-alignment-manifesto" target="_blank" rel="noopener noreferrer" class="transition hover:underline">{{ t('footer.luxury_manifesto') }}</a>
                         </li>
                         <li>
-                            <Link href="https://fondacijastevanovic.ba/" target="_blank" class="transition hover:underline">
+                            <a href="https://fondacijastevanovic.ba/" target="_blank" rel="noopener noreferrer" class="transition hover:underline">
                                 {{ t('footer.foundation') }}
-                            </Link>
+                            </a>
                         </li>
                     </ul>
 
