@@ -71,19 +71,19 @@ const { t } = useTrans()
                     <span class="text-sm">{{ t('footer.corporate_info') }}</span>
                     <ul class="mt-4 mb-3 space-y-0.5 text-sm opacity-90">
                         <li>
-                            <Link href="#" class="transition hover:underline">{{ t('footer.about_corp') }}</Link>
+                            <Link href="https://standardprva.ba/o-nasoj-korporaciji" target="_blank" class="transition hover:underline">{{ t('footer.about_corp') }}</Link>
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline">{{ t('footer.management') }}</Link>
+                            <Link href="https://standardprva.ba/menadzment-tim" target="_blank" class="transition hover:underline">{{ t('footer.management') }}</Link>
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline">{{ t('footer.standard_plaza') }}</Link>
+                            <Link href="https://standardplaza.ba/" target="_blank" class="transition hover:underline">{{ t('footer.standard_plaza') }}</Link>
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline">{{ t('footer.luxury_manifesto') }}</Link>
+                            <Link href="http://standardprva.ba/the-luxury-alignment-manifesto" target="_blank" class="transition hover:underline">{{ t('footer.luxury_manifesto') }}</Link>
                         </li>
                         <li>
-                            <Link href="#" class="transition hover:underline">
+                            <Link href="https://fondacijastevanovic.ba/" target="_blank" class="transition hover:underline">
                                 {{ t('footer.foundation') }}
                             </Link>
                         </li>
