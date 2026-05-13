@@ -47,9 +47,7 @@
             {{ t('no_articles') }}
         </div>
 
-        <div ref="loadMoreIntersect" class="h-10 flex items-center justify-center">
-            <span v-if="isLoading" class="text-sm text-gray-500 italic">Učitavanje još članaka...</span>
-        </div>
+        <div ref="loadMoreIntersect" class="h-10 flex items-center justify-center sm:hidden"> </div>
 
         <div class="mt-12 flex justify-center hidden sm:flex">
             <Pagination :links="articles.meta.links" />
@@ -165,7 +163,7 @@ onMounted(() => {
             }
         },
         {
-            rootMargin: '100px',
+            rootMargin: '400px',
         },
     )
 
