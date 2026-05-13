@@ -8,7 +8,7 @@
         </h2>
 
         <div class="grid grid-cols-1 gap-12">
-            <div v-for="article in articles" :key="article.id" class="flex flex-col md:flex-row overflow-hidden">
+            <div v-for="article in articles.data" :key="article.id" class="flex flex-col md:flex-row overflow-hidden">
                 <div class="h-64 md:w-2/5 shrink-0 overflow-hidden">
                     <img
                         v-if="article.image"
@@ -43,13 +43,18 @@
             </div>
         </div>
 
-        <div v-if="articles.length === 0" class="text-center py-12 text-gray-500">
+        <div v-if="articles.data.length === 0" class="text-center py-12 text-gray-500">
             {{ t('no_articles') }}
+        </div>
+
+        <div class="mt-12 flex justify-center">
+            <Pagination :links="articles.meta.links" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import Pagination from '@/Components/Pagination.vue'
 import { useTrans } from '@/Composables/useTrans'
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Article } from '@/types'
@@ -60,7 +65,17 @@ const { t } = useTrans()
 defineOptions({ layout: MainLayout })
 
 defineProps<{
-    articles: Article[]
+    articles: {
+        data: Article[]
+        links: any
+        meta: {
+            links: Array<{
+                url: string | null
+                label: string
+                active: boolean
+            }>
+        }
+    }
     category: {
         id: number
         name: string

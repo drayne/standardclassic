@@ -27,7 +27,7 @@ class ArticlesController extends Controller
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
             ->orderBy('published_at', 'desc')
-            ->get();
+            ->paginate(3);
 
         return Inertia::render('Articles/Index', [
             'articles' => ArticleResource::collection($articles),
