@@ -8,7 +8,7 @@
         </h2>
 
         <div class="grid grid-cols-1 gap-12">
-            <div v-for="article in articles.data" :key="article.id" class="flex flex-col md:flex-row overflow-hidden">
+            <div v-for="article in allArticles" :key="article.id" class="flex flex-col md:flex-row overflow-hidden">
                 <div class="h-64 md:w-2/5 shrink-0 overflow-hidden">
                     <img
                         v-if="article.image"
@@ -43,11 +43,15 @@
             </div>
         </div>
 
-        <div v-if="articles.data.length === 0" class="text-center py-12 text-gray-500">
+        <div v-if="allArticles.length === 0" class="text-center py-12 text-gray-500">
             {{ t('no_articles') }}
         </div>
 
-        <div class="mt-12 flex justify-center">
+        <div ref="loadMoreIntersect" class="h-10 flex items-center justify-center">
+            <span v-if="isLoading" class="text-sm text-gray-500 italic">Učitavanje još članaka...</span>
+        </div>
+
+        <div class="mt-12 flex justify-center hidden sm:flex">
             <Pagination :links="articles.meta.links" />
         </div>
     </div>
@@ -58,17 +62,25 @@ import Pagination from '@/Components/Pagination.vue'
 import { useTrans } from '@/Composables/useTrans'
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Article } from '@/types'
-import { Head, Link } from '@inertiajs/vue3'
+import { Head, Link, router } from '@inertiajs/vue3'
+import { onMounted, ref, watch } from 'vue'
 
 const { t } = useTrans()
 
 defineOptions({ layout: MainLayout })
 
-defineProps<{
+const props = defineProps<{
     articles: {
         data: Article[]
-        links: any
+        links: {
+            first: string | null
+            last: string | null
+            prev: string | null
+            next: string | null
+        }
         meta: {
+            current_page: number
+            last_page: number
             links: Array<{
                 url: string | null
                 label: string
@@ -82,4 +94,83 @@ defineProps<{
         slug: string
     }
 }>()
+
+const allArticles = ref<Article[]>([...props.articles.data])
+const loadMoreIntersect = ref<HTMLElement | null>(null)
+const isLoading = ref(false)
+
+const isInfiniteLoading = ref(false)
+
+watch(
+    () => props.articles.data,
+    (newData) => {
+        // Ako NIJE u toku beskonačno učitavanje (infinite scroll),
+        // znači da je korisnik kliknuo na link ili promenio kategoriju, pa resetujemo niz.
+        if (!isInfiniteLoading.value) {
+            allArticles.value = [...newData]
+            return
+        }
+
+        // Ako JESTE u toku beskonačno učitavanje, dodajemo nove podatke na stare.
+        // Dodajemo samo one koji već nisu u nizu (za svaki slučaj)
+        const existingIds = new Set(allArticles.value.map((a) => a.id))
+        const uniqueNewData = newData.filter((a) => !existingIds.has(a.id))
+        allArticles.value.push(...uniqueNewData)
+
+        // Resetujemo flag nakon što smo dodali podatke
+        isInfiniteLoading.value = false
+    },
+    { deep: true },
+)
+
+const loadMore = () => {
+    if (isLoading.value || props.articles.meta.current_page >= props.articles.meta.last_page) {
+        return
+    }
+
+    if (window.innerWidth >= 640) {
+        return
+    }
+
+    isLoading.value = true
+    isInfiniteLoading.value = true
+
+    // Nađi link za sledeću stranicu koristeći top-level links objekat koji Laravel obezbeđuje
+    const nextUrl = props.articles.links?.next
+
+    if (!nextUrl) {
+        isLoading.value = false
+        return
+    }
+
+    router.get(
+        nextUrl,
+        {},
+        {
+            preserveState: true,
+            preserveScroll: true,
+            only: ['articles'],
+            onFinish: () => {
+                isLoading.value = false
+            },
+        },
+    )
+}
+
+onMounted(() => {
+    const observer = new IntersectionObserver(
+        (entries) => {
+            if (entries[0].isIntersecting) {
+                loadMore()
+            }
+        },
+        {
+            rootMargin: '100px',
+        },
+    )
+
+    if (loadMoreIntersect.value) {
+        observer.observe(loadMoreIntersect.value)
+    }
+})
 </script>
