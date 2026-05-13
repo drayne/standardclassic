@@ -11,6 +11,8 @@ export default {
     politics_news: 'Politics news',
     read_more: 'Read more',
     back_home: 'Back to home',
+    previous: '< Previous',
+    next: 'Next >',
     source: 'Source',
     photo: 'Photo',
     language: {

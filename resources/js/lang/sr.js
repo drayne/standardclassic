@@ -11,6 +11,8 @@ export default {
     politics_news: 'Vijesti iz dnevno-političkog života',
     read_more: 'Pročitaj više',
     back_home: 'Povratak na početnu',
+    previous: '< Prethodna',
+    next: 'Sljedeća >',
     source: 'Izvor',
     photo: 'Foto',
     language: {
