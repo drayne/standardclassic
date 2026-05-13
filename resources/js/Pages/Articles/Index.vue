@@ -47,7 +47,7 @@
             {{ t('no_articles') }}
         </div>
 
-        <div ref="loadMoreIntersect" class="h-10 flex items-center justify-center sm:hidden"> </div>
+        <div ref="loadMoreIntersect" class="h-20 flex items-center justify-center sm:hidden"> </div>
 
         <div class="mt-12 flex justify-center hidden sm:flex">
             <Pagination :links="articles.meta.links" />
@@ -167,6 +167,7 @@ const loadMore = () => {
 
     if (!nextUrl) {
         isLoading.value = false
+        isInfiniteLoading.value = false
         return
     }
 
@@ -179,6 +180,10 @@ const loadMore = () => {
             only: ['articles'],
             onFinish: () => {
                 isLoading.value = false
+            },
+            onError: () => {
+                isLoading.value = false
+                isInfiniteLoading.value = false
             },
         },
     )
@@ -194,12 +199,26 @@ onMounted(() => {
             }
         },
         {
-            rootMargin: '400px',
+            threshold: 0.1,
+            rootMargin: '600px',
         },
     )
 
     if (loadMoreIntersect.value) {
         observer.observe(loadMoreIntersect.value)
+    }
+})
+
+// Dodatna provjera ako je element i dalje vidljiv nakon učitavanja
+watch([() => props.articles.meta.current_page, isLoading], ([newPage, loading]) => {
+    if (!loading && newPage < props.articles.meta.last_page) {
+        // Provjeri je li intersect element i dalje vidljiv (ili blizu)
+        if (loadMoreIntersect.value) {
+            const rect = loadMoreIntersect.value.getBoundingClientRect()
+            if (rect.top < window.innerHeight + 600) {
+                loadMore()
+            }
+        }
     }
 })
 
