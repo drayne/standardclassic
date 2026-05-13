@@ -4,17 +4,31 @@
             <template v-for="(link, key) in paginationLinks" :key="key">
                 <div
                     v-if="link.url === null"
-                    class="mr-1 mb-1 px-4 py-3 text-sm leading-4 text-gray-400 border rounded"
-                    v-html="link.label" />
+                    class="mr-1 mb-1 px-3 py-2 md:px-4 md:py-3 text-sm leading-4 text-gray-400 border rounded"
+                    :class="{
+                        'hidden sm:block': link.label.includes('...'),
+                        'inline-flex sm:hidden':
+                            link.label.toLowerCase().includes('prev') ||
+                            link.label.toLowerCase().includes('next') ||
+                            link.label.includes('&laquo;') ||
+                            link.label.includes('&raquo;'),
+                    }"
+                    v-html="getLinkLabel(link.label)" />
                 <Link
                     v-else
-                    class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded transition-colors duration-200 focus:outline-none focus:border-radio-red focus:text-radio-red"
+                    class="mr-1 mb-1 px-3 py-2 md:px-4 md:py-3 text-sm leading-4 border rounded transition-colors duration-200 focus:outline-none focus:border-radio-red focus:text-radio-red"
                     :class="{
                         'bg-radio-red text-white border-radio-red hover:bg-red-700': link.active,
                         'hover:bg-gray-100 hover:border-radio-red': !link.active,
+                        'hidden sm:inline-flex': !link.active && !isNaN(Number(link.label)),
+                        'inline-flex sm:hidden':
+                            link.label.toLowerCase().includes('prev') ||
+                            link.label.toLowerCase().includes('next') ||
+                            link.label.includes('&laquo;') ||
+                            link.label.includes('&raquo;'),
                     }"
                     :href="link.url">
-                    <span v-html="link.label"></span>
+                    <span v-html="getLinkLabel(link.label)"></span>
                 </Link>
             </template>
         </div>
@@ -22,8 +36,11 @@
 </template>
 
 <script setup lang="ts">
+import { useTrans } from '@/Composables/useTrans'
 import { Link } from '@inertiajs/vue3'
 import { computed } from 'vue'
+
+const { t } = useTrans()
 
 const props = defineProps<{
     links: Array<{
@@ -34,12 +51,16 @@ const props = defineProps<{
 }>()
 
 const paginationLinks = computed(() => {
-    return props.links.filter((link) => {
-        // Zadržavamo samo linkove čija je labela broj (Laravel pagination šalje brojeve stranica kao stringove "1", "2", itd.)
-        // i linkove za "tri tačke" (...) koji nemaju URL ali služe kao separator
-        const isNumeric = !isNaN(Number(link.label))
-        const isDots = link.label.includes('...')
-        return isNumeric || isDots
-    })
+    return props.links
 })
+
+const getLinkLabel = (label: string) => {
+    if (label.toLowerCase().includes('prev') || label.includes('&laquo;')) {
+        return t('previous')
+    }
+    if (label.toLowerCase().includes('next') || label.includes('&raquo;')) {
+        return t('next')
+    }
+    return label
+}
 </script>
