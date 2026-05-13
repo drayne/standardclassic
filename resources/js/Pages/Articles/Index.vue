@@ -52,6 +52,23 @@
         <div class="mt-12 flex justify-center hidden sm:flex">
             <Pagination :links="articles.meta.links" />
         </div>
+
+        <!-- Back to Top Button -->
+        <button
+            v-show="showScrollTop"
+            @click="scrollToTop"
+            class="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border-2 border-radio-red bg-white text-radio-red shadow-lg transition-all duration-300 hover:scale-110 sm:hidden"
+            aria-label="Back to top">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="3"
+                stroke="currentColor"
+                class="h-6 w-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+            </svg>
+        </button>
     </div>
 </template>
 
@@ -61,7 +78,7 @@ import { useTrans } from '@/Composables/useTrans'
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Article } from '@/types'
 import { Head, Link, router } from '@inertiajs/vue3'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 
 const { t } = useTrans()
 
@@ -96,8 +113,20 @@ const props = defineProps<{
 const allArticles = ref<Article[]>([...props.articles.data])
 const loadMoreIntersect = ref<HTMLElement | null>(null)
 const isLoading = ref(false)
+const showScrollTop = ref(false)
 
 const isInfiniteLoading = ref(false)
+
+const handleScroll = () => {
+    showScrollTop.value = window.scrollY > 300
+}
+
+const scrollToTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+    })
+}
 
 watch(
     () => props.articles.data,
@@ -156,6 +185,8 @@ const loadMore = () => {
 }
 
 onMounted(() => {
+    window.addEventListener('scroll', handleScroll)
+
     const observer = new IntersectionObserver(
         (entries) => {
             if (entries[0].isIntersecting) {
@@ -170,5 +201,9 @@ onMounted(() => {
     if (loadMoreIntersect.value) {
         observer.observe(loadMoreIntersect.value)
     }
+})
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll)
 })
 </script>
