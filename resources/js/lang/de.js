@@ -110,6 +110,7 @@ export default {
         chairman: 'Vorsitzender des Aufsichtsrats: Miloš Stevanović',
         editor_in_chief: 'Chefredakteur: Miloš Stevanović',
         web_editor: 'Website-Editor: Danka Zakić',
+        email: 'E-Mail: standardclassicradio@advokati-stevanovic.com',
     },
     program_page: {
         title: 'Radioprogramm',

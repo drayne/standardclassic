@@ -37,6 +37,13 @@ defineOptions({ layout: MainLayout })
                     <span>{{ t('impressum_page.web_editor') }}</span>
                 </div>
                 <div class="mb-5">
+                    <a
+                        class="hover:cursor-pointer hover:underline"
+                        href="mailto:standardclassicradio@advokati-stevanovic.com">
+                        {{ t('impressum_page.email') }}
+                    </a>
+                </div>
+                <div class="mb-5">
                     <img src="/images/standardprva-logo.png" alt="standardprva logo" class="h-12 w-auto" />
                     <a class="hover:cursor-pointer hover:underline" href="https://standardprva.ba" target="_blank">
                         www.standardprva.ba

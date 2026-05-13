@@ -112,6 +112,7 @@ export default {
         chairman: 'Chairman of the Supervisory Board: Miloš Stevanović',
         editor_in_chief: 'Editor-in-Chief: Miloš Stevanović',
         web_editor: 'Website Editor: Danka Zakić',
+        email: 'Email: standardclassicradio@advokati-stevanovic.com',
     },
     program_page: {
         title: 'Radio Program',
