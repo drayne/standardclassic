@@ -112,6 +112,7 @@ export default {
         chairman: 'Predsjednik Nadzornog odbora: Miloš Stevanović',
         editor_in_chief: 'Glavni i odgovorni urednik: Miloš Stevanović',
         web_editor: 'Urednik sajta: Danka Zakić',
+        email: 'Email: standardclassicradio@advokati-stevanovic.com',
     },
     program_page: {
         title: 'Program Radija',
