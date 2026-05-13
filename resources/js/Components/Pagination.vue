@@ -8,8 +8,11 @@
                     v-html="link.label" />
                 <Link
                     v-else
-                    class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:bg-white focus:border-indigo-500 focus:text-indigo-500"
-                    :class="{ 'bg-radio-red text-white': link.active }"
+                    class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded transition-colors duration-200 focus:outline-none focus:border-radio-red focus:text-radio-red"
+                    :class="{
+                        'bg-radio-red text-white border-radio-red hover:bg-red-700': link.active,
+                        'hover:bg-gray-100 hover:border-radio-red': !link.active,
+                    }"
                     :href="link.url">
                     <span v-html="link.label"></span>
                 </Link>
