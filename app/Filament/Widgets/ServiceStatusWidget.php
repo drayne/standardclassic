@@ -2,13 +2,14 @@
 
 namespace App\Filament\Widgets;
 
+use App\Http\Services\RadioService;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Http;
 
 class ServiceStatusWidget extends StatsOverviewWidget
 {
-    protected ?string $pollingInterval = 'everyMinute';
+    protected ?string $pollingInterval = '10s';
 
     protected static ?int $sort = 0;
 
@@ -48,49 +49,32 @@ class ServiceStatusWidget extends StatsOverviewWidget
 
     private function getListenersCount(): Stat
     {
-        try {
-            $host = config('radio.icecast_host');
-            $port = config('radio.icecast_port');
-            $response = Http::timeout(2)->get(sprintf('http://%s:%s/status-json.xsl', $host, $port));
+        $radioService = app(RadioService::class);
+        $stat = $radioService->getTodayStats();
 
-            if ($response->successful()) {
-                $data = $response->json();
-                $sources = $data['icestats']['source'] ?? null;
-
-                $currentListeners = 0;
-                if ($sources) {
-                    if (isset($sources['listeners'])) {
-                        $currentListeners = $sources['listeners'];
-                    } else if (is_array($sources)) {
-                        foreach ($sources as $source) {
-                            $currentListeners += $source['listeners'] ?? 0;
-                        }
-                    }
-                }
-
-                // Logika za PEAK (Najviše danas)
-                // Cache se čuva do kraja dana (ponoć)
-                $cacheKey = 'radio_peak_listeners_' . now()->format('Y-m-d');
-                $peakListeners = cache()->get($cacheKey, 0);
-
-                if ($currentListeners > $peakListeners) {
-                    $peakListeners = $currentListeners;
-                    cache()->put($cacheKey, $peakListeners, now()->endOfDay());
-                }
-
-                return Stat::make('Trenutno slušalaca', $currentListeners)
-                    ->description("Najviše danas: {$peakListeners}")
-                    ->descriptionIcon('heroicon-m-chart-bar-square')
-                    ->color($currentListeners > 0 ? 'success' : 'gray')
-                    ->icon('heroicon-m-user-group');
-            }
-        } catch (\Exception $e) {
-            // Greška pri čitanju Icecast-a
+        if (! $stat || ($stat->current === 0 && ! $this->isIcecastAvailable())) {
+             return Stat::make('Trenutno slušalaca', '0')
+                ->description('Icecast nedostupan ili nema podataka')
+                ->color('danger')
+                ->icon('heroicon-m-user-group');
         }
 
-        return Stat::make('Trenutno slušalaca', '0')
-            ->description('Icecast nedostupan')
-            ->color('danger')
+        return Stat::make('Trenutno slušalaca', $stat->current)
+            ->description("Najviše danas: {$stat->highest}")
+            ->descriptionIcon('heroicon-m-chart-bar-square')
+            ->color($stat->current > 0 ? 'success' : 'gray')
             ->icon('heroicon-m-user-group');
+    }
+
+    private function isIcecastAvailable(): bool
+    {
+        $host = config('radio.icecast_host');
+        $port = config('radio.icecast_port');
+        $connection = @fsockopen($host, $port, $errno, $errstr, 1);
+        if ($connection) {
+            fclose($connection);
+            return true;
+        }
+        return false;
     }
 }
