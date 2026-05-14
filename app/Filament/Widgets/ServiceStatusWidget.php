@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Filament\Resources\Stats\StatResource;
 use App\Http\Services\RadioService;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -63,7 +64,8 @@ class ServiceStatusWidget extends StatsOverviewWidget
             ->description("Najviše danas: {$stat->highest}")
             ->descriptionIcon('heroicon-m-chart-bar-square')
             ->color($stat->current > 0 ? 'success' : 'gray')
-            ->icon('heroicon-m-user-group');
+            ->icon('heroicon-m-user-group')
+            ->url(StatResource::getUrl());
     }
 
     private function isIcecastAvailable(): bool

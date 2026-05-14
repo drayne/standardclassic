@@ -18,7 +18,7 @@ class UpdateRadioStatistics extends Command
      *
      * @var string
      */
-    protected $description = 'Pripkuplja statistiku slušalaca sa Icecast servera i ažurira peak za danas.';
+    protected $description = 'Pripkuplja statistiku slušalaca sa Icecast servera i ažurira pik za danas.';
 
     /**
      * Execute the console command.
@@ -26,6 +26,6 @@ class UpdateRadioStatistics extends Command
     public function handle(\App\Http\Services\RadioService $radioService)
     {
         $stat = $radioService->updateStatistics();
-        $this->info("Statistika ažurirana. Trenutno: {$stat->current}, Današnji peak: {$stat->highest}");
+        $this->info("Statistika ažurirana. Trenutno: {$stat->current}, Današnji pik: {$stat->highest}");
     }
 }
