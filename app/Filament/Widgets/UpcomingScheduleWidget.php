@@ -26,7 +26,7 @@ class UpcomingScheduleWidget extends BaseWidget
             ->poll('15s')
             ->query(
                 MediaSchedule::query()
-                    ->with(['media', 'media.type'])
+                    ->with(['media', 'media.type', 'media.composer'])
                     ->where('played', false)
                     ->where('scheduled_at', '>', now())
                     ->orderBy('scheduled_at', 'asc')
@@ -34,10 +34,10 @@ class UpcomingScheduleWidget extends BaseWidget
             )
             ->columns([
                 Tables\Columns\Layout\Split::make([
-                    Tables\Columns\ImageColumn::make('media.image_path')
+                    Tables\Columns\ImageColumn::make('media.composer.image')
                         ->circular()
-                        ->defaultImageUrl(url('/images/default-music.png'))
-                        ->disk('radio-covers')
+                        ->defaultImageUrl(url('https://ui-avatars.com/api/?name=?&color=7F9CF5&background=EBF4FF&format=svg&icon=heroicon-s-musical-note'))
+                        ->disk('composer-images')
                         ->grow(false),
                     Tables\Columns\IconColumn::make('media.type.name')
                         ->label('Tip')
