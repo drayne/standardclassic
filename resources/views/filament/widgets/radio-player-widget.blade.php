@@ -26,7 +26,7 @@
                                  alt="{{ $current->composer->name }}"
                                  class="w-full h-full object-cover opacity-90 rounded-full">
                         @else
-                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-tr from-gray-800 to-gray-950">
+                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-tr from-gray-800 to-gray-950 rounded-full">
                                 <x-heroicon-s-musical-note class="w-10 h-10 text-gray-600" />
                             </div>
                         @endif

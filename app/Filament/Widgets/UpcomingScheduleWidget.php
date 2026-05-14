@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\MediaSchedule;
 use Filament\Tables;
+use Filament\Actions\Action;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 
@@ -15,29 +16,34 @@ class UpcomingScheduleWidget extends BaseWidget
 
     protected int | string | array $columnSpan = 2;
 
-    protected function getTableContentHeight(): ?string
+    protected function getTableRecordAction(): ?string
     {
-        return '450px';
+        return null;
     }
 
     public function table(Table $table): Table
     {
+        $totalUpcoming = MediaSchedule::query()
+            ->where('played', false)
+            ->where('scheduled_at', '>', now())
+            ->count();
+
         return $table
             ->poll('15s')
             ->query(
                 MediaSchedule::query()
-                    ->with(['media', 'media.type'])
+                    ->with(['media', 'media.type', 'media.composer'])
                     ->where('played', false)
                     ->where('scheduled_at', '>', now())
                     ->orderBy('scheduled_at', 'asc')
-                    ->limit(10)
+                    ->limit(4)
             )
             ->columns([
                 Tables\Columns\Layout\Split::make([
-                    Tables\Columns\ImageColumn::make('media.image_path')
+                    Tables\Columns\ImageColumn::make('media.composer.image')
                         ->circular()
-                        ->defaultImageUrl(url('/images/default-music.png'))
-                        ->disk('radio-covers')
+                        ->defaultImageUrl(url('https://ui-avatars.com/api/?name=?&color=7F9CF5&background=EBF4FF&format=svg&icon=heroicon-s-musical-note'))
+                        ->disk('composer-images')
                         ->grow(false),
                     Tables\Columns\IconColumn::make('media.type.name')
                         ->label('Tip')
@@ -69,14 +75,26 @@ class UpcomingScheduleWidget extends BaseWidget
                             ->badge()
                             ->color('info')
                             ->icon('heroicon-m-clock')
-                            ->description(fn($state) => $state->format('d.m.Y'), position: 'below')
+                            ->alignEnd(),
+                        Tables\Columns\TextColumn::make('scheduled_at_date')
+                            ->state(fn ($record) => $record->scheduled_at->format('d.m.Y'))
+                            ->color('gray-400')
+                            ->size('xs')
                             ->alignEnd(),
                     ])->grow(false),
                 ]),
             ])
             ->paginated(false)
             ->header(null)
-            ->heading('Predstojeće zakazane emisije')
+            ->heading(new \Illuminate\Support\HtmlString('Predstojeće zakazane emisije <span class="text-xs font-normal text-gray-500">(ukupno zakazanih: ' . $totalUpcoming . ')</span>'))
+            ->headerActions([
+                Action::make('view_all')
+                    ->label('Vidi sve')
+                    ->url(\App\Filament\Resources\MediaSchedules\MediaScheduleResource::getUrl('index'))
+                    ->icon('heroicon-m-arrow-top-right-on-square')
+                    ->size('xs')
+                    ->color('gray'),
+            ])
             ->emptyStateHeading('Nema zakazanih emisija')
             ->emptyStateDescription('Trenutno nema emisija u rasporedu.')
             ->extraAttributes([
@@ -84,6 +102,7 @@ class UpcomingScheduleWidget extends BaseWidget
             ])
             ->contentGrid([
                 'default' => 1,
-            ]);
+            ])
+            ->deferLoading();
     }
 }
