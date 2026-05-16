@@ -1,7 +1,7 @@
 <script setup>
 import { useTrans } from '@/Composables/useTrans'
 import MainLayout from '@/Layouts/MainLayout.vue'
-import { Head } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 
 const { t } = useTrans()
 
@@ -32,6 +32,13 @@ defineOptions({ layout: MainLayout })
                     <p class="mb-4" v-html="t('podcasts_page.aljosa_p2')"></p>
                     <p class="mb-4" v-html="t('podcasts_page.aljosa_p3')"></p>
                     <p class="mb-4" v-html="t('podcasts_page.aljosa_p4')"></p>
+                    <div class="mt-6">
+                        <Link
+                            :href="route('gdje-se-fura-nekultura')"
+                            class="text-radio-red font-bold hover:underline transition-all">
+                            Pogledaj detaljnije &rarr;
+                        </Link>
+                    </div>
                 </div>
             </div>
 
@@ -47,6 +54,13 @@ defineOptions({ layout: MainLayout })
                     <p class="mb-4" v-html="t('podcasts_page.milos_p1')"></p>
                     <p class="mb-4" v-html="t('podcasts_page.milos_p2')"></p>
                     <p class="mb-4" v-html="t('podcasts_page.milos_p3')"></p>
+                    <div class="mt-6">
+                        <Link
+                            :href="route('Milos-Stevanovic-standard-classic-podcast')"
+                            class="text-radio-red font-bold hover:underline transition-all">
+                            Pogledaj detaljnije &rarr;
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
