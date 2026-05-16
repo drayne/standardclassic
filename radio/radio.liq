@@ -4,13 +4,16 @@ settings.server.telnet.set(true)
 settings.server.telnet.bind_addr.set("0.0.0.0")
 settings.server.telnet.port.set(1234)
 
+# --- 0. POSTAVKE ---
+base_url = "https://standardclassic.ba/api/radio"
+
 # --- 0. ZA REPORT PUSTENE PJESME ---
 def on_track_started(m) =
   media_id = m["media_id"]
   type = m["type"]
   # Asinhroni HTTP poziv Laravelu
   thread.run({
-    ignore(http.get("https://test.standardclassic.ba/api/radio/report-played?media_id=#{media_id}&type=#{type}"))
+    ignore(http.get("#{base_url}/report-played?media_id=#{media_id}&type=#{type}"))
   })
 end
 
@@ -21,7 +24,7 @@ scheduled_queue = request.queue(id="scheduled_queue")
 
 # Regularna muzika sa Laravela
 def get_next_track() =
-  raw_json = http.get("https://test.standardclassic.ba/api/radio/next")
+  raw_json = http.get("#{base_url}/next")
 
   # 1. Izvlačimo media_id iz JSON-a
   data = json.parse(default=[("title","Unknown"), ("artist", "Unknown"), ("path", ""), ("media_id", "")], raw_json)
@@ -50,7 +53,7 @@ scheduled_queue.on_track(on_track_started)
 music.on_track(on_track_started)
 
 def check_for_scheduled_media() =
-  raw_json = http.get("https://test.standardclassic.ba/api/radio/check-schedule")
+  raw_json = http.get("#{base_url}/check-schedule")
   data = json.parse(default=[("status","idle"), ("path", ""), ("title", ""), ("artist", ""), ("media_id", "")], raw_json)
 
   if data["status"] == "play_now" then
