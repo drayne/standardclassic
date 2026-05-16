@@ -64,6 +64,7 @@ class ShowResource extends Resource
                         ->default(fn ($record) => match($record->name) {
                             'Kult Express' => asset('images/logo-kult-express.jpg'),
                             'Popodne sa Acom Informacijom' => asset('images/popodne-sa-acom-informacijom.jpg'),
+                            'Vijesti sa Dankom - iz zemlje i svijeta' => asset('images/vijesti-sa-dankom.jpg'),
                             default => asset('images/emisije-na-nasem-radiju.jpg'),
                         })
                         ->height(300)
