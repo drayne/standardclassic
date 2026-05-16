@@ -5,7 +5,9 @@ use App\Http\Controllers\GetArticleController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\MediaStreamController;
+use App\Http\Controllers\PodcastController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShowController;
 use App\Http\Controllers\StaticController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,15 +26,15 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/', IndexController::class);
-Route::get('gdje-se-fura-nekultura', StaticController::class)->name('gdje-se-fura-nekultura');
-Route::get('Milos-Stevanovic-standard-classic-podcast', StaticController::class)->name('Milos-Stevanovic-standard-classic-podcast');
+Route::get('gdje-se-fura-nekultura', PodcastController::class)->name('gdje-se-fura-nekultura');
+Route::get('Milos-Stevanovic-standard-classic-podcast', PodcastController::class)->name('Milos-Stevanovic-standard-classic-podcast');
 Route::get('zasto-postojimo', StaticController::class)->name('zasto-postojimo');
 Route::get('program-radija', StaticController::class)->name('program-radija');
 Route::get('emisije-na-nasem-radiju', StaticController::class)->name('emisije-na-nasem-radiju');
 Route::get('impressum', StaticController::class)->name('impressum');
 Route::get('podkasti-na-standardclassic-radiju', StaticController::class)->name('podkasti-na-standardclassic-radiju');
-Route::get('popodne-sa-Acom-Informacijom', StaticController::class)->name('popodne-sa-Acom-Informacijom');
-Route::get('vijesti-sa-dankom', StaticController::class)->name('vijesti-sa-dankom');
+Route::get('popodne-sa-Acom-Informacijom', ShowController::class)->name('popodne-sa-Acom-Informacijom');
+Route::get('vijesti-sa-dankom', ShowController::class)->name('vijesti-sa-dankom');
 
 Route::get('vijesti-iz-kulture', ArticlesController::class)->name('vijesti-iz-kulture');
 Route::get('vijesti-iz-dnevno-politickog-zivota', ArticlesController::class)->name('vijesti-iz-dnevno-politickog-zivota');
