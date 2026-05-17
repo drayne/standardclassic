@@ -33,11 +33,13 @@ const togglePlay = () => {
 
 <template>
     <div
+        @click="!episode.is_youtube && togglePlay()"
         :class="[
             'group relative flex flex-col bg-white border rounded-xl p-4 md:p-5 transition-all duration-500 overflow-hidden',
+            !episode.is_youtube ? 'cursor-pointer' : '',
             episode.playing
-                ? 'border-radio-red/40 shadow-[0_12px_30px_rgba(179,27,27,0.1)] ring-1 ring-radio-red/10'
-                : 'border-gray-100 hover:border-radio-red/30 hover:shadow-xl',
+                ? 'border-radio-red/40 shadow-[0_12px_30px_rgba(179,27,27,0.1)] ring-1 ring-radio-red/10 bg-radio-red/[0.02]'
+                : 'border-gray-100 hover:border-radio-red/30 hover:shadow-xl hover:bg-radio-red/[0.02]',
         ]">
         <!-- Creative Accent Strip -->
         <div
@@ -70,11 +72,17 @@ const togglePlay = () => {
             </svg>
         </div>
 
-        <!-- Background Play/Pause Indicator -->
-        <div
+        <!-- Background Indicator (Play/Pause for Audio) -->
+        <button
             v-if="!episode.is_youtube"
-            class="absolute right-0 top-0 md:right-auto md:-left-2 md:top-1/2 md:-translate-y-1/2 pointer-events-none transition-all duration-500 opacity-[0.08] group-hover:opacity-[0.12]"
-            :class="episode.playing ? 'text-radio-red scale-110 opacity-[0.15]' : 'text-gray-400'">
+            @click.stop="togglePlay"
+            type="button"
+            class="absolute right-4 top-4 md:right-auto md:-left-2 md:top-1/2 md:-translate-y-1/2 transition-all duration-500 group-hover:scale-105 z-30 focus:outline-none cursor-pointer"
+            :class="[
+                episode.playing
+                    ? 'text-radio-red scale-110 opacity-[0.2]'
+                    : 'text-gray-400 group-hover:text-radio-red/30 opacity-[0.08] group-hover:opacity-[0.25] hover:opacity-[0.5]',
+            ]">
             <svg
                 v-if="!episode.playing"
                 xmlns="http://www.w3.org/2000/svg"
@@ -97,13 +105,22 @@ const togglePlay = () => {
                     d="M8.5 5a.5.5 0 01.5.5v13a.5.5 0 01-1 0v-13a.5.5 0 01.5-.5zM15.5 5a.5.5 0 01.5.5v13a.5.5 0 01-1 0v-13a.5.5 0 01.5-.5z"
                     clip-rule="evenodd" />
             </svg>
+        </button>
+
+        <!-- YouTube Indicator (Mobile watermark) -->
+        <div
+            v-else
+            class="absolute right-4 top-4 md:hidden pointer-events-none transition-all duration-500 opacity-[0.08] text-radio-red/60">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-24 h-24">
+                <path d="M4.5 4.5a3 3 0 00-3 3v9a3 3 0 003 3h15a3 3 0 003-3v-9a3 3 0 00-3-3h-15zm6 4.5l5 3-5 3V9z" />
+            </svg>
         </div>
 
         <div class="relative z-10 flex flex-col gap-4" :class="{ 'md:pl-24': !episode.is_youtube }">
             <!-- Top Row: Title/Date -->
             <div class="flex flex-row items-center gap-4">
-                <!-- YouTube Icon Visual remains for video -->
-                <div v-if="episode.is_youtube" class="flex-shrink-0">
+                <!-- YouTube Icon Visual remains for video (Desktop) -->
+                <div v-if="episode.is_youtube" class="hidden md:flex flex-shrink-0">
                     <div
                         class="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center bg-radio-red/10 text-radio-red">
                         <svg
@@ -134,7 +151,8 @@ const togglePlay = () => {
                             {{ episode.title }}
                         </h3>
                         <!-- Summary next to title on desktop, below on mobile -->
-                        <p class="text-gray-600 text-xs md:text-sm leading-relaxed line-clamp-2 mt-1">
+                        <p
+                            class="text-gray-600 group-hover:text-radio-red/60 text-xs md:text-sm leading-relaxed line-clamp-2 mt-1 transition-colors">
                             {{ episode.summary }}
                         </p>
                     </div>
@@ -142,7 +160,7 @@ const togglePlay = () => {
                         class="order-1 md:order-2 inline-flex items-center self-start md:self-start px-2.5 py-1 rounded-full text-[10px] md:text-xs font-semibold bg-gray-50 text-gray-500 border border-gray-100 flex-shrink-0 transition-colors group-hover:border-radio-red/20 group-hover:bg-radio-red/5 group-hover:text-radio-red">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-3 w-3 mr-1 text-gray-400"
+                            class="h-3 w-3 mr-1 text-gray-400 group-hover:text-radio-red/50 transition-colors"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -178,7 +196,7 @@ const togglePlay = () => {
                             "
                             allowfullscreen></iframe>
                     </div>
-                    <div v-else class="mt-2 bg-white rounded-full border border-gray-300">
+                    <div v-else class="mt-2 bg-white rounded-full border border-gray-300" @click.stop>
                         <audio
                             :id="`audio-${episode.id}`"
                             controls
