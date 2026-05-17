@@ -33,13 +33,13 @@ const togglePlay = () => {
 
 <template>
     <div
-        class="group flex flex-col bg-white border border-gray-100 rounded-xl p-5 hover:border-radio-red/30 hover:shadow-xl transition-all duration-300">
-        <div class="flex flex-col md:flex-row gap-6">
+        class="group flex flex-col bg-white border border-gray-100 rounded-xl p-4 md:p-5 hover:border-radio-red/30 hover:shadow-xl transition-all duration-300">
+        <div class="flex flex-row gap-4 md:gap-6 items-center">
             <!-- Play/Video Icon Visual -->
             <div v-if="!episode.is_youtube" class="flex-shrink-0 flex items-center justify-center">
                 <button
                     @click="togglePlay"
-                    class="w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-sm"
+                    class="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-sm"
                     :class="
                         episode.playing
                             ? 'bg-radio-red text-white'
@@ -50,7 +50,7 @@ const togglePlay = () => {
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         fill="currentColor"
-                        class="w-8 h-8 ml-1">
+                        class="w-6 h-6 md:w-8 md:h-8 ml-1">
                         <path
                             fill-rule="evenodd"
                             d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
@@ -61,7 +61,7 @@ const togglePlay = () => {
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         fill="currentColor"
-                        class="w-8 h-8">
+                        class="w-6 h-6 md:w-8 md:h-8">
                         <path
                             fill-rule="evenodd"
                             d="M6.75 5.25a.75.75 0 01.75.75v12a.75.75 0 01-1.5 0V6a.75.75 0 01.75-.75zM17.25 5.25a.75.75 0 01.75.75v12a.75.75 0 01-1.5 0V6a.75.75 0 01.75-.75z"
@@ -70,8 +70,13 @@ const togglePlay = () => {
                 </button>
             </div>
             <div v-else class="flex-shrink-0 flex items-center justify-center">
-                <div class="w-16 h-16 rounded-full flex items-center justify-center bg-radio-red/10 text-radio-red">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
+                <div
+                    class="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center bg-radio-red/10 text-radio-red">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        class="w-6 h-6 md:w-8 md:h-8">
                         <path
                             d="M4.5 4.5a3 3 0 00-3 3v9a3 3 0 003 3h15a3 3 0 003-3v-9a3 3 0 00-3-3h-15zm6 4.5l5 3-5 3V9z" />
                     </svg>
@@ -79,30 +84,31 @@ const togglePlay = () => {
             </div>
 
             <!-- Content -->
-            <div class="flex-grow flex flex-col">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-2">
-                    <h3 class="font-bold text-xl text-gray-900 group-hover:text-radio-red transition-colors">
+            <div class="flex-grow flex flex-col min-w-0">
+                <div class="flex flex-row items-start justify-between mb-2 md:mb-3 gap-2">
+                    <h3
+                        class="font-bold text-base md:text-xl text-gray-900 group-hover:text-radio-red transition-colors leading-tight order-1">
                         {{ episode.title }}
                     </h3>
                     <span
-                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                        class="inline-flex items-center flex-shrink-0 px-2 py-0.5 rounded-full text-[10px] md:text-xs font-medium bg-gray-100 text-gray-500 border border-gray-200 order-2">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-4 w-4 mr-1"
+                            class="h-3 w-3 mr-1 text-gray-400"
                             fill="none"
-                            viewBox="0 0 26 26"
-                            stroke="black">
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                stroke-width="1"
+                                stroke-width="2"
                                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                         {{ episode.date }}
                     </span>
                 </div>
 
-                <p class="text-gray-600 text-base leading-relaxed mb-4 line-clamp-2 md:line-clamp-none">
+                <p class="text-gray-600 text-xs md:text-base leading-relaxed mb-4 line-clamp-2 md:line-clamp-none">
                     {{ episode.summary }}
                 </p>
 
