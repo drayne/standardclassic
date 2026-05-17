@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import EpisodeItem from '@/Components/EpisodeItem.vue'
 import Pagination from '@/Components/Pagination.vue'
-import { ref } from 'vue'
+import { onBeforeUnmount, ref, watch } from 'vue'
 
 const props = defineProps<{
     episodes: {
@@ -25,20 +25,45 @@ const props = defineProps<{
 
 const localEpisodes = ref(props.episodes)
 
-const togglePlay = (id: number) => {
+onBeforeUnmount(() => {
+    const audioElements = document.querySelectorAll('audio')
+    audioElements.forEach((el) => {
+        el.pause()
+        el.src = '' // Oslobađanje resursa
+        el.load()
+    })
+})
+
+watch(
+    () => props.episodes,
+    (newEpisodes) => {
+        localEpisodes.value = newEpisodes
+    },
+)
+
+const togglePlay = async (id: number) => {
     const audioElements = document.querySelectorAll('audio')
     const clickedAudio = document.getElementById(`audio-${id}`) as HTMLAudioElement
 
+    // Pauziraj sve ostale
     audioElements.forEach((el) => {
         if (el !== clickedAudio) {
             el.pause()
         }
     })
 
-    if (clickedAudio.paused) {
-        clickedAudio.play()
-    } else {
-        clickedAudio.pause()
+    if (!clickedAudio) return
+
+    try {
+        if (clickedAudio.paused) {
+            await clickedAudio.play()
+        } else {
+            clickedAudio.pause()
+        }
+    } catch (error) {
+        if (error instanceof Error && error.name !== 'AbortError') {
+            console.error('Audio playback error:', error)
+        }
     }
 }
 

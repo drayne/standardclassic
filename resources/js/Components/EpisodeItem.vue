@@ -129,6 +129,7 @@ const togglePlay = () => {
                         v-else
                         :id="`audio-${episode.id}`"
                         controls
+                        preload="metadata"
                         controlsList="nodownload"
                         class="w-full h-8 custom-audio-player"
                         @play="onPlay"
