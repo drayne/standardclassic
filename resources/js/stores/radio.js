@@ -108,17 +108,26 @@ export const radioStore = reactive({
         }
     },
 
+    stop() {
+        if (!this.audio) return
+        this.audio.pause()
+        this.audio.src = ''
+        this.audio.load()
+        this.isPlaying = false
+        this.isLoading = false
+        this.updateMediaSession()
+    },
+
     togglePlay() {
         if (!this.audio) return
 
         if (this.isPlaying) {
-            this.audio.pause()
-            this.audio.src = ''
-            this.audio.load()
-            this.isPlaying = false
-            this.isLoading = false
-            this.updateMediaSession()
+            this.stop()
         } else {
+            // Pauziraj sve audio elemente u DOM-u (npr. epizode iz arhive)
+            const audioElements = document.querySelectorAll('audio')
+            audioElements.forEach((el) => el.pause())
+
             this.isLoading = true
             this.isPlaying = true // Odmah mijenjamo stanje da UI reaguje
             this.audio.src = this.streamUrl
@@ -181,14 +190,7 @@ export const radioStore = reactive({
             // Postavljanje kontrola
             navigator.mediaSession.setActionHandler('play', () => this.togglePlay())
             navigator.mediaSession.setActionHandler('pause', () => this.togglePlay())
-            navigator.mediaSession.setActionHandler('stop', () => {
-                this.audio.pause()
-                this.audio.src = ''
-                this.audio.load()
-                this.isPlaying = false
-                this.isLoading = false
-                this.updateMediaSession()
-            })
+            navigator.mediaSession.setActionHandler('stop', () => this.stop())
         }
     },
 })

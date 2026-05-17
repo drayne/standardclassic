@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import EpisodeItem from '@/Components/EpisodeItem.vue'
 import Pagination from '@/Components/Pagination.vue'
+import { radioStore } from '@/stores/radio'
 import { onBeforeUnmount, ref, watch } from 'vue'
 
 const props = defineProps<{
@@ -42,6 +43,11 @@ watch(
 )
 
 const togglePlay = async (id: number) => {
+    // Pauziraj radio ako svira
+    if (radioStore.isPlaying) {
+        radioStore.stop()
+    }
+
     const audioElements = document.querySelectorAll('audio')
     const clickedAudio = document.getElementById(`audio-${id}`) as HTMLAudioElement
 
@@ -77,6 +83,21 @@ const togglePlay = async (id: number) => {
 }
 
 const onPlay = (id: number) => {
+    // Pauziraj radio ako svira
+    if (radioStore.isPlaying) {
+        radioStore.stop()
+    }
+
+    // Pauziraj ostale epizode
+    const audioElements = document.querySelectorAll('audio')
+    const clickedAudio = document.getElementById(`audio-${id}`) as HTMLAudioElement
+
+    audioElements.forEach((el) => {
+        if (el !== clickedAudio) {
+            el.pause()
+        }
+    })
+
     localEpisodes.value.data.forEach((e) => (e.playing = e.id === id))
 }
 
