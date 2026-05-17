@@ -20,13 +20,16 @@ class MediaStreamController extends Controller
 
         return response()->stream(function () use ($path) {
             $stream = fopen($path, 'rb');
-            fpassthru($stream);
-            fclose($stream);
+            if ($stream) {
+                fpassthru($stream);
+                fclose($stream);
+            }
         }, 200, [
             'Content-Type' => $mime,
             'Content-Length' => $size,
             'Content-Disposition' => 'inline; filename="' . basename($path) . '"',
             'Accept-Ranges' => 'bytes',
+            'X-Content-Type-Options' => 'nosniff',
         ]);
     }
 }
