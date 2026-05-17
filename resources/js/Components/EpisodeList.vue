@@ -56,14 +56,23 @@ const togglePlay = async (id: number) => {
 
     try {
         if (clickedAudio.paused) {
-            await clickedAudio.play()
+            // Dodatna provera stanja pre play()
+            if (clickedAudio.readyState >= 1) {
+                // HAVE_METADATA
+                await clickedAudio.play()
+            } else {
+                clickedAudio.load()
+                await clickedAudio.play()
+            }
         } else {
             clickedAudio.pause()
         }
     } catch (error) {
-        if (error instanceof Error && error.name !== 'AbortError') {
-            console.error('Audio playback error:', error)
+        // Ignorišemo AbortError jer je to normalno ponašanje kod prekida
+        if (error instanceof Error && error.name === 'AbortError') {
+            return
         }
+        console.error('Audio playback error:', error)
     }
 }
 
