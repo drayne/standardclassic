@@ -33,45 +33,77 @@ const togglePlay = () => {
 
 <template>
     <div
-        class="group flex flex-col bg-white border border-gray-100 rounded-xl p-4 md:p-5 hover:border-radio-red/30 hover:shadow-xl transition-all duration-300">
-        <div class="flex flex-col gap-4">
-            <!-- Top Row: Play Button + Title/Date -->
+        :class="[
+            'group relative flex flex-col bg-white border rounded-xl p-4 md:p-5 transition-all duration-500 overflow-hidden',
+            episode.playing
+                ? 'border-radio-red/40 shadow-[0_12px_30px_rgba(179,27,27,0.1)] ring-1 ring-radio-red/10'
+                : 'border-gray-100 hover:border-radio-red/30 hover:shadow-xl',
+        ]">
+        <!-- Creative Accent Strip -->
+        <div
+            class="absolute left-0 top-0 bottom-0 w-[3px] transition-all duration-500 z-20"
+            :class="
+                episode.playing
+                    ? 'bg-radio-red shadow-[0_0_15px_rgba(179,27,27,0.5)]'
+                    : 'bg-transparent group-hover:bg-radio-red/20'
+            ">
+        </div>
+
+        <!-- Background Soundwave Texture -->
+        <div
+            v-if="!episode.is_youtube"
+            class="absolute right-0 bottom-0 pointer-events-none opacity-[0.03] transition-all duration-1000"
+            :class="{ 'opacity-[0.1] scale-110 translate-x-4': episode.playing }">
+            <svg
+                width="300"
+                height="120"
+                viewBox="0 0 300 120"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="text-radio-red">
+                <path
+                    d="M0 60C30 40 60 80 90 60C120 40 150 80 180 60C210 40 240 80 270 60C300 40 330 80 360 60"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    class="path-animate" />
+            </svg>
+        </div>
+
+        <!-- Background Play/Pause Indicator -->
+        <div
+            v-if="!episode.is_youtube"
+            class="absolute right-0 top-0 md:right-auto md:-left-2 md:top-1/2 md:-translate-y-1/2 pointer-events-none transition-all duration-500 opacity-[0.08] group-hover:opacity-[0.12]"
+            :class="episode.playing ? 'text-radio-red scale-110 opacity-[0.15]' : 'text-gray-400'">
+            <svg
+                v-if="!episode.playing"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-24 h-24 md:w-32 md:h-32">
+                <path
+                    fill-rule="evenodd"
+                    d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
+                    clip-rule="evenodd" />
+            </svg>
+            <svg
+                v-else
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-24 h-24 md:w-32 md:h-32">
+                <path
+                    fill-rule="evenodd"
+                    d="M8.5 5a.5.5 0 01.5.5v13a.5.5 0 01-1 0v-13a.5.5 0 01.5-.5zM15.5 5a.5.5 0 01.5.5v13a.5.5 0 01-1 0v-13a.5.5 0 01.5-.5z"
+                    clip-rule="evenodd" />
+            </svg>
+        </div>
+
+        <div class="relative z-10 flex flex-col gap-4" :class="{ 'md:pl-24': !episode.is_youtube }">
+            <!-- Top Row: Title/Date -->
             <div class="flex flex-row items-center gap-4">
-                <!-- Play/Video Icon Visual -->
-                <div v-if="!episode.is_youtube" class="flex-shrink-0">
-                    <button
-                        @click="togglePlay"
-                        class="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-sm"
-                        :class="
-                            episode.playing
-                                ? 'bg-radio-red text-white'
-                                : 'bg-radio-red/10 text-radio-red group-hover:bg-radio-red group-hover:text-white'
-                        ">
-                        <svg
-                            v-if="!episode.playing"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            class="w-6 h-6 md:w-8 md:h-8 ml-1">
-                            <path
-                                fill-rule="evenodd"
-                                d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        <svg
-                            v-else
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            class="w-6 h-6 md:w-8 md:h-8">
-                            <path
-                                fill-rule="evenodd"
-                                d="M6.75 5.25a.75.75 0 01.75.75v12a.75.75 0 01-1.5 0V6a.75.75 0 01.75-.75zM17.25 5.25a.75.75 0 01.75.75v12a.75.75 0 01-1.5 0V6a.75.75 0 01.75-.75z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                </div>
-                <div v-else class="flex-shrink-0">
+                <!-- YouTube Icon Visual remains for video -->
+                <div v-if="episode.is_youtube" class="flex-shrink-0">
                     <div
                         class="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center bg-radio-red/10 text-radio-red">
                         <svg
@@ -87,8 +119,16 @@ const togglePlay = () => {
 
                 <!-- Title & Date -->
                 <div
-                    class="flex-grow flex flex-col md:flex-row md:items-center md:justify-between min-w-0 gap-1 md:gap-4">
-                    <div class="order-2 md:order-1 flex flex-col min-w-0">
+                    class="flex-grow flex flex-col md:flex-row md:items-start md:justify-between min-w-0 gap-1 md:gap-4">
+                    <div class="order-2 md:order-1 flex flex-col min-w-0 relative pt-4">
+                        <!-- Now Playing Indicator -->
+                        <div
+                            v-if="episode.playing && !episode.is_youtube"
+                            class="absolute top-0 left-0 flex items-center gap-1.5 text-radio-red text-[10px] font-bold uppercase tracking-widest animate-pulse">
+                            <span class="flex h-1.5 w-1.5 rounded-full bg-radio-red"></span>
+                            Slušate sada
+                        </div>
+
                         <h3
                             class="font-bold text-base md:text-xl text-gray-900 group-hover:text-radio-red transition-colors leading-tight line-clamp-2">
                             {{ episode.title }}
@@ -99,7 +139,7 @@ const togglePlay = () => {
                         </p>
                     </div>
                     <span
-                        class="order-1 md:order-2 inline-flex items-center self-start md:self-center px-2 py-0.5 rounded-full text-[10px] md:text-xs font-medium bg-gray-100 text-gray-500 border border-gray-200 flex-shrink-0">
+                        class="order-1 md:order-2 inline-flex items-center self-start md:self-start px-2.5 py-1 rounded-full text-[10px] md:text-xs font-semibold bg-gray-50 text-gray-500 border border-gray-100 flex-shrink-0 transition-colors group-hover:border-radio-red/20 group-hover:bg-radio-red/5 group-hover:text-radio-red">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="h-3 w-3 mr-1 text-gray-400"
@@ -159,9 +199,10 @@ const togglePlay = () => {
 </template>
 
 <style scoped>
-/* Stilizacija za audio plejer - smanjen naglasak */
+/* Stilizacija za audio plejer - boje aplikacije */
 .custom-audio-player {
-    filter: grayscale(40%) opacity(0.7) contrast(95%);
+    accent-color: #b31b1b;
+    filter: opacity(0.8);
     background-color: white; /* Beli pokrivač za sakrivanje sive pozadine browsera */
     border-radius: 9999px;
     transition: all 0.3s ease;
@@ -177,6 +218,20 @@ const togglePlay = () => {
 }
 
 .custom-audio-player:hover {
-    filter: grayscale(0%) opacity(1) contrast(100%);
+    filter: opacity(1);
+}
+
+/* Animacija za talas u pozadini */
+@keyframes wave-flow {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-60px);
+    }
+}
+
+.path-animate {
+    animation: wave-flow 4s linear infinite;
 }
 </style>
