@@ -77,7 +77,7 @@ const togglePlay = () => {
             v-if="!episode.is_youtube"
             @click.stop="togglePlay"
             type="button"
-            class="absolute right-4 top-4 md:right-auto md:-left-2 md:top-1/2 md:-translate-y-1/2 transition-all duration-500 group-hover:scale-105 z-30 focus:outline-none cursor-pointer"
+            class="absolute right-2 top-2 md:translate-y-[-50%] md:right-auto md:-left-2 md:top-1/2 transition-all duration-500 group-hover:scale-105 z-30 focus:outline-none cursor-pointer"
             :class="[
                 episode.playing
                     ? 'text-radio-red scale-110 opacity-[0.2]'
@@ -110,7 +110,7 @@ const togglePlay = () => {
         <!-- YouTube Indicator (Mobile watermark) -->
         <div
             v-else
-            class="absolute right-4 top-4 md:hidden pointer-events-none transition-all duration-500 opacity-[0.08] text-radio-red/60">
+            class="absolute right-2 top-2 md:hidden pointer-events-none transition-all duration-500 opacity-[0.08] text-radio-red/60">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-24 h-24">
                 <path d="M4.5 4.5a3 3 0 00-3 3v9a3 3 0 003 3h15a3 3 0 003-3v-9a3 3 0 00-3-3h-15zm6 4.5l5 3-5 3V9z" />
             </svg>
