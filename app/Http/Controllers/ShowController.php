@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Show;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ShowController extends Controller
@@ -29,9 +30,14 @@ class ShowController extends Controller
             $isYoutube = false;
             $videoUrl = null;
             $audioUrl = null;
+            $fileSize = null;
 
             if ($episode->media) {
                 $audioUrl = route('media.stream', $episode->media_id);
+                if ($episode->media->file_path && Storage::disk('radio')->exists($episode->media->file_path)) {
+                    $sizeInBytes = Storage::disk('radio')->size($episode->media->file_path);
+                    $fileSize = round($sizeInBytes / 1024 / 1024, 1);
+                }
             } elseif ($episode->external_url) {
                 if (str_contains($episode->external_url, 'youtube.com') || str_contains($episode->external_url, 'youtu.be')) {
                     $isYoutube = true;
@@ -53,6 +59,7 @@ class ShowController extends Controller
                 'summary' => $episode->description,
                 'audio_url' => $audioUrl,
                 'video_url' => $videoUrl,
+                'file_size' => $fileSize,
                 'is_youtube' => $isYoutube,
                 'playing' => false,
             ];
