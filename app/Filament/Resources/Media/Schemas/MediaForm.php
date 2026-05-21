@@ -29,7 +29,7 @@ class MediaForm
                                     ->disk('radio')
                                     ->directory('audio')
                                     ->acceptedFileTypes(['audio/mpeg', 'audio/mp4', 'audio/x-m4a'])
-                                    ->maxSize(204800) // 200MB
+                                    ->maxSize(307200) // 300MB
                                     ->live()
                                     // Slugifikacija naziva audio fajla sa timestampom
                                     ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
