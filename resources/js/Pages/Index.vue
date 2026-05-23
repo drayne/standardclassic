@@ -3,12 +3,12 @@
 
     <div>
         <section class="mb-12">
-            <h1 class="inline-block text-xl md:text-2xl -mt-6" v-html="t('index_page.welcome_header')"></h1>
+            <h1 class="inline-block text-2xl md:text-[1.75rem] -mt-6" v-html="t('index_page.welcome_header')"></h1>
         </section>
         <!-- Culture News Section -->
         <section class="mb-16">
-            <h2 class="mb-3 flex items-center md:text-lg font-medium md:font-bold tracking-wide uppercase">
-                <span class="bg-radio-red mr-3 h-0.5 w-6 md:h-1 md:w-8"></span>
+            <h2 class="mb-3 flex items-center md:text-lg font-bold tracking-wide uppercase">
+                <span class="bg-radio-red mr-3 h-1 w-8"></span>
                 {{ t('index_page.culture_news') }}
             </h2>
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -47,7 +47,7 @@
         <section class="grid grid-cols-1 gap-16 pb-12 lg:grid-cols-2">
             <!-- Daily News -->
             <div>
-                <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide uppercase">
+                <h2 class="mb-1 flex items-center md:text-lg font-bold tracking-wide uppercase">
                     <span class="bg-radio-red mr-3 h-1 w-8 shrink-0"></span>
                     {{ t('index_page.daily_news') }}
                 </h2>
@@ -70,7 +70,7 @@
 
             <!-- Podcasts & Shows -->
             <div>
-                <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide uppercase">
+                <h2 class="mb-1 flex items-center md:text-lg font-bold tracking-wide uppercase">
                     <span class="bg-radio-red mr-3 h-1 w-8 shrink-0"></span>
                     {{ t('index_page.podcasts_and_shows') }}
                 </h2>
@@ -93,7 +93,7 @@
 
         <!-- Welcome Section -->
         <section class="mb-16">
-            <h2 class="mb-2 flex items-center text-lg font-bold tracking-wide uppercase">
+            <h2 class="mb-2 flex items-center md:text-lg font-bold tracking-wide uppercase">
                 <span class="bg-radio-red mr-3 h-1 w-8"></span>
                 {{ t('index_page.about_us') }}
             </h2>
