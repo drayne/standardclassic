@@ -2,80 +2,13 @@
     <Head :title="t('index_page.title')" />
 
     <div>
-        <!-- Hero Section -->
-        <section class="mb-16 grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2">
-            <div class="flex items-center justify-center">
-                <img :src="leftImage" alt="Klasična muzika" class="h-auto w-full" />
-            </div>
-            <div class="flex">
-                <img :src="rightImage" alt="Umetnička ilustracija - Anđeli" class="w-full rounded-lg object-cover" />
-            </div>
+        <section class="mb-12">
+            <h1 class="inline-block text-xl md:text-2xl -mt-6">
+                Dobro došli na talase <b class="font-bold">Standard</b>
+                <span class="text-radio-red"> Classic</span>
+                radija!
+            </h1>
         </section>
-
-        <!-- Welcome Section -->
-        <section class="mb-16">
-            <h2 class="mb-2 flex items-center text-lg font-bold tracking-wide uppercase">
-                <span class="bg-radio-red mr-3 h-1 w-8"></span>
-                {{ t('index_page.about_us') }}
-            </h2>
-            <div class="mt-4 grid grid-cols-1 gap-12 lg:grid-cols-2">
-                <div class="lg:col-span-1 min-h-100 relative">
-                    <Transition name="fade">
-                        <div
-                            :key="currentIndex"
-                            v-if="currentComposer"
-                            class="flex flex-col overflow-hidden absolute inset-0 w-full">
-                            <img
-                                v-if="currentComposer.image"
-                                :src="currentComposer.image"
-                                :alt="currentComposer.name"
-                                @click="currentComposer.url ? openExternalLink(currentComposer.url) : null"
-                                class="h-80 w-full rounded-lg object-cover object-top hover:cursor-pointer hover:shadow-md transition duration-300" />
-                            <div
-                                v-else
-                                class="h-80 w-full rounded-lg bg-gray-100 flex items-center justify-center text-gray-400">
-                                {{ t('index_page.no_image') }}
-                            </div>
-                            <span class="mt-2 text-sm text-gray-500 italic">
-                                <span
-                                    v-if="currentComposer.url"
-                                    class="hover:cursor-pointer hover:underline"
-                                    @click="openExternalLink(currentComposer.url)">
-                                    🔗 {{ currentComposer.name }} - {{ currentComposer.description }}
-                                </span>
-                                <span v-else>{{ currentComposer.name }} - {{ currentComposer.description }}</span>
-                            </span>
-                        </div>
-                        <div v-else class="flex flex-col overflow-hidden absolute inset-0 w-full">
-                            <img
-                                src="/images/gustavo-dudamel.jpg"
-                                alt="Gustavo Dudamel"
-                                @click="
-                                    openExternalLink(
-                                        'https://sr.wikipedia.org/sr-ec/%D0%93%D1%83%D1%81%D1%82%D0%B0%D0%B2%D0%BE_%D0%94%D1%83%D0%B4%D0%B0%D0%BC%D0%B5%D0%BB',
-                                    )
-                                "
-                                class="h-80 w-full rounded-lg object-cover object-top hover:cursor-pointer hover:shadow-md transition duration-300" />
-                            <span class="mt-2 text-sm text-gray-500 italic">
-                                {{ t('index_page.dudamel_desc') }}
-                            </span>
-                        </div>
-                    </Transition>
-                </div>
-                <div class="prose max-w-none lg:col-span-1">
-                    <h1 class="mb-7 inline-block text-2xl" v-html="t('index_page.welcome_h1')"></h1>
-                    <p class="mb-7 text-lg leading-relaxed text-gray-700">
-                        {{ t('index_page.welcome_p') }}
-                    </p>
-                    <Link
-                        class="text-radio-red cursor-pointer text-lg font-bold hover:underline"
-                        :href="route('zasto-postojimo')">
-                        <span v-html="t('index_page.read_more_about_us')"></span>
-                    </Link>
-                </div>
-            </div>
-        </section>
-
         <!-- Culture News Section -->
         <section class="mb-16">
             <h2 class="mb-3 flex items-center text-lg font-bold tracking-wide uppercase">
@@ -149,6 +82,80 @@
                 <PodcastMilos v-if="randomPodcastIndex === 2" />
                 <PodcastAca v-if="randomPodcastIndex === 3" />
                 <EmisijeDanka v-if="randomPodcastIndex === 4" />
+            </div>
+        </section>
+
+        <!-- Hero Section -->
+        <section class="mb-16 grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2">
+            <div class="flex items-center justify-center">
+                <img :src="leftImage" alt="Klasična muzika" class="h-auto w-full" />
+            </div>
+            <div class="flex">
+                <img :src="rightImage" alt="Umetnička ilustracija - Anđeli" class="w-full rounded-lg object-cover" />
+            </div>
+        </section>
+
+        <!-- Welcome Section -->
+        <section class="mb-16">
+            <h2 class="mb-2 flex items-center text-lg font-bold tracking-wide uppercase">
+                <span class="bg-radio-red mr-3 h-1 w-8"></span>
+                {{ t('index_page.about_us') }}
+            </h2>
+            <div class="mt-4 grid grid-cols-1 gap-12 lg:grid-cols-2">
+                <div class="lg:col-span-1 min-h-100 relative">
+                    <Transition name="fade">
+                        <div
+                            :key="currentIndex"
+                            v-if="currentComposer"
+                            class="flex flex-col overflow-hidden absolute inset-0 w-full">
+                            <img
+                                v-if="currentComposer.image"
+                                :src="currentComposer.image"
+                                :alt="currentComposer.name"
+                                @click="currentComposer.url ? openExternalLink(currentComposer.url) : null"
+                                class="h-80 w-full rounded-lg object-cover object-top hover:cursor-pointer hover:shadow-md transition duration-300" />
+                            <div
+                                v-else
+                                class="h-80 w-full rounded-lg bg-gray-100 flex items-center justify-center text-gray-400">
+                                {{ t('index_page.no_image') }}
+                            </div>
+                            <span class="mt-2 text-sm text-gray-500 italic">
+                                <span
+                                    v-if="currentComposer.url"
+                                    class="hover:cursor-pointer hover:underline"
+                                    @click="openExternalLink(currentComposer.url)">
+                                    🔗 {{ currentComposer.name }} - {{ currentComposer.description }}
+                                </span>
+                                <span v-else>{{ currentComposer.name }} - {{ currentComposer.description }}</span>
+                            </span>
+                        </div>
+                        <div v-else class="flex flex-col overflow-hidden absolute inset-0 w-full">
+                            <img
+                                src="/images/gustavo-dudamel.jpg"
+                                alt="Gustavo Dudamel"
+                                @click="
+                                    openExternalLink(
+                                        'https://sr.wikipedia.org/sr-ec/%D0%93%D1%83%D1%81%D1%82%D0%B0%D0%B2%D0%BE_%D0%94%D1%83%D0%B4%D0%B0%D0%BC%D0%B5%D0%BB',
+                                    )
+                                "
+                                class="h-80 w-full rounded-lg object-cover object-top hover:cursor-pointer hover:shadow-md transition duration-300" />
+                            <span class="mt-2 text-sm text-gray-500 italic">
+                                {{ t('index_page.dudamel_desc') }}
+                            </span>
+                        </div>
+                    </Transition>
+                </div>
+                <div class="prose max-w-none lg:col-span-1">
+                    <h1 class="mb-7 inline-block text-2xl" v-html="t('index_page.welcome_h1')"></h1>
+                    <p class="mb-7 text-lg leading-relaxed text-gray-700">
+                        {{ t('index_page.welcome_p') }}
+                    </p>
+                    <Link
+                        class="text-radio-red cursor-pointer text-lg font-bold hover:underline"
+                        :href="route('zasto-postojimo')">
+                        <span v-html="t('index_page.read_more_about_us')"></span>
+                    </Link>
+                </div>
             </div>
         </section>
     </div>
