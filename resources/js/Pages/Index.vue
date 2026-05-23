@@ -3,11 +3,7 @@
 
     <div>
         <section class="mb-12">
-            <h1 class="inline-block text-xl md:text-2xl -mt-6">
-                Dobro došli na talase <b class="font-bold">Standard</b>
-                <span class="text-radio-red"> Classic</span>
-                radija!
-            </h1>
+            <h1 class="inline-block text-xl md:text-2xl -mt-6" v-html="t('index_page.welcome_header')"></h1>
         </section>
         <!-- Culture News Section -->
         <section class="mb-16">
