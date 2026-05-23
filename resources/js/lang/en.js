@@ -44,6 +44,7 @@ export default {
     index_page: {
         title: 'Home',
         about_us: 'About us',
+        welcome_header: 'Welcome to the waves of <b>Standard</b> <span class="text-radio-red"> Classic</span> radio!',
         dudamel_desc: '🔗 Gustavo Dudamel - Director of the New York Philharmonic',
         welcome_h1: 'Welcome to <b>Standard</b> <span class="text-red-700">Classic</span> Radio',
         welcome_p:

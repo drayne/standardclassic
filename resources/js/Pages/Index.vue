@@ -2,6 +2,85 @@
     <Head :title="t('index_page.title')" />
 
     <div>
+        <section class="mb-12">
+            <h1 class="inline-block text-xl md:text-2xl -mt-6" v-html="t('index_page.welcome_header')"></h1>
+        </section>
+        <!-- Culture News Section -->
+        <section class="mb-16">
+            <h2 class="mb-3 flex items-center md:text-lg font-medium md:font-bold tracking-wide uppercase">
+                <span class="bg-radio-red mr-3 h-0.5 w-6 md:h-1 md:w-8"></span>
+                {{ t('index_page.culture_news') }}
+            </h2>
+            <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                <div
+                    v-for="article in kulturaArticles"
+                    :key="article.id"
+                    class="flex overflow-hidden rounded-md border border-gray-200 bg-white transition hover:shadow-md hover:cursor-pointer"
+                    @click="$inertia.visit(`/vijest/${article.slug}`)">
+                    <div class="h-64 w-2/5 flex-shrink-0">
+                        <img
+                            v-if="article.image"
+                            :src="article.image"
+                            :alt="article.title || ''"
+                            class="h-full w-full object-cover" />
+                        <div v-else class="flex h-full items-center justify-center">
+                            <p class="text-xs text-gray-400 italic">{{ t('index_page.no_image') }}</p>
+                        </div>
+                    </div>
+                    <div class="flex w-full flex-col justify-between p-6">
+                        <div>
+                            <h3 class="mb-2 line-clamp-2 text-lg font-bold">
+                                {{ article.title }}
+                            </h3>
+                            <div class="mb-4 line-clamp-4 text-sm text-gray-600" v-html="article.content"></div>
+                        </div>
+                        <button class="text-radio-red text-left text-sm font-bold hover:cursor-pointer">
+                            <span>{{ t('read_more') }}</span>
+                            &rarr;
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Grid -->
+        <section class="grid grid-cols-1 gap-16 pb-12 lg:grid-cols-2">
+            <!-- Daily News -->
+            <div>
+                <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide uppercase">
+                    <span class="bg-radio-red mr-3 h-1 w-8 shrink-0"></span>
+                    {{ t('index_page.daily_news') }}
+                </h2>
+                <ul class="mt-6 space-y-4">
+                    <li
+                        v-for="article in dpArticles"
+                        :key="article.id"
+                        class="flex items-center gap-6 border-b border-gray-300 pb-4 last:border-0">
+                        <span class="text-radio-red block w-24 shrink-0 whitespace-nowrap text-sm font-bold">
+                            {{ article.published_at }}
+                        </span>
+                        <Link
+                            :href="route('vijest', article.slug)"
+                            class="hover:text-radio-red truncate text-base font-medium transition">
+                            {{ article.title }}
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Podcasts & Shows -->
+            <div>
+                <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide uppercase">
+                    <span class="bg-radio-red mr-3 h-1 w-8 shrink-0"></span>
+                    {{ t('index_page.podcasts_and_shows') }}
+                </h2>
+                <PodcastAljosa v-if="randomPodcastIndex === 1" />
+                <PodcastMilos v-if="randomPodcastIndex === 2" />
+                <PodcastAca v-if="randomPodcastIndex === 3" />
+                <EmisijeDanka v-if="randomPodcastIndex === 4" />
+            </div>
+        </section>
+
         <!-- Hero Section -->
         <section class="mb-16 grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2">
             <div class="flex items-center justify-center">
@@ -73,82 +152,6 @@
                         <span v-html="t('index_page.read_more_about_us')"></span>
                     </Link>
                 </div>
-            </div>
-        </section>
-
-        <!-- Culture News Section -->
-        <section class="mb-16">
-            <h2 class="mb-3 flex items-center text-lg font-bold tracking-wide uppercase">
-                <span class="bg-radio-red mr-3 h-1 w-8"></span>
-                {{ t('index_page.culture_news') }}
-            </h2>
-            <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-                <div
-                    v-for="article in kulturaArticles"
-                    :key="article.id"
-                    class="flex overflow-hidden rounded-md border border-gray-200 bg-white transition hover:shadow-md hover:cursor-pointer"
-                    @click="$inertia.visit(`/vijest/${article.slug}`)">
-                    <div class="h-64 w-2/5 flex-shrink-0">
-                        <img
-                            v-if="article.image"
-                            :src="article.image"
-                            :alt="article.title || ''"
-                            class="h-full w-full object-cover" />
-                        <div v-else class="flex h-full items-center justify-center">
-                            <p class="text-xs text-gray-400 italic">{{ t('index_page.no_image') }}</p>
-                        </div>
-                    </div>
-                    <div class="flex w-full flex-col justify-between p-6">
-                        <div>
-                            <h3 class="mb-2 line-clamp-2 text-lg font-bold">
-                                {{ article.title }}
-                            </h3>
-                            <div class="mb-4 line-clamp-4 text-sm text-gray-600" v-html="article.content"></div>
-                        </div>
-                        <button class="text-radio-red text-left text-sm font-bold hover:cursor-pointer">
-                            <span>{{ t('read_more') }}</span>
-                            &rarr;
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Bottom Grid -->
-        <section class="grid grid-cols-1 gap-16 pb-12 lg:grid-cols-2">
-            <!-- Daily News -->
-            <div>
-                <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide uppercase">
-                    <span class="bg-radio-red mr-3 h-1 w-8 shrink-0"></span>
-                    {{ t('index_page.daily_news') }}
-                </h2>
-                <ul class="mt-6 space-y-4">
-                    <li
-                        v-for="article in dpArticles"
-                        :key="article.id"
-                        class="flex items-center gap-6 border-b border-gray-300 pb-4 last:border-0">
-                        <span class="text-radio-red block w-24 shrink-0 whitespace-nowrap text-sm font-bold">
-                            {{ article.published_at }}
-                        </span>
-                        <Link
-                            :href="route('vijest', article.slug)"
-                            class="hover:text-radio-red truncate text-base font-medium transition">
-                            {{ article.title }}
-                        </Link>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Podcasts & Shows -->
-            <div>
-                <h2 class="mb-1 flex items-center text-lg font-bold tracking-wide uppercase">
-                    <span class="bg-radio-red mr-3 h-1 w-8 shrink-0"></span>
-                    {{ t('index_page.podcasts_and_shows') }}
-                </h2>
-                <PodcastAljosa v-if="randomPodcastIndex === 1" />
-                <PodcastMilos v-if="randomPodcastIndex === 2" />
-                <PodcastAca v-if="randomPodcastIndex === 3" />
-                <EmisijeDanka v-if="randomPodcastIndex === 4" />
             </div>
         </section>
     </div>
