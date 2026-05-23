@@ -48,7 +48,7 @@ export default {
         welcome_h1: 'Willkommen beim <b>Standard</b> <span class="text-red-700">Classic</span> Radio',
         welcome_p:
             'Unser Ziel ist es, die Kultur in der Region wieder auf die große Bühne zu bringen, nicht nur durch klassische Musik, sondern auch durch Geschichten über Filme, Comics, alte Schallplatten, Malerei, Theater, aber auch durch die Begleitung alltäglicher Ereignisse im regulären Leben.',
-        read_more_about_us: 'Lesen Sie mehr über uns und unsere Pläne &rarr;',
+        read_more_about_us: 'Lesen Sie mehr über uns und unsere Pläne&rarr;',
         culture_news: 'Kulturnachrichten',
         no_image: '[Kein Bild]',
         daily_news: 'Nachrichten aus dem täglichen politischen Leben',
@@ -163,13 +163,13 @@ export default {
             title: 'Wo Kultur auf (Un)kultur trifft',
             author: 'Autor: Aljoša Ljubojević',
             p1: 'Wo Kultur auf (Un)kultur trifft ist unsere beste Sendung, in der Hörer und Zuschauer eine exzellente Podcast-Serie verfolgen können, die von Aljoša Ljubojević, einem bekannten Journalisten aus Bijeljina, moderiert wird. Aljoša wird mit zahlreichen Kulturschaffenden, aber auch Experten für Film, Sport, gute Musik, Comics und vieles mehr sprechen.',
-            read_more: 'Details ansehen &rarr;',
+            read_more: 'Details ansehen&rarr;',
         },
         milos: {
             title: 'Standard Podcast',
             author: 'Autor: Miloš Stevanović',
             p1: 'Miloš spricht mit seinen Gästen über das Geschäft, betrachtet Themen aus geschäftlichen, wirtschaftlichen und politischen Aspekten im Land und in der Region und zieht Schlussfolgerungen, die nachhaltig sind und durch das StandardPrva-Ökosystem Resonanz finden werden.',
-            read_more: 'Details ansehen &rarr;',
+            read_more: 'Details ansehen&rarr;',
         },
     },
 }

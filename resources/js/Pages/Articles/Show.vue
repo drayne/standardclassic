@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            <h1 class="mb-4 text-3xl font-bold leading-tight md:text-4xl">
+            <h1 class="mb-4 text-2xl font-medium md:font-bold leading-tight md:text-4xl">
                 {{ article.title }}
             </h1>
 

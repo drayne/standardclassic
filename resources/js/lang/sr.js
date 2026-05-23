@@ -50,7 +50,7 @@ export default {
         welcome_h1: 'Dobro došli na <b>Standard</b> <span class="text-red-700">Classic</span> Radio',
         welcome_p:
             'Naš cilj je da vratimo kulturu na velika vrata u regionu, ne samo kroz klasičnu muziku, nego i kroz priču o filmovima, stripu, starim gramofonskim pločama, slikarstvu, pozorištu, ali i da pratimo svakodnevna dešavanja u redovnom životu.',
-        read_more_about_us: 'Pročitajte više o nama i našim planovima &rarr;',
+        read_more_about_us: 'Pročitajte više o nama i našim planovima&nbsp;&rarr;',
         culture_news: 'Vijesti iz kulture',
         no_image: '[Nema slike]',
         daily_news: 'Vijesti iz dnevno-političkog života',
@@ -165,13 +165,13 @@ export default {
             title: 'Gdje se fura (ne)kultura',
             author: 'Autor: Aljoša Ljubojević',
             p1: 'Gdje se fura (ne)kultura je naša najbolja emisija gdje slušaoci i gledaoci mogu da prate odličan podkast serija koji vodi Aljoša Ljubojević, poznati novinar iz Bijeljine. Aljoša će razgovarati sa brojnim kulturnim radnicima, ali i poznavaocima filma, sporta, dobre muzike, stripova i mnogo toga.',
-            read_more: 'Pogledajte detaljnije &rarr;',
+            read_more: 'Pogledajte detaljnije&nbsp;&rarr;',
         },
         milos: {
             title: 'Standard Podkast',
             author: 'Autor: Miloš Stevanović',
             p1: 'Miloš sa svojim gostima priča o biznisu, sagledava teme iz poslovnog, ekonomskog i političkog aspekta u zemlji i regionu sa donošenjem zaključaka koji su održivi i koji će putem ekosistema StandardPrve imati svoj odijek.',
-            read_more: 'Pogledajte detaljnije &rarr;',
+            read_more: 'Pogledajte detaljnije&nbsp;&rarr;',
         },
     },
 }
