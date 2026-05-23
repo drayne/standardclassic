@@ -50,7 +50,7 @@ export default {
         welcome_h1: 'Welcome to <b>Standard</b> <span class="text-red-700">Classic</span> Radio',
         welcome_p:
             'Our goal is to bring culture back to the big stage in the region, not only through classical music, but also through stories about films, comics, old vinyl records, painting, theater, but also to follow everyday events in regular life.',
-        read_more_about_us: 'Read more about us and our plans &rarr;',
+        read_more_about_us: 'Read more about us and our plans&nbsp;&rarr;',
         culture_news: 'Culture News',
         no_image: '[No image]',
         daily_news: 'Daily Political News',
@@ -165,13 +165,13 @@ export default {
             title: 'Where culture meets (non)culture',
             author: 'Author: Aljoša Ljubojević',
             p1: 'Where culture meets (non)culture is our best show where listeners and viewers can follow an excellent podcast series hosted by Aljoša Ljubojević, a well-known journalist from Bijeljina. Aljoša will talk with numerous cultural workers, but also experts in film, sports, good music, comics and much more.',
-            read_more: 'View more details &rarr;',
+            read_more: 'View more details&nbsp;&rarr;',
         },
         milos: {
             title: 'Standard Podcast',
             author: 'Author: Miloš Stevanović',
             p1: 'Miloš talks with his guests about business, looks at topics from business, economic and political aspects in the country and the region with making conclusions that are sustainable and will have their resonance through the StandardPrva ecosystem.',
-            read_more: 'View more details &rarr;',
+            read_more: 'View more details&nbsp;&rarr;',
         },
     },
 }
