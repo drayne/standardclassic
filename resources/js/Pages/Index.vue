@@ -7,8 +7,8 @@
         </section>
         <!-- Culture News Section -->
         <section class="mb-16">
-            <h2 class="mb-3 flex items-center text-lg font-bold tracking-wide uppercase">
-                <span class="bg-radio-red mr-3 h-1 w-8"></span>
+            <h2 class="mb-3 flex items-center md:text-lg font-medium md:font-bold tracking-wide uppercase">
+                <span class="bg-radio-red mr-3 h-0.5 w-6 md:h-1 md:w-8"></span>
                 {{ t('index_page.culture_news') }}
             </h2>
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
