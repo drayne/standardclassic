@@ -45,7 +45,7 @@ export default {
         title: 'Početna',
         about_us: 'O nama',
         welcome_header:
-            'Dobro došli na talase <br class="md:hidden"> <b>Standard</b> <span class="text-radio-red"> Classic</span> radija!',
+            'Dobro došli na talase <br class="md:hidden"> <b>Standard</b><span class="text-radio-red">Classic</span> radija!',
         dudamel_desc: '🔗 Gustavo Dudamel - direktor Njujorške filharmonije',
         welcome_h1: 'Dobro došli na <b>Standard</b> <span class="text-red-700">Classic</span> Radio',
         welcome_p:
