@@ -105,7 +105,7 @@ export default {
         author: 'Author and host: Miloš Stevanović',
         p1: 'The podcast of Miloš Stevanović, owner of the StandardPrva Group, and a very popular author of the book "Let bez prestanka", and an internet star who often appears in shows related to personal progress, this time brings something completely new.',
         p2: 'Miloš Stevanović appears in the role of the show host, and talks with his guests about business, examines themes from a business, economic, and political aspect in the country and the region, bringing conclusions that are sustainable and will have their resonance through the StandardPrva ecosystem.',
-        p3: 'The show will be broadcast once a month on StandardClassic radio and its archive will be entirely located on the radio website.',
+        p3: "The show will be broadcast once a week, every Thursday at 8:00 PM on StandardClassic Radio, and its archive will be fully available on the radio's website.",
     },
     impressum_page: {
         title: 'Impressum',
