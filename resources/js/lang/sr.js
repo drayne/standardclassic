@@ -39,7 +39,7 @@ export default {
         milos_p2:
             'Miloš Stevanović se pojavljuje u ulozi voditelja emisije, te sa svojim gostima priča o biznisu, sagledava teme iz poslovnog, ekonomskog i političkog aspekta u zemlji i regionu sa donošenjem zaključaka koji su održivi i koji će putem ekosistema StandardPrve imati svoj odijek.',
         milos_p3:
-            'Emisija će se emitovati jednom mjesečno na radiju StandardClassic i njena arhiva biće u cjelosti smještena na sajtu radija.',
+            'Emisija će se emitovati jednom sedmično, svakog četvrtka u 20h na radiju StandardClassic i njena arhiva biće u cjelosti smještena na sajtu radija.',
     },
     index_page: {
         title: 'Početna',
@@ -112,7 +112,7 @@ export default {
         text1: 'StandardClassic.ba internet radio je vlasništvo korporacije "StandardPrva" d.o.o. Bijeljina.',
         director: 'Direktor: Slaviša Lakić',
         chairman: 'Predsjednik Nadzornog odbora: Miloš Stevanović',
-        editor_in_chief: 'Glavni i odgovorni urednik: Miloš Stevanović',
+        editor_in_chief: 'Glavni i odgovorni urednik: Danka Zakić',
         web_editor: 'Urednik sajta: Danka Zakić',
         email: 'Email: standardclassicradio@advokati-stevanovic.com',
     },

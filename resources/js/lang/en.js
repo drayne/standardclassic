@@ -39,7 +39,7 @@ export default {
         milos_p2:
             'Miloš Stevanović appears in the role of the show host, and talks with his guests about business, examines themes from a business, economic, and political aspect in the country and the region, bringing conclusions that are sustainable and will have their resonance through the StandardPrva ecosystem.',
         milos_p3:
-            'The show will be broadcast once a month on StandardClassic radio and its archive will be entirely located on the radio website.',
+            "The show will be broadcast once a week, every Thursday at 8:00 PM on StandardClassic Radio, and its archive will be fully available on the radio's website.",
     },
     index_page: {
         title: 'Home',
@@ -112,7 +112,7 @@ export default {
         text1: 'StandardClassic.ba internet radio is the property of the corporation "StandardPrva" d.o.o. Bijeljina.',
         director: 'Director: Slaviša Lakić',
         chairman: 'Chairman of the Supervisory Board: Miloš Stevanović',
-        editor_in_chief: 'Editor-in-Chief: Miloš Stevanović',
+        editor_in_chief: 'Editor-in-Chief: Danka Zakić',
         web_editor: 'Website Editor: Danka Zakić',
         email: 'Email: standardclassicradio@advokati-stevanovic.com',
     },
