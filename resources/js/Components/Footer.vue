@@ -68,24 +68,56 @@ const { t } = useTrans()
                 <!-- Corporate Info / Copyright -->
                 <div>
                     <a href="https://standardprva.ba" target="_blank" rel="noopener noreferrer">
-                        <img src="/images/sp-logo-red.png" alt="Standard Classic Radio" class="h-12 w-auto object-contain" />
+                        <img
+                            src="/images/sp-logo-red.png"
+                            alt="Standard Classic Radio"
+                            class="h-12 w-auto object-contain" />
                     </a>
                     <span class="text-sm">{{ t('footer.corporate_info') }}</span>
+
                     <ul class="mt-4 mb-3 space-y-0.5 text-sm opacity-90">
                         <li>
-                            <a href="https://standardprva.ba/o-nasoj-korporaciji" target="_blank" rel="noopener noreferrer" class="transition hover:underline">{{ t('footer.about_corp') }}</a>
+                            <a
+                                href="https://standardprva.ba/o-nasoj-korporaciji"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="transition hover:underline"
+                                >{{ t('footer.about_corp') }}</a
+                            >
                         </li>
                         <li>
-                            <a href="https://standardprva.ba/menadzment-tim" target="_blank" rel="noopener noreferrer" class="transition hover:underline">{{ t('footer.management') }}</a>
+                            <a
+                                href="https://standardprva.ba/menadzment-tim"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="transition hover:underline"
+                                >{{ t('footer.management') }}</a
+                            >
                         </li>
                         <li>
-                            <a href="https://standardplaza.ba/" target="_blank" rel="noopener noreferrer" class="transition hover:underline">{{ t('footer.standard_plaza') }}</a>
+                            <a
+                                href="https://standardplaza.ba/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="transition hover:underline"
+                                >{{ t('footer.standard_plaza') }}</a
+                            >
                         </li>
                         <li>
-                            <a href="https://standardprva.ba/the-luxury-alignment-manifesto" target="_blank" rel="noopener noreferrer" class="transition hover:underline">{{ t('footer.luxury_manifesto') }}</a>
+                            <a
+                                href="https://standardprva.ba/the-luxury-alignment-manifesto"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="transition hover:underline"
+                                >{{ t('footer.luxury_manifesto') }}</a
+                            >
                         </li>
                         <li>
-                            <a href="https://fondacijastevanovic.ba/" target="_blank" rel="noopener noreferrer" class="transition hover:underline">
+                            <a
+                                href="https://fondacijastevanovic.ba/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="transition hover:underline">
                                 {{ t('footer.foundation') }}
                             </a>
                         </li>
@@ -94,6 +126,13 @@ const { t } = useTrans()
                     <span class="text-xs">
                         {{ t('footer.copyright').replace('{year}', new Date().getFullYear()) }}
                     </span>
+
+                    <a
+                        href="https://standardprva.ba/250-godina-SAD-i-vrijednosti-koje-dijelimo"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        <img src="/images/sp-250-white.png" alt="250 SAD" class="h-20 w-auto object-contain mt-6" />
+                    </a>
                 </div>
             </div>
         </div>
