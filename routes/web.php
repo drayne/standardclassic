@@ -43,5 +43,3 @@ Route::get('vijesti-iz-dnevno-politickog-zivota', ArticlesController::class)->na
 Route::get('vijest/{slug}', GetArticleController::class)->name('vijest');
 
 Route::post('language', LanguageController::class)->name('language');
-
-require __DIR__.'/auth.php';

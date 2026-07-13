@@ -2,11 +2,10 @@
 
 namespace App\Filament\Resources\MediaSchedules\Schemas;
 
+use Filament\Forms\Components\Repeater;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Form;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class MediaScheduleForm
@@ -14,27 +13,45 @@ class MediaScheduleForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(2)
             ->components([
-                Section::make('Zakazivanje emitovanja')
-                    ->description('Izaberite medij i termin kada treba da se emituje mimo regularne plejliste.')
+                Section::make('Osnovne informacije')
+                    ->columnSpan(1)
                     ->schema([
-                        Grid::make(2)
+                        Select::make('media_id')
+                            ->label('Naziv')
+                            ->relationship('media', 'title')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                    ]),
+                Section::make('Vrijeme emitovanja')
+                    ->columnSpanFull()
+                    ->schema([
+                        Repeater::make('scheduled_times')
+                            ->label('Termini')
                             ->schema([
-                                Select::make('media_id')
-                                    ->label('Naziv')
-                                    ->relationship('media', 'title')
-                                    ->searchable()
-                                    ->preload()
-                                    ->required(),
-
                                 DateTimePicker::make('scheduled_at')
-                                    ->label('Vrijeme emitovanja')
+                                    ->hiddenLabel()
                                     ->required()
                                     ->native(false)
                                     ->displayFormat('d.m.Y H:i')
                                     ->seconds(false),
-                    ])
-                ])
-        ]);
+                            ])
+                            ->minItems(1)
+                            ->createItemButtonLabel('Dodaj novi termin')
+                            ->grid(5)
+                            ->reorderable(false)
+                            ->hidden(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\EditRecord),
+
+                        DateTimePicker::make('scheduled_at')
+                            ->label('Vrijeme emitovanja')
+                            ->required()
+                            ->native(false)
+                            ->displayFormat('d.m.Y H:i')
+                            ->seconds(false)
+                            ->visible(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\EditRecord),
+                    ]),
+            ]);
     }
 }

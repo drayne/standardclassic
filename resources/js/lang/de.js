@@ -37,7 +37,7 @@ export default {
         milos_p2:
             'Miloš Stevanović tritt in der Rolle des Moderators auf und spricht mit seinen Gästen über Business, beleuchtet Themen aus geschäftlicher, wirtschaftlicher und politischer Sicht im Land und in der Region und zieht nachhaltige Schlussfolgerungen, die durch das Ökosystem von StandardPrva Resonanz finden werden.',
         milos_p3:
-            'Die Sendung wird einmal im Monat auf StandardClassic Radio ausgestrahlt und ihr Archiv wird vollständig auf der Radio-Website zu finden sein.',
+            'Die Sendung wird einmal wöchentlich, jeden Donnerstag um 20:00 Uhr auf StandardClassic Radio ausgestrahlt, und ihr Archiv wird vollständig auf der Website des Radiosenders verfügbar sein.',
     },
     index_page: {
         title: 'Startseite',
@@ -103,14 +103,14 @@ export default {
         author: 'Autor und Moderator: Miloš Stevanović',
         p1: 'Der Podcast von Miloš Stevanović, Inhaber der StandardPrva-Gruppe und beliebter Autor des Buches "Let bez prestanka" sowie Internet-Star, der oft in Sendungen zum Thema persönliche Weiterentwicklung auftritt, bringt diesmal etwas völlig Neues.',
         p2: 'Miloš Stevanović tritt in der Rolle des Moderators auf und spricht mit seinen Gästen über Business, beleuchtet Themen aus geschäftlicher, wirtschaftlicher und politischer Sicht im Land und in der Region und zieht nachhaltige Schlussfolgerungen, die durch das Ökosystem von StandardPrva Resonanz finden werden.',
-        p3: 'Die Sendung wird einmal im Monat auf StandardClassic Radio ausgestrahlt und ihr Archiv wird vollständig auf der Radio-Website zu finden sein.',
+        p3: 'Die Sendung wird einmal wöchentlich, jeden Donnerstag um 20:00 Uhr auf StandardClassic Radio ausgestrahlt, und ihr Archiv wird vollständig auf der Website des Radiosenders verfügbar sein.',
     },
     impressum_page: {
         title: 'Impressum',
         text1: 'StandardClassic.ba Internetradio ist Eigentum der Gesellschaft "StandardPrva" d.o.o. Bijeljina.',
         director: 'Direktor: Slaviša Lakić',
         chairman: 'Vorsitzender des Aufsichtsrats: Miloš Stevanović',
-        editor_in_chief: 'Chefredakteur: Miloš Stevanović',
+        editor_in_chief: 'Chefredakteur: Danka Zakić',
         web_editor: 'Website-Editor: Danka Zakić',
         email: 'E-Mail: standardclassicradio@advokati-stevanovic.com',
     },
