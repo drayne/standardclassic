@@ -55,7 +55,7 @@
                     <li
                         v-for="article in dpArticles"
                         :key="article.id"
-                        class="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 border-b border-gray-300 pb-4 last:border-0">
+                        class="flex flex-col md:flex-row md:items-center gap-2 md:gap-12 border-b border-gray-300 pb-4 last:border-0">
                         <span class="text-radio-red block w-24 shrink-0 whitespace-nowrap text-sm font-bold">
                             {{ article.published_at }}
                         </span>
