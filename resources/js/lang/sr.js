@@ -165,7 +165,8 @@ export default {
         listen_web: 'Uživo na našem sajtu',
         listen_mobile: 'Putem mobilne aplikacije',
         listen_devices: 'Na pametnim uređajima',
-        footer_quote: 'Dobra filmska muzika funkcioniše i bez filma. Ona je posebna vrijednost, dio naše zajedničke kulturne baštine.',
+        footer_quote_line1: 'Dobra filmska muzika funkcioniše i bez filma.',
+        footer_quote_line2: 'Ona je posebna vrijednost, dio naše zajedničke kulturne baštine.',
     },
     footer: {
         slogan: 'Muzika koja inspiriše i povezuje',

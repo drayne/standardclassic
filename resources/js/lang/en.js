@@ -165,7 +165,8 @@ export default {
         listen_web: 'Live on our website',
         listen_mobile: 'Through the mobile app',
         listen_devices: 'On smart devices',
-        footer_quote: 'Great film music works even without the film. It is a value of its own, part of our shared cultural heritage.',
+        footer_quote_line1: 'Great film music works even without the film.',
+        footer_quote_line2: 'It is a value of its own, part of our shared cultural heritage.',
     },
     footer: {
         slogan: 'Music that inspires and connects',

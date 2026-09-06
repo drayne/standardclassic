@@ -163,7 +163,8 @@ export default {
         listen_web: 'Live auf unserer Website',
         listen_mobile: 'Über die mobile App',
         listen_devices: 'Auf intelligenten Geräten',
-        footer_quote: 'Gute Filmmusik funktioniert auch ohne den Film. Sie ist ein eigener Wert und Teil unseres gemeinsamen kulturellen Erbes.',
+        footer_quote_line1: 'Gute Filmmusik funktioniert auch ohne den Film.',
+        footer_quote_line2: 'Sie ist ein eigener Wert und Teil unseres gemeinsamen kulturellen Erbes.',
     },
     footer: {
         slogan: 'Musik, die inspiriert und verbindet',

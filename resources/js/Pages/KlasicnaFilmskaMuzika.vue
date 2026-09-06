@@ -100,20 +100,24 @@ defineOptions({ layout: MainLayout })
             </aside>
         </section>
 
-        <section
-            class="relative flex min-h-[190px] items-center justify-center overflow-hidden bg-stone-100 px-8 py-12 text-center">
+        <section class="relative aspect-[3124/350] overflow-hidden bg-stone-100 text-left">
             <img
                 src="/images/filmska/2sm.jpg"
                 :alt="t('film_music_page.footer_image_alt')"
                 class="absolute inset-0 h-full w-full object-cover" />
-            <div class="absolute inset-0 bg-stone-100/75"></div>
-            <div class="relative max-w-3xl">
-                <p class="font-serif text-2xl italic leading-relaxed text-slate-800 sm:text-3xl">{{
-                    t('film_music_page.footer_quote')
-                }}</p>
-                <div class="mx-auto mt-6 h-px w-16 bg-red-500"></div>
-                <p class="mt-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-500">Hans Zimmer</p>
+            <div class="absolute inset-0 bg-stone-100/20"></div>
+            <div class="absolute left-[30%] top-[24%] w-[72%] text-left">
+                <p
+                    class="font-normal font-serif text-[clamp(0.5rem,1.35vw,1.3rem)] italic leading-[1.2] text-slate-800">
+                    <span class="block">{{ t('film_music_page.footer_quote_line1') }}</span>
+                    <span class="ml-[6%] block">{{ t('film_music_page.footer_quote_line2') }}</span>
+                </p>
             </div>
+            <div class="absolute left-[68%] top-[70%] h-px w-[5.5%] bg-red-500"></div>
+            <p
+                class="absolute left-[84%] top-[72%] text-[clamp(0.35rem,0.65vw,0.65rem)] font-semibold uppercase tracking-[0.3em] text-slate-500">
+                Hans Zimmer
+            </p>
         </section>
     </div>
 </template>
