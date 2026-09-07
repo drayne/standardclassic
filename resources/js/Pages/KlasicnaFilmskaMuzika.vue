@@ -24,7 +24,7 @@ defineOptions({ layout: MainLayout })
                 :alt="t('film_music_page.hero_image_alt')"
                 class="absolute inset-0 h-full w-full object-cover" />
             <div class="absolute inset-0 bg-slate-950/50 sm:bg-transparent"></div>
-            <div class="absolute left-[10%] top-[17%] w-[66%] text-white sm:left-[18.5%] sm:top-[16%] sm:w-[52%]">
+            <div class="absolute left-[8%] top-[17%] w-[53%] text-white sm:left-[18.5%] sm:top-[16%] sm:w-[52%]">
                 <h1
                     class="font-normal font-serif text-[clamp(1.15rem,7vw,1.8rem)] leading-[0.92] sm:text-[clamp(1.1rem,3.3vw,3.25rem)]"
                     v-html="t('film_music_page.hero_title')"></h1>
@@ -38,7 +38,7 @@ defineOptions({ layout: MainLayout })
                     {{ t('film_music_page.hero_subtitle') }}
                 </p>
             </div>
-            <div class="absolute left-[63%] top-[16%] w-[33%] text-white sm:left-[78%] sm:top-[18%] sm:w-[21%]">
+            <div class="absolute left-[64%] top-[16%] w-[32%] text-white sm:left-[78%] sm:top-[18%] sm:w-[21%]">
                 <p
                     class="font-normal font-serif text-[clamp(0.62rem,2.7vw,0.95rem)] italic leading-[1.25] sm:text-[clamp(0.5rem,1vw,1rem)] sm:leading-[1.35]"
                     v-html="t('film_music_page.hero_right_text')"></p>
@@ -137,7 +137,7 @@ defineOptions({ layout: MainLayout })
                 <p
                     class="font-normal font-serif text-[clamp(0.8rem,3.5vw,1.35rem)] italic leading-[1.2] text-slate-800 sm:text-[clamp(0.5rem,1.35vw,1.3rem)]">
                     <span class="block">{{ t('film_music_page.footer_quote_line1') }}</span>
-                    <span class="ml-[6%] block">{{ t('film_music_page.footer_quote_line2') }}</span>
+                    <span class="ml-0 block sm:ml-[6%]">{{ t('film_music_page.footer_quote_line2') }}</span>
                 </p>
             </div>
             <div class="absolute left-[68%] top-[70%] h-px w-[5.5%] bg-red-500"></div>
