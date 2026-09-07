@@ -26,15 +26,15 @@ defineOptions({ layout: MainLayout })
             <div class="absolute inset-0 bg-slate-950/50 sm:bg-transparent"></div>
             <div class="absolute left-[8%] top-[17%] w-[53%] text-white sm:left-[18.5%] sm:top-[16%] sm:w-[52%]">
                 <h1
-                    class="font-normal font-serif text-[clamp(1.15rem,7vw,1.8rem)] leading-[0.92] sm:text-[clamp(1.1rem,3.3vw,3.25rem)]"
+                    class="font-normal font-serif text-[clamp(1.15rem,7vw,1.2rem)] leading-[0.82] sm:text-[clamp(1.1rem,3.3vw,3.25rem)]"
                     v-html="t('film_music_page.hero_title')"></h1>
                 <p
-                    class="mt-[5%] text-[clamp(0.55rem,2.5vw,0.85rem)] font-normal uppercase tracking-[0.12em] sm:mt-[4%] sm:text-[clamp(0.4rem,1vw,0.95rem)] sm:tracking-[0.18em]">
+                    class="mt-[3%] text-[clamp(0.55rem,2.5vw,0.4rem)] font-normal uppercase tracking-[0.12em] sm:mt-[4%] sm:text-[clamp(0.4rem,1vw,0.95rem)] sm:tracking-[0.18em]">
                     {{ t('film_music_page.hero_schedule') }}
                 </p>
-                <div class="mt-[4%] h-px w-[26%] bg-red-500 sm:mt-[3%]"></div>
+                <div class="mt-[2%] h-px w-[26%] bg-red-500 sm:mt-[3%]"></div>
                 <p
-                    class="mt-[4%] font-normal font-serif text-[clamp(0.8rem,3.2vw,1.2rem)] italic sm:mt-[3%] sm:text-[clamp(0.65rem,1.3vw,1.25rem)]">
+                    class="mt-[2%] font-normal font-serif text-[clamp(0.3rem,3.2vw,1.2rem)] italic sm:mt-[3%] sm:text-[clamp(0.65rem,1.3vw,1.25rem)]">
                     {{ t('film_music_page.hero_subtitle') }}
                 </p>
             </div>
