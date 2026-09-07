@@ -70,7 +70,10 @@ defineOptions({ layout: MainLayout })
             <aside class="space-y-3 lg:py-4">
                 <div class="bg-stone-100 p-6 text-slate-700">
                     <div class="mb-5 flex items-start gap-4">
-                        <span class="text-3xl text-red-600" aria-hidden="true">▣</span>
+                        <img
+                            src="/images/filmska/kalendar.png"
+                            :alt="t('film_music_page.schedule_icon_alt')"
+                            class="h-10 w-10 object-contain" />
                         <div>
                             <p class="text-[10px] font-semibold uppercase tracking-[0.25em] text-red-600">{{
                                 t('film_music_page.schedule_label')
@@ -79,15 +82,27 @@ defineOptions({ layout: MainLayout })
                         </div>
                     </div>
                     <div class="flex items-start gap-4 border-t border-stone-200 pt-5">
-                        <span class="text-3xl text-red-600" aria-hidden="true">◉</span>
+                        <img
+                            src="/images/filmska/slusalice.png"
+                            :alt="t('film_music_page.listen_icon_alt')"
+                            class="h-10 w-10 object-contain" />
                         <div>
                             <p class="text-[10px] font-semibold uppercase tracking-[0.25em] text-red-600">{{
                                 t('film_music_page.listen_label')
                             }}</p>
                             <ul class="mt-2 space-y-2 text-sm leading-relaxed">
-                                <li>▸ {{ t('film_music_page.listen_web') }}</li>
-                                <li>▯ {{ t('film_music_page.listen_mobile') }}</li>
-                                <li>◖ {{ t('film_music_page.listen_devices') }}</li>
+                                <li class="flex items-start gap-2">
+                                    <i class="pi pi-play mt-1 text-base text-slate-700" aria-hidden="true"></i>
+                                    <span>{{ t('film_music_page.listen_web') }}</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="pi pi-mobile mt-1 text-base text-slate-700" aria-hidden="true"></i>
+                                    <span>{{ t('film_music_page.listen_mobile') }}</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="pi pi-volume-up mt-1 text-base text-slate-700" aria-hidden="true"></i>
+                                    <span>{{ t('film_music_page.listen_devices') }}</span>
+                                </li>
                             </ul>
                         </div>
                     </div>

@@ -32,5 +32,8 @@
         "vite": "^7.0.7",
         "vue": "^3.4.0",
         "vue-tsc": "^2.0.24"
+    },
+    "dependencies": {
+        "primeicons": "^8.0.0"
     }
 }
