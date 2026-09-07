@@ -5,6 +5,17 @@
         <section class="mb-12">
             <h1 class="inline-block text-2xl md:text-[1.75rem] -mt-6" v-html="t('index_page.welcome_header')"></h1>
         </section>
+
+        <Link
+            :href="route('klasicna-filmska-muzika')"
+            class="group mb-10 block overflow-hidden"
+            aria-label="Klasična filmska muzika">
+            <img
+                src="/images/filmska/filmska-baner.jpg"
+                alt="Klasična filmska muzika"
+                class="h-auto w-full transition duration-300 group-hover:opacity-90" />
+        </Link>
+
         <!-- Culture News Section -->
         <section class="mb-16">
             <h2 class="mb-3 flex items-center md:text-lg font-bold tracking-wide uppercase">
