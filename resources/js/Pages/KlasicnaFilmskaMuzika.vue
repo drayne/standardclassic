@@ -18,28 +18,29 @@ defineOptions({ layout: MainLayout })
     <Head :title="t('film_music_page.title')" />
 
     <div class="overflow-hidden bg-white text-slate-800">
-        <section class="relative -mx-1 aspect-[2612/670] overflow-hidden bg-slate-950 sm:mx-0">
+        <section class="relative -mx-1 aspect-[2612/820] overflow-hidden bg-slate-950 sm:mx-0 sm:aspect-[2612/670]">
             <img
                 src="/images/filmska/1sm.jpg"
                 :alt="t('film_music_page.hero_image_alt')"
                 class="absolute inset-0 h-full w-full object-cover" />
-            <div class="absolute left-[16%] top-[14%] w-[58%] text-white sm:left-[18.5%] sm:top-[16%] sm:w-[52%]">
+            <div class="absolute inset-0 bg-slate-950/50 sm:bg-transparent"></div>
+            <div class="absolute left-[10%] top-[17%] w-[66%] text-white sm:left-[18.5%] sm:top-[16%] sm:w-[52%]">
                 <h1
-                    class="font-normal font-serif text-[clamp(1rem,6vw,1.55rem)] leading-[0.92] sm:text-[clamp(1.1rem,3.3vw,3.25rem)]"
+                    class="font-normal font-serif text-[clamp(1.15rem,7vw,1.8rem)] leading-[0.92] sm:text-[clamp(1.1rem,3.3vw,3.25rem)]"
                     v-html="t('film_music_page.hero_title')"></h1>
                 <p
-                    class="mt-[5%] text-[clamp(0.35rem,1.8vw,0.65rem)] font-normal uppercase tracking-[0.12em] sm:mt-[4%] sm:text-[clamp(0.4rem,1vw,0.95rem)] sm:tracking-[0.18em]">
+                    class="mt-[5%] text-[clamp(0.55rem,2.5vw,0.85rem)] font-normal uppercase tracking-[0.12em] sm:mt-[4%] sm:text-[clamp(0.4rem,1vw,0.95rem)] sm:tracking-[0.18em]">
                     {{ t('film_music_page.hero_schedule') }}
                 </p>
                 <div class="mt-[4%] h-px w-[26%] bg-red-500 sm:mt-[3%]"></div>
                 <p
-                    class="mt-[4%] font-normal font-serif text-[clamp(0.55rem,2.4vw,0.95rem)] italic sm:mt-[3%] sm:text-[clamp(0.65rem,1.3vw,1.25rem)]">
+                    class="mt-[4%] font-normal font-serif text-[clamp(0.8rem,3.2vw,1.2rem)] italic sm:mt-[3%] sm:text-[clamp(0.65rem,1.3vw,1.25rem)]">
                     {{ t('film_music_page.hero_subtitle') }}
                 </p>
             </div>
-            <div class="absolute left-[72%] top-[13%] w-[26%] text-white sm:left-[78%] sm:top-[18%] sm:w-[21%]">
+            <div class="absolute left-[63%] top-[16%] w-[33%] text-white sm:left-[78%] sm:top-[18%] sm:w-[21%]">
                 <p
-                    class="font-normal font-serif text-[clamp(0.42rem,1.9vw,0.7rem)] italic leading-[1.25] sm:text-[clamp(0.5rem,1vw,1rem)] sm:leading-[1.35]"
+                    class="font-normal font-serif text-[clamp(0.62rem,2.7vw,0.95rem)] italic leading-[1.25] sm:text-[clamp(0.5rem,1vw,1rem)] sm:leading-[1.35]"
                     v-html="t('film_music_page.hero_right_text')"></p>
                 <div class="mt-[8%] h-px w-[22%] bg-red-500 sm:mt-[6%]"></div>
             </div>
@@ -125,22 +126,23 @@ defineOptions({ layout: MainLayout })
             </footer>
         </blockquote>
 
-        <section class="relative -mx-4 aspect-[3124/350] overflow-hidden bg-stone-100 text-left sm:mx-0">
+        <section
+            class="relative -mx-4 aspect-[3124/650] overflow-hidden bg-stone-100 text-left sm:mx-0 sm:aspect-[3124/350]">
             <img
                 src="/images/filmska/2sm.jpg"
                 :alt="t('film_music_page.footer_image_alt')"
                 class="absolute inset-0 h-full w-full object-cover" />
             <div class="absolute inset-0 bg-stone-100/20"></div>
-            <div class="absolute left-[22%] top-[18%] w-[72%] text-left sm:left-[30%] sm:top-[24%]">
+            <div class="absolute left-[14%] top-[20%] w-[82%] text-left sm:left-[30%] sm:top-[24%]">
                 <p
-                    class="font-normal font-serif text-[clamp(0.48rem,1.9vw,0.85rem)] italic leading-[1.2] text-slate-800 sm:text-[clamp(0.5rem,1.35vw,1.3rem)]">
+                    class="font-normal font-serif text-[clamp(0.8rem,3.5vw,1.35rem)] italic leading-[1.2] text-slate-800 sm:text-[clamp(0.5rem,1.35vw,1.3rem)]">
                     <span class="block">{{ t('film_music_page.footer_quote_line1') }}</span>
                     <span class="ml-[6%] block">{{ t('film_music_page.footer_quote_line2') }}</span>
                 </p>
             </div>
             <div class="absolute left-[68%] top-[70%] h-px w-[5.5%] bg-red-500"></div>
             <p
-                class="absolute left-[78%] top-[72%] text-[clamp(0.3rem,1.1vw,0.5rem)] font-semibold uppercase tracking-[0.18em] text-slate-500 sm:left-[84%] sm:text-[clamp(0.35rem,0.65vw,0.65rem)] sm:tracking-[0.3em]">
+                class="absolute left-[74%] top-[73%] text-[clamp(0.5rem,1.8vw,0.75rem)] font-semibold uppercase tracking-[0.18em] text-slate-500 sm:left-[84%] sm:text-[clamp(0.35rem,0.65vw,0.65rem)] sm:tracking-[0.3em]">
                 Hans Zimmer
             </p>
         </section>
