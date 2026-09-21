@@ -44,7 +44,7 @@
                 ]
                 : [
                     'label' => 'Regularna stavka',
-                    'icon' => 'heroicon-o-queue-list',
+                    'icon' => 'heroicon-o-play-circle',
                     'classes' => 'bg-gray-100 text-gray-700 ring-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-700',
                 ];
 
@@ -80,23 +80,16 @@
                     Aktivna plejlista: {{ $playlist_name ?: 'Nije odabrana' }} · pregled do {{ $horizon->format('d.m.Y H:i') }}
                 </p>
             </div>
-            <div class="text-left text-xs text-gray-500 sm:text-right dark:text-gray-400">
-                <span class="font-medium text-gray-700 dark:text-gray-300">Crossfade: {{ $crossfade_seconds }} s</span><br>
-                Posljednje osvježavanje: {{ $now->format('d.m.Y H:i:s') }}
+            <div class="flex flex-wrap items-center gap-3 text-left text-xs text-gray-500 sm:justify-end sm:text-right dark:text-gray-400">
+                <div>
+                    <span class="font-medium text-gray-700 dark:text-gray-300">Crossfade: {{ $crossfade_seconds }} s</span><br>
+                    Posljednje osvježavanje: {{ $now->format('d.m.Y H:i:s') }}
+                </div>
+                <a href="{{ \App\Filament\Pages\PlaylistOrder::getUrl() }}" class="inline-flex items-center gap-1.5 rounded-lg bg-gray-100 px-3 py-2 font-medium text-gray-700 transition hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
+                    <x-filament::icon icon="heroicon-o-arrows-up-down" class="h-4 w-4" />
+                    Uredi program
+                </a>
             </div>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-xs text-gray-600 dark:border-white/10 dark:bg-gray-900/60 dark:text-gray-300">
-            <span class="font-semibold text-gray-900 dark:text-white">Legenda:</span>
-            <span class="inline-flex items-center gap-1.5">
-                <x-filament::icon icon="heroicon-o-queue-list" class="h-4 w-4" /> Regularna stavka
-            </span>
-            <span class="inline-flex items-center gap-1.5">
-                <x-filament::icon icon="heroicon-o-calendar-days" class="h-4 w-4 text-info-600" /> Zakazana emisija
-            </span>
-            <span class="inline-flex items-center gap-1.5">
-                <x-filament::icon icon="heroicon-o-musical-note" class="h-4 w-4 text-primary-600" /> Tip medija
-            </span>
         </div>
 
         @if (count($warnings))
@@ -129,13 +122,13 @@
                         <div class="truncate text-sm text-gray-600 dark:text-gray-300">{{ $current['artist'] ?: 'StandardClassic' }}</div>
                     </div>
                     <div class="grid grid-cols-2 gap-5 text-left sm:min-w-64 sm:text-right">
-                        <div>
-                            <div class="text-[10px] font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Početak</div>
+                        <div title="Početak emitovanja">
+                            <x-filament::icon icon="heroicon-o-play" class="mb-1 h-3.5 w-3.5 text-gray-400 sm:ml-auto" />
                             <div class="font-semibold text-gray-900 dark:text-white">{{ $current['starts_at']?->format('H:i:s') ?: 'Nepoznato' }}</div>
                             <div class="text-xs text-gray-500 dark:text-gray-400">{{ $current['starts_at']?->format('d.m.Y') }}</div>
                         </div>
-                        <div>
-                            <div class="text-[10px] font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Kraj</div>
+                        <div title="Kraj emitovanja">
+                            <x-filament::icon icon="heroicon-o-flag" class="mb-1 h-3.5 w-3.5 text-gray-400 sm:ml-auto" />
                             <div class="font-semibold text-gray-900 dark:text-white">{{ $current['ends_at']?->format('H:i:s') ?: 'Nepoznato' }}</div>
                             <div class="text-xs text-gray-500 dark:text-gray-400">{{ $formatDuration($current['duration']) }}</div>
                         </div>
@@ -170,7 +163,7 @@
                                 : 'border-gray-200 bg-white dark:border-white/10 dark:bg-gray-900';
                         @endphp
 
-                        <article class="relative z-10 grid gap-4 rounded-xl border p-4 shadow-sm transition-shadow hover:shadow-md md:grid-cols-[7.5rem_2.5rem_minmax(0,1fr)] md:items-center {{ $cardClasses }}">
+                        <article wire:key="program-row-{{ $loop->index }}-{{ $row['kind'] }}-{{ $row['playlist_media_id'] ?? $row['schedule_id'] ?? 'unknown' }}" class="relative z-10 grid gap-4 rounded-xl border p-4 shadow-sm transition-shadow hover:shadow-md md:grid-cols-[7.5rem_2.5rem_minmax(0,1fr)] md:items-center {{ $cardClasses }}">
                             <div class="text-left md:pr-2 md:text-right">
                                 <div class="text-xl font-bold tracking-tight text-gray-950 dark:text-white">{{ $row['starts_at']?->format('H:i') ?: '—' }}</div>
                                 <div class="text-xs text-gray-500 dark:text-gray-400">{{ $row['starts_at']?->format('d.m.Y') ?: 'Datum nepoznat' }}</div>
@@ -199,13 +192,13 @@
                                 <div class="truncate text-sm text-gray-500 dark:text-gray-400">{{ $row['artist'] ?: $source['label'] }}</div>
 
                                 <div class="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-xs text-gray-600 dark:text-gray-300">
-                                    <span class="inline-flex items-center gap-1.5 font-medium">
+                                    <span class="inline-flex items-center gap-1.5 font-medium" title="Očekivani početak">
                                         <x-filament::icon icon="heroicon-o-play" class="h-3.5 w-3.5 text-gray-400" />
-                                        Počinje {{ $row['starts_at']?->format('H:i:s') ?: 'nepoznato' }}
+                                        {{ $row['starts_at']?->format('H:i:s') ?: 'nepoznato' }}
                                     </span>
-                                    <span class="inline-flex items-center gap-1.5 font-medium">
+                                    <span class="inline-flex items-center gap-1.5 font-medium" title="Očekivani kraj">
                                         <x-filament::icon icon="heroicon-o-flag" class="h-3.5 w-3.5 text-gray-400" />
-                                        Do {{ $row['ends_at']?->format('H:i:s') ?: 'nepoznato' }}
+                                        {{ $row['ends_at']?->format('H:i:s') ?: 'nepoznato' }}
                                     </span>
                                     <span class="inline-flex items-center gap-1.5">
                                         <x-filament::icon icon="heroicon-o-clock" class="h-3.5 w-3.5 text-gray-400" />

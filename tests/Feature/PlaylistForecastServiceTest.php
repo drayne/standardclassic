@@ -9,8 +9,10 @@ use App\Models\Playlist;
 use App\Models\TrackType;
 use App\Models\User;
 use App\Services\PlaylistForecastService;
+use App\Services\PlaylistOrderService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 beforeEach(function (): void {
     Carbon::setTestNow(Carbon::parse('2026-09-21 12:00:00', config('app.timezone')));
@@ -84,7 +86,10 @@ test('forecast applies the three second crossfade and scheduled interruption', f
         ->and($forecast['rows'][1]['kind'])->toBe('scheduled')
         ->and($forecast['rows'][1]['starts_at']->format('H:i:s'))->toBe('12:00:30')
         ->and($forecast['rows'][2]['title'])->toBe('Next')
-        ->and($forecast['rows'][2]['starts_at']->format('H:i:s'))->toBe('12:01:27');
+        ->and($forecast['rows'][2]['starts_at']->format('H:i:s'))->toBe('12:01:27')
+        ->and($forecast['playlist_rows'])->toHaveCount(2)
+        ->and($forecast['playlist_rows'][1]['title'])->toBe('Next')
+        ->and($forecast['playlist_rows'][1]['starts_at']->format('H:i:s'))->toBe('12:01:27');
 });
 
 test('forecast stops playlist timing after a media item without duration', function (): void {
@@ -124,6 +129,25 @@ test('forecast stops playlist timing after a media item without duration', funct
         ->and($forecast['meta']['warnings'])->toContain('Dalji termini plejliste nisu procijenjeni jer jednoj stavci nedostaje trajanje.');
 });
 
+test('active playlist items can be reordered by their pivot id', function (): void {
+    $playlist = Playlist::create(['name' => 'Sortable playlist', 'active' => true]);
+    $first = forecastMedia('First', 60);
+    $second = forecastMedia('Second', 60);
+    $third = forecastMedia('Third', 60);
+
+    $firstPivotId = attachForecastMedia($playlist, $first, 1);
+    attachForecastMedia($playlist, $second, 2);
+    $thirdPivotId = attachForecastMedia($playlist, $third, 3);
+
+    app(PlaylistOrderService::class)->moveBefore($thirdPivotId, $firstPivotId, true);
+
+    expect(DB::table('playlist_media')
+        ->where('playlist_id', $playlist->id)
+        ->orderBy('sort_order')
+        ->pluck('media_id')
+        ->all())->toBe([$third->id, $first->id, $second->id]);
+});
+
 test('admin program page renders the forecast', function (): void {
     $playlist = Playlist::create(['name' => 'Visual test playlist', 'active' => true]);
     foreach ([
@@ -155,6 +179,48 @@ test('admin program page renders the forecast', function (): void {
         ->assertSee('Emisija')
         ->assertSee('Podkast')
         ->assertSee('Džingl')
-        ->assertSee('Počinje')
-        ->assertSee('Do');
+        ->assertDontSee('Legenda:')
+        ->assertDontSee('Redoslijed aktivne plejliste')
+        ->assertDontSee('draggable="true"', false)
+        ->assertDontSee('Počinje')
+        ->assertSee('Uredi program');
+
+    preg_match_all('/wire:key="([^"]+)"/', $response->getContent(), $wireKeys);
+
+    expect($wireKeys[1])->toHaveCount(count(array_unique($wireKeys[1])));
+});
+
+test('playlist order page renders sortable playlist details without scheduled emissions', function (): void {
+    $playlist = Playlist::create(['name' => 'Sortable visual playlist', 'active' => true]);
+    foreach ([
+        ['Sortable song', 'song'],
+        ['Sortable show', 'show'],
+        ['Sortable podcast', 'podcast'],
+        ['Sortable jingle', 'jingle'],
+    ] as $index => [$title, $type]) {
+        attachForecastMedia($playlist, forecastMedia($title, 120, $type), $index + 1);
+    }
+
+    $scheduledShow = forecastMedia('Scheduled show excluded from editor', 60, 'show');
+    MediaSchedule::create([
+        'media_id' => $scheduledShow->id,
+        'scheduled_at' => Carbon::parse('2026-09-21 12:10:00', config('app.timezone')),
+        'played' => false,
+    ]);
+
+    $user = User::factory()->create(['email' => 'playlist-order-admin@example.com']);
+    config(['auth.allowed_admin_emails' => $user->email]);
+
+    $response = $this->actingAs($user)->get('/admin/playlist-order');
+
+    $response->assertOk()
+        ->assertSee('Uređivanje programa')
+        ->assertDontSee('Uređivanje plejliste')
+        ->assertSee('Redoslijed stavki')
+        ->assertSee('Sortable song')
+        ->assertSee('Pjesma')
+        ->assertSee('Očekivani početak i kraj')
+        ->assertSee('data-playlist-media-id', false)
+        ->assertSee('draggable="true"', false)
+        ->assertDontSee('Scheduled show excluded from editor');
 });

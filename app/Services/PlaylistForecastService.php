@@ -18,7 +18,7 @@ final class PlaylistForecastService
     public const HORIZON_HOURS = 72;
 
     /**
-     * @return array{rows: array<int, array<string, mixed>>, meta: array<string, mixed>}
+     * @return array{rows: array<int, array<string, mixed>>, playlist_rows: array<int, array<string, mixed>>, meta: array<string, mixed>}
      */
     public function forecast(?Carbon $now = null, int $horizonHours = self::HORIZON_HOURS): array
     {
@@ -60,6 +60,7 @@ final class PlaylistForecastService
                 'current',
                 'Trenutno u etru',
             );
+            $currentRow['playlist_media_id'] = $this->cachePivotId($state['current_data']);
             $rows[] = $currentRow;
         } else {
             $warnings[] = 'Nije moguće potvrditi trenutno emitovanu numeru.';
@@ -70,6 +71,7 @@ final class PlaylistForecastService
 
             return [
                 'rows' => $this->appendFixedSchedules($rows, $schedules, $horizon),
+                'playlist_rows' => [],
                 'meta' => $this->meta($now, $horizon, $playlist?->name, $warnings),
             ];
         }
@@ -92,6 +94,7 @@ final class PlaylistForecastService
 
             return [
                 'rows' => $this->appendFixedSchedules($rows, $schedules, $horizon),
+                'playlist_rows' => $this->playlistRows($items, $rows),
                 'meta' => $this->meta($now, $horizon, $playlist->name, $warnings),
             ];
         }
@@ -135,6 +138,8 @@ final class PlaylistForecastService
             $nextSchedule = $schedules->get($scheduleIndex);
 
             $row = $this->mediaRow($media, $start, $end, 'upcoming', 'Aktivna plejlista');
+            $playlistMediaId = $media->pivot?->id ? (int) $media->pivot->id : null;
+            $row['playlist_media_id'] = $playlistMediaId;
 
             if ($nextSchedule && $end && $nextSchedule->scheduled_at->lt($end)) {
                 $row['ends_at'] = $nextSchedule->scheduled_at->copy();
@@ -162,8 +167,42 @@ final class PlaylistForecastService
 
         return [
             'rows' => $rows,
+            'playlist_rows' => $this->playlistRows($items, $rows),
             'meta' => $this->meta($now, $horizon, $playlist->name, $warnings),
         ];
+    }
+
+    /**
+     * @param  Collection<int, Media>  $items
+     * @param  array<int, array<string, mixed>>  $rows
+     * @return array<int, array<string, mixed>>
+     */
+    private function playlistRows(Collection $items, array $rows): array
+    {
+        $forecastByPivot = collect($rows)
+            ->filter(fn (array $row): bool => ! empty($row['playlist_media_id']))
+            ->groupBy('playlist_media_id')
+            ->map(fn (Collection $matches): array => $matches->first());
+
+        return $items->values()->map(function (Media $media, int $index) use ($forecastByPivot): array {
+            $playlistMediaId = (int) ($media->pivot?->id ?? 0);
+            $forecast = $forecastByPivot->get($playlistMediaId);
+
+            return [
+                'position' => $index + 1,
+                'playlist_media_id' => $playlistMediaId,
+                'media_id' => $media->id,
+                'title' => $media->title,
+                'artist' => $media->artist,
+                'type' => $media->type?->name,
+                'duration' => $this->durationSeconds($media),
+                'starts_at' => $forecast['starts_at'] ?? null,
+                'ends_at' => $forecast['ends_at'] ?? null,
+                'status' => $forecast['status'] ?? 'unforecasted',
+                'interrupted' => ($forecast['status'] ?? null) === 'interrupted',
+                'reorderable' => $playlistMediaId > 0,
+            ];
+        })->all();
     }
 
     /**
@@ -287,6 +326,7 @@ final class PlaylistForecastService
             'starts_at' => $startsAt,
             'ends_at' => $endsAt,
             'schedule_id' => null,
+            'playlist_media_id' => $media->pivot?->id ? (int) $media->pivot->id : null,
         ];
     }
 
@@ -312,6 +352,7 @@ final class PlaylistForecastService
                 ? $schedule->scheduled_at->copy()->setTimezone(config('app.timezone'))->addSeconds($duration)
                 : null,
             'schedule_id' => $schedule->id,
+            'playlist_media_id' => null,
         ];
     }
 
