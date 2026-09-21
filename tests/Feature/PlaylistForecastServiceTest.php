@@ -88,6 +88,7 @@ test('forecast applies the three second crossfade and scheduled interruption', f
         ->and($forecast['rows'][2]['title'])->toBe('Next')
         ->and($forecast['rows'][2]['starts_at']->format('H:i:s'))->toBe('12:01:27')
         ->and($forecast['playlist_rows'])->toHaveCount(2)
+        ->and(collect($forecast['playlist_rows'])->where('buffered', true)->count())->toBe(2)
         ->and($forecast['playlist_rows'][1]['title'])->toBe('Next')
         ->and($forecast['playlist_rows'][1]['starts_at']->format('H:i:s'))->toBe('12:01:27');
 });
@@ -172,8 +173,10 @@ test('playlist rows are sorted by their next expected playback time', function (
         ->toBe(['Third in playlist', 'First in playlist', 'Second in playlist'])
         ->and($forecast['playlist_rows'][0]['position'])->toBe(1)
         ->and($forecast['playlist_rows'][0]['buffered'])->toBeTrue()
+        ->and($forecast['playlist_rows'][0]['buffered_reason'])->toBe('next')
         ->and($forecast['playlist_rows'][0]['reorderable'])->toBeFalse()
         ->and($forecast['playlist_rows'][1]['buffered'])->toBeTrue()
+        ->and($forecast['playlist_rows'][1]['buffered_reason'])->toBe('following')
         ->and($forecast['playlist_rows'][1]['reorderable'])->toBeFalse()
         ->and($forecast['playlist_rows'][1]['position'])->toBe(2)
         ->and($forecast['playlist_rows'][2]['buffered'])->toBeFalse()
