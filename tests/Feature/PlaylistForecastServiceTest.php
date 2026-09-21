@@ -171,8 +171,38 @@ test('playlist rows are sorted by their next expected playback time', function (
     expect(collect($forecast['playlist_rows'])->pluck('title')->all())
         ->toBe(['Third in playlist', 'First in playlist', 'Second in playlist'])
         ->and($forecast['playlist_rows'][0]['position'])->toBe(1)
+        ->and($forecast['playlist_rows'][0]['buffered'])->toBeTrue()
+        ->and($forecast['playlist_rows'][0]['reorderable'])->toBeFalse()
+        ->and($forecast['playlist_rows'][1]['buffered'])->toBeTrue()
+        ->and($forecast['playlist_rows'][1]['reorderable'])->toBeFalse()
         ->and($forecast['playlist_rows'][1]['position'])->toBe(2)
+        ->and($forecast['playlist_rows'][2]['buffered'])->toBeFalse()
+        ->and($forecast['playlist_rows'][2]['reorderable'])->toBeTrue()
         ->and($forecast['playlist_rows'][2]['position'])->toBe(3);
+});
+
+test('buffered playlist items cannot be reordered', function (): void {
+    $playlist = Playlist::create(['name' => 'Buffered playlist', 'active' => true]);
+    $first = forecastMedia('Buffered first', 60);
+    $second = forecastMedia('Buffered second', 60);
+    $third = forecastMedia('Buffered third', 60);
+    $fourth = forecastMedia('Movable fourth', 60);
+
+    $firstPivotId = attachForecastMedia($playlist, $first, 1);
+    $secondPivotId = attachForecastMedia($playlist, $second, 2);
+    $thirdPivotId = attachForecastMedia($playlist, $third, 3);
+    $fourthPivotId = attachForecastMedia($playlist, $fourth, 4);
+
+    Cache::put(TrackOrder::NEXT_TRACK, [
+        'id' => $second->id,
+        'pivot_id' => $secondPivotId,
+    ]);
+
+    expect(app(PlaylistOrderService::class)->moveBefore($secondPivotId, $firstPivotId, true))->toBeFalse()
+        ->and(DB::table('playlist_media')->where('playlist_id', $playlist->id)->orderBy('sort_order')->pluck('media_id')->all())
+        ->toBe([$first->id, $second->id, $third->id, $fourth->id])
+        ->and(app(PlaylistOrderService::class)->moveBefore($thirdPivotId, $firstPivotId, true))->toBeFalse()
+        ->and(app(PlaylistOrderService::class)->moveBefore($fourthPivotId, $firstPivotId, true))->toBeTrue();
 });
 
 test('admin program page renders the forecast', function (): void {
@@ -247,7 +277,41 @@ test('playlist order page renders sortable playlist details without scheduled em
         ->assertSee('Sortable song')
         ->assertSee('Pjesma')
         ->assertSee('Očekivani početak i kraj')
+        ->assertSee('Trenutna i naredne dvije stavke su zaključane')
         ->assertSee('data-playlist-media-id', false)
         ->assertSee('draggable="true"', false)
         ->assertDontSee('Scheduled show excluded from editor');
+});
+
+test('playlist order page locks current, next and following buffered entries', function (): void {
+    $playlist = Playlist::create(['name' => 'Buffered visual playlist', 'active' => true]);
+    $current = forecastMedia('Current buffered song', 120);
+    $next = forecastMedia('Next buffered song', 120);
+    $following = forecastMedia('Following buffered song', 120);
+    $movable = forecastMedia('Movable song', 120);
+
+    $currentPivotId = attachForecastMedia($playlist, $current, 1);
+    $nextPivotId = attachForecastMedia($playlist, $next, 2);
+    attachForecastMedia($playlist, $following, 3);
+    attachForecastMedia($playlist, $movable, 4);
+
+    Cache::put(TrackOrder::CURRENT_TRACK, [
+        'id' => $current->id,
+        'pivot_id' => $currentPivotId,
+    ]);
+    Cache::put(TrackOrder::NEXT_TRACK, [
+        'id' => $next->id,
+        'pivot_id' => $nextPivotId,
+    ]);
+
+    $user = User::factory()->create(['email' => 'buffered-order-admin@example.com']);
+    config(['auth.allowed_admin_emails' => $user->email]);
+
+    $response = $this->actingAs($user)->get('/admin/playlist-order');
+
+    $response->assertOk()
+        ->assertSee('Baferovano')
+        ->assertSee('Stavka je učitana u bafer');
+
+    expect(substr_count($response->getContent(), 'draggable="true"'))->toBe(1);
 });

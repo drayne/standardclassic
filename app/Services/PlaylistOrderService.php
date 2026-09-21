@@ -8,8 +8,15 @@ use Illuminate\Support\Facades\DB;
 
 final class PlaylistOrderService
 {
-    public function moveBefore(int $playlistMediaId, int $targetPlaylistMediaId, bool $before): void
+    public function moveBefore(int $playlistMediaId, int $targetPlaylistMediaId, bool $before): bool
     {
+        $bufferedPivotIds = $this->bufferedPivotIds();
+
+        if (in_array($playlistMediaId, $bufferedPivotIds, true)
+            || in_array($targetPlaylistMediaId, $bufferedPivotIds, true)) {
+            return false;
+        }
+
         $playlistId = Playlist::query()
             ->where('active', true)
             ->value('id');
@@ -34,7 +41,7 @@ final class PlaylistOrderService
         }
 
         if ($currentPosition === $targetPosition) {
-            return;
+            return true;
         }
 
         array_splice($pivotIds, $currentPosition, 1);
@@ -50,5 +57,21 @@ final class PlaylistOrderService
                     ->update(['sort_order' => $position + 1]);
             }
         });
+
+        return true;
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    private function bufferedPivotIds(): array
+    {
+        return collect(app(PlaylistForecastService::class)->forecast()['playlist_rows'] ?? [])
+            ->filter(fn (array $row): bool => (bool) ($row['buffered'] ?? false))
+            ->pluck('playlist_media_id')
+            ->filter()
+            ->map(fn (int|string $id): int => (int) $id)
+            ->values()
+            ->all();
     }
 }

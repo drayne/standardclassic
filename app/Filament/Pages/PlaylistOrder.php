@@ -34,7 +34,17 @@ class PlaylistOrder extends Page
 
     public function movePlaylistItem(int|string $item, int|string $target, bool $before): void
     {
-        app(PlaylistOrderService::class)->moveBefore((int) $item, (int) $target, $before);
+        $moved = app(PlaylistOrderService::class)->moveBefore((int) $item, (int) $target, $before);
+
+        if (! $moved) {
+            Notification::make()
+                ->title('Baferovane stavke nije moguće pomjerati.')
+                ->body('Trenutna i naredne dvije stavke su već pripremljene za reprodukciju.')
+                ->warning()
+                ->send();
+
+            return;
+        }
 
         Notification::make()
             ->title('Redoslijed plejliste je sačuvan.')

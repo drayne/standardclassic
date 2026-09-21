@@ -49,6 +49,12 @@ final class PlaylistForecastService
             ->get();
 
         $state = $this->currentState($now);
+        $currentPivotId = $this->cachePivotId($state['current_data']);
+        $nextPivotId = $this->cachePivotId($state['next_data']);
+        $bufferedPivotIds = array_values(array_unique(array_filter([
+            $currentPivotId,
+            $nextPivotId,
+        ])));
         $rows = [];
         $warnings = [];
 
@@ -60,7 +66,7 @@ final class PlaylistForecastService
                 'current',
                 'Trenutno u etru',
             );
-            $currentRow['playlist_media_id'] = $this->cachePivotId($state['current_data']);
+            $currentRow['playlist_media_id'] = $currentPivotId;
             $rows[] = $currentRow;
         } else {
             $warnings[] = 'Nije moguće potvrditi trenutno emitovanu numeru.';
@@ -94,7 +100,7 @@ final class PlaylistForecastService
 
             return [
                 'rows' => $this->appendFixedSchedules($rows, $schedules, $horizon),
-                'playlist_rows' => $this->playlistRows($items, $rows),
+                'playlist_rows' => $this->playlistRows($items, $rows, $bufferedPivotIds, $currentPivotId, $nextPivotId),
                 'meta' => $this->meta($now, $horizon, $playlist->name, $warnings),
             ];
         }
@@ -165,9 +171,15 @@ final class PlaylistForecastService
             $warnings[] = 'Dalji termini plejliste nisu procijenjeni jer jednoj stavci nedostaje trajanje.';
         }
 
+        $followingPivotId = $this->followingBufferedPivotId($rows, $bufferedPivotIds);
+
+        if ($followingPivotId !== null) {
+            $bufferedPivotIds[] = $followingPivotId;
+        }
+
         return [
             'rows' => $rows,
-            'playlist_rows' => $this->playlistRows($items, $rows),
+            'playlist_rows' => $this->playlistRows($items, $rows, $bufferedPivotIds, $currentPivotId, $nextPivotId, $followingPivotId),
             'meta' => $this->meta($now, $horizon, $playlist->name, $warnings),
         ];
     }
@@ -175,18 +187,26 @@ final class PlaylistForecastService
     /**
      * @param  Collection<int, Media>  $items
      * @param  array<int, array<string, mixed>>  $rows
+     * @param  array<int, int>  $bufferedPivotIds
      * @return array<int, array<string, mixed>>
      */
-    private function playlistRows(Collection $items, array $rows): array
+    private function playlistRows(Collection $items, array $rows, array $bufferedPivotIds = [], ?int $currentPivotId = null, ?int $nextPivotId = null, ?int $followingPivotId = null): array
     {
         $forecastByPivot = collect($rows)
             ->filter(fn (array $row): bool => ! empty($row['playlist_media_id']))
             ->groupBy('playlist_media_id')
             ->map(fn (Collection $matches): array => $matches->first());
 
-        $playlistRows = $items->values()->map(function (Media $media, int $index) use ($forecastByPivot): array {
+        $playlistRows = $items->values()->map(function (Media $media, int $index) use ($forecastByPivot, $bufferedPivotIds, $currentPivotId, $nextPivotId, $followingPivotId): array {
             $playlistMediaId = (int) ($media->pivot?->id ?? 0);
             $forecast = $forecastByPivot->get($playlistMediaId);
+            $buffered = in_array($playlistMediaId, $bufferedPivotIds, true);
+            $bufferedReason = match (true) {
+                $playlistMediaId === $currentPivotId => 'current',
+                $playlistMediaId === $nextPivotId => 'next',
+                $playlistMediaId === $followingPivotId => 'following',
+                default => null,
+            };
 
             return [
                 'position' => $index + 1,
@@ -200,7 +220,9 @@ final class PlaylistForecastService
                 'ends_at' => $forecast['ends_at'] ?? null,
                 'status' => $forecast['status'] ?? 'unforecasted',
                 'interrupted' => ($forecast['status'] ?? null) === 'interrupted',
-                'reorderable' => $playlistMediaId > 0,
+                'buffered' => $buffered,
+                'buffered_reason' => $buffered ? $bufferedReason : null,
+                'reorderable' => $playlistMediaId > 0 && ! $buffered,
             ];
         })->all();
 
@@ -219,6 +241,37 @@ final class PlaylistForecastService
         unset($playlistRow);
 
         return $playlistRows;
+    }
+
+    /**
+     * Find the first forecasted playlist item after the cache-backed buffered items.
+     *
+     * @param  array<int, array<string, mixed>>  $rows
+     * @param  array<int, int>  $bufferedPivotIds
+     */
+    private function followingBufferedPivotId(array $rows, array $bufferedPivotIds): ?int
+    {
+        if ($bufferedPivotIds === []) {
+            return null;
+        }
+
+        $hasKnownBufferedRow = collect($rows)
+            ->contains(fn (array $row): bool => isset($row['playlist_media_id'])
+                && in_array((int) $row['playlist_media_id'], $bufferedPivotIds, true));
+
+        if (! $hasKnownBufferedRow) {
+            return null;
+        }
+
+        foreach ($rows as $row) {
+            $playlistMediaId = isset($row['playlist_media_id']) ? (int) $row['playlist_media_id'] : 0;
+
+            if ($playlistMediaId > 0 && ! in_array($playlistMediaId, $bufferedPivotIds, true)) {
+                return $playlistMediaId;
+            }
+        }
+
+        return null;
     }
 
     /**

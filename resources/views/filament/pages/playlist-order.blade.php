@@ -84,6 +84,11 @@
             </div>
         @endif
 
+        <div class="flex items-start gap-3 rounded-xl border border-info-200 bg-info-50 px-4 py-3 text-sm text-info-800 dark:border-info-800 dark:bg-info-950/30 dark:text-info-200">
+            <x-filament::icon icon="heroicon-o-lock-closed" class="mt-0.5 h-5 w-5 shrink-0" />
+            <p>Trenutna i naredne dvije stavke su zaključane jer su već učitane u audio bafer. Promjena njihovog redoslijeda ne bi uticala na već pripremljenu reprodukciju.</p>
+        </div>
+
         <div class="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
             <div class="flex flex-col gap-2 border-b border-gray-200 px-5 py-5 sm:flex-row sm:items-center sm:justify-between dark:border-white/10">
                 <div>
@@ -105,27 +110,38 @@
                             $playlistType = $typePresentation($playlistItem['type']);
                             $playlistStatus = $statusPresentation($playlistItem['status']);
                             $playlistId = (int) $playlistItem['playlist_media_id'];
+                            $isReorderable = (bool) ($playlistItem['reorderable'] ?? false);
                         @endphp
 
                         <article
                             wire:key="playlist-item-{{ $playlistId }}"
-                            draggable="true"
-                            data-playlist-media-id="{{ $playlistId }}"
-                            class="relative grid gap-4 px-4 py-4 transition-colors hover:bg-gray-50 sm:grid-cols-[3rem_minmax(0,1fr)_13rem] sm:items-center sm:px-5 dark:hover:bg-white/[0.03]"
-                            x-on:dragstart="dragged = $event.currentTarget.dataset.playlistMediaId; $event.dataTransfer.effectAllowed = 'move'"
-                            x-on:dragover.prevent="if (dragged !== '{{ $playlistId }}') { dropTarget = '{{ $playlistId }}'; dropBefore = $event.offsetY < ($event.currentTarget.offsetHeight / 2) }"
-                            x-on:dragleave="if (dropTarget === '{{ $playlistId }}') dropTarget = null"
-                            x-on:drop.prevent="if (dragged && dragged !== '{{ $playlistId }}') { $wire.movePlaylistItem(dragged, '{{ $playlistId }}', dropBefore); dragged = null; dropTarget = null }"
-                            x-on:dragend="dragged = null; dropTarget = null"
-                            x-bind:class="dropTarget === '{{ $playlistId }}' ? 'bg-primary-50/70 dark:bg-primary-950/20' : ''"
+                            class="relative grid gap-4 px-4 py-4 transition-colors sm:grid-cols-[3rem_minmax(0,1fr)_13rem] sm:items-center sm:px-5 {{ $isReorderable ? 'hover:bg-gray-50 dark:hover:bg-white/[0.03]' : 'bg-gray-50/70 dark:bg-white/[0.03]' }}"
+                            @if ($isReorderable)
+                                draggable="true"
+                                data-playlist-media-id="{{ $playlistId }}"
+                                x-on:dragstart="dragged = $event.currentTarget.dataset.playlistMediaId; $event.dataTransfer.effectAllowed = 'move'"
+                                x-on:dragover.prevent="if (dragged !== '{{ $playlistId }}') { dropTarget = '{{ $playlistId }}'; dropBefore = $event.offsetY < ($event.currentTarget.offsetHeight / 2) }"
+                                x-on:dragleave="if (dropTarget === '{{ $playlistId }}') dropTarget = null"
+                                x-on:drop.prevent="if (dragged && dragged !== '{{ $playlistId }}') { $wire.movePlaylistItem(dragged, '{{ $playlistId }}', dropBefore); dragged = null; dropTarget = null }"
+                                x-on:dragend="dragged = null; dropTarget = null"
+                                x-bind:class="dropTarget === '{{ $playlistId }}' ? 'bg-primary-50/70 dark:bg-primary-950/20' : ''"
+                            @endif
                         >
-                            <div x-cloak x-show="dropTarget === '{{ $playlistId }}' && dropBefore" class="pointer-events-none absolute inset-x-4 top-0 z-10 h-0.5 bg-primary-500 sm:inset-x-5"></div>
-                            <div x-cloak x-show="dropTarget === '{{ $playlistId }}' && ! dropBefore" class="pointer-events-none absolute inset-x-4 bottom-0 z-10 h-0.5 bg-primary-500 sm:inset-x-5"></div>
+                            @if ($isReorderable)
+                                <div x-cloak x-show="dropTarget === '{{ $playlistId }}' && dropBefore" class="pointer-events-none absolute inset-x-4 top-0 z-10 h-0.5 bg-primary-500 sm:inset-x-5"></div>
+                                <div x-cloak x-show="dropTarget === '{{ $playlistId }}' && ! dropBefore" class="pointer-events-none absolute inset-x-4 bottom-0 z-10 h-0.5 bg-primary-500 sm:inset-x-5"></div>
+                            @endif
 
                             <div class="flex items-center gap-3 sm:justify-center">
-                                <span class="cursor-grab text-gray-400 active:cursor-grabbing dark:text-gray-500" title="Prevuci za promjenu redoslijeda" aria-label="Prevuci za promjenu redoslijeda">
-                                    <x-filament::icon icon="heroicon-o-bars-3" class="h-5 w-5" />
-                                </span>
+                                @if ($isReorderable)
+                                    <span class="cursor-grab text-gray-400 active:cursor-grabbing dark:text-gray-500" title="Prevuci za promjenu redoslijeda" aria-label="Prevuci za promjenu redoslijeda">
+                                        <x-filament::icon icon="heroicon-o-bars-3" class="h-5 w-5" />
+                                    </span>
+                                @else
+                                    <span class="text-info-600 dark:text-info-300" title="Stavka je učitana u bafer" aria-label="Stavka je učitana u bafer">
+                                        <x-filament::icon icon="heroicon-o-lock-closed" class="h-5 w-5" />
+                                    </span>
+                                @endif
                                 <span class="text-sm font-semibold tabular-nums text-gray-500 dark:text-gray-400">{{ $playlistItem['position'] }}</span>
                             </div>
 
@@ -141,6 +157,12 @@
                                     <span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium {{ $playlistStatus['classes'] }}">
                                         {{ $playlistStatus['label'] }}
                                     </span>
+                                    @if (! $isReorderable)
+                                        <span class="inline-flex items-center gap-1.5 rounded-full bg-info-100 px-2.5 py-1 text-xs font-medium text-info-800 dark:bg-info-900/40 dark:text-info-200">
+                                            <x-filament::icon icon="heroicon-o-lock-closed" class="h-3.5 w-3.5" />
+                                            Baferovano
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="truncate text-sm font-semibold text-gray-950 dark:text-white">{{ $playlistItem['title'] }}</div>
                                 <div class="truncate text-xs text-gray-500 dark:text-gray-400">{{ $playlistItem['artist'] ?: 'StandardClassic' }}</div>
