@@ -148,6 +148,33 @@ test('active playlist items can be reordered by their pivot id', function (): vo
         ->all())->toBe([$third->id, $first->id, $second->id]);
 });
 
+test('playlist rows are sorted by their next expected playback time', function (): void {
+    $playlist = Playlist::create(['name' => 'Forecast sorted playlist', 'active' => true]);
+    $first = forecastMedia('First in playlist', 60);
+    $second = forecastMedia('Second in playlist', 60);
+    $third = forecastMedia('Third in playlist', 60);
+
+    attachForecastMedia($playlist, $first, 1);
+    attachForecastMedia($playlist, $second, 2);
+    $thirdPivotId = attachForecastMedia($playlist, $third, 3);
+
+    Cache::put(TrackOrder::NEXT_TRACK, [
+        'id' => $third->id,
+        'pivot_id' => $thirdPivotId,
+    ]);
+
+    $forecast = app(PlaylistForecastService::class)->forecast(
+        Carbon::parse('2026-09-21 13:00:00', config('app.timezone')),
+        1,
+    );
+
+    expect(collect($forecast['playlist_rows'])->pluck('title')->all())
+        ->toBe(['Third in playlist', 'First in playlist', 'Second in playlist'])
+        ->and($forecast['playlist_rows'][0]['position'])->toBe(1)
+        ->and($forecast['playlist_rows'][1]['position'])->toBe(2)
+        ->and($forecast['playlist_rows'][2]['position'])->toBe(3);
+});
+
 test('admin program page renders the forecast', function (): void {
     $playlist = Playlist::create(['name' => 'Visual test playlist', 'active' => true]);
     foreach ([

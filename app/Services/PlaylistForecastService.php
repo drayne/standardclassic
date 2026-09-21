@@ -184,7 +184,7 @@ final class PlaylistForecastService
             ->groupBy('playlist_media_id')
             ->map(fn (Collection $matches): array => $matches->first());
 
-        return $items->values()->map(function (Media $media, int $index) use ($forecastByPivot): array {
+        $playlistRows = $items->values()->map(function (Media $media, int $index) use ($forecastByPivot): array {
             $playlistMediaId = (int) ($media->pivot?->id ?? 0);
             $forecast = $forecastByPivot->get($playlistMediaId);
 
@@ -203,6 +203,22 @@ final class PlaylistForecastService
                 'reorderable' => $playlistMediaId > 0,
             ];
         })->all();
+
+        usort($playlistRows, function (array $left, array $right): int {
+            $leftStart = $left['starts_at']?->getTimestamp() ?? PHP_INT_MAX;
+            $rightStart = $right['starts_at']?->getTimestamp() ?? PHP_INT_MAX;
+
+            return ($leftStart <=> $rightStart)
+                ?: (($left['position'] ?? PHP_INT_MAX) <=> ($right['position'] ?? PHP_INT_MAX))
+                ?: (($left['playlist_media_id'] ?? PHP_INT_MAX) <=> ($right['playlist_media_id'] ?? PHP_INT_MAX));
+        });
+
+        foreach ($playlistRows as $index => &$playlistRow) {
+            $playlistRow['position'] = $index + 1;
+        }
+        unset($playlistRow);
+
+        return $playlistRows;
     }
 
     /**
