@@ -6,6 +6,13 @@
             <h1 class="inline-block text-2xl md:text-[1.75rem] -mt-6" v-html="t('index_page.welcome_header')"></h1>
         </section>
 
+        <Link :href="route('udarnik')" class="group mb-10 block overflow-hidden" aria-label="Udarnik">
+            <img
+                src="/images/udarnik.jpg"
+                alt="Udarnik – promocija mladih preduzetnika u StandardClassic Podcastu"
+                class="h-auto w-full transition duration-300 group-hover:opacity-90" />
+        </Link>
+
         <Link
             :href="route('klasicna-filmska-muzika')"
             class="group mb-10 block overflow-hidden"

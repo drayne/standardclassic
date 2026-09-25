@@ -34,6 +34,7 @@ Route::get('program-radija', StaticController::class)->name('program-radija');
 Route::get('emisije-na-nasem-radiju', StaticController::class)->name('emisije-na-nasem-radiju');
 Route::get('impressum', StaticController::class)->name('impressum');
 Route::get('podkasti-na-standardclassic-radiju', StaticController::class)->name('podkasti-na-standardclassic-radiju');
+Route::get('udarnik', StaticController::class)->name('udarnik');
 Route::get('klasicna-filmska-muzika', StaticController::class)->name('klasicna-filmska-muzika');
 Route::get('popodne-sa-Acom-Informacijom', ShowController::class)->name('popodne-sa-Acom-Informacijom');
 Route::get('vijesti-sa-dankom', ShowController::class)->name('vijesti-sa-dankom');
