@@ -127,11 +127,11 @@ const { t } = useTrans()
                         {{ t('footer.copyright').replace('{year}', new Date().getFullYear()) }}
                     </span>
 
-                    <a
-                        href="https://standardprva.ba/250-godina-SAD-i-vrijednosti-koje-dijelimo"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        <img src="/images/sp-250-white.png" alt="250 SAD" class="h-20 w-auto object-contain mt-6" />
+                    <a href="https://stvaranje.ba" target="_blank" rel="noopener noreferrer">
+                        <img
+                            src="/images/stvaranje-logo-white.png"
+                            alt="Stvaranje"
+                            class="h-20 w-auto object-contain mt-6" />
                     </a>
                 </div>
             </div>
