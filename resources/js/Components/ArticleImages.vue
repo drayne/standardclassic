@@ -7,7 +7,7 @@
             :disabled="!hasGallery"
             :aria-label="hasGallery ? t('gallery.open') : undefined"
             @click="openAt(0)">
-            <img :src="images[0]" :alt="alt" class="h-auto w-full object-cover" />
+            <img :src="images[0].url" :alt="alt" class="h-auto w-full object-cover" />
             <span
                 v-if="hasGallery"
                 class="absolute right-2 bottom-2 flex items-center gap-1.5 rounded-sm bg-black/70 px-2 py-1 text-xs font-bold text-white transition group-hover:bg-radio-red">
@@ -19,11 +19,11 @@
         <div v-if="hasGallery" ref="thumbnailRow" class="mt-1.5 flex gap-1.5 overflow-hidden">
             <button
                 v-for="(image, index) in thumbnails"
-                :key="image"
+                :key="image.url"
                 type="button"
                 class="relative h-10 w-14 shrink-0 overflow-hidden rounded-sm hover:cursor-zoom-in"
                 @click="openAt(index + 1)">
-                <img :src="image" alt="" class="h-full w-full object-cover transition-transform duration-300 hover:scale-105" />
+                <img :src="image.thumbnail" alt="" class="h-full w-full object-cover transition-transform duration-300 hover:scale-105" />
                 <span
                     v-if="index === thumbnails.length - 1 && hiddenCount > 0"
                     class="absolute inset-0 flex items-center justify-center bg-black/60 text-sm font-bold text-white">
@@ -49,6 +49,7 @@
 <script setup lang="ts">
 import ImageLightbox from '@/Components/ImageLightbox.vue'
 import { useTrans } from '@/Composables/useTrans'
+import { ArticleImage } from '@/types'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 const { t } = useTrans()
@@ -59,7 +60,7 @@ const THUMBNAIL_GAP = 6
 
 const props = withDefaults(
     defineProps<{
-        images: string[]
+        images: ArticleImage[]
         alt?: string
         source?: string | null
     }>(),

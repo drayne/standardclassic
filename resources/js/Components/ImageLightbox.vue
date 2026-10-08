@@ -26,8 +26,8 @@
 
                 <div class="relative flex min-h-0 flex-1 items-center justify-center px-2 sm:px-16" @click.self="close">
                     <img
-                        :key="images[current]"
-                        :src="images[current]"
+                        :key="images[current].url"
+                        :src="images[current].url"
                         :alt="alt"
                         class="max-h-full max-w-full object-contain" />
 
@@ -56,12 +56,12 @@
                 <div v-if="images.length > 1" class="flex justify-center gap-2 overflow-x-auto px-4 py-3">
                     <button
                         v-for="(image, index) in images"
-                        :key="image"
+                        :key="image.url"
                         type="button"
                         class="h-14 w-20 shrink-0 overflow-hidden rounded-sm border-2 hover:cursor-pointer"
                         :class="index === current ? 'border-white' : 'border-transparent opacity-50 hover:opacity-100'"
                         @click="current = index">
-                        <img :src="image" alt="" class="h-full w-full object-cover" />
+                        <img :src="image.thumbnail" alt="" class="h-full w-full object-cover" />
                     </button>
                 </div>
             </div>
@@ -71,13 +71,14 @@
 
 <script setup lang="ts">
 import { useTrans } from '@/Composables/useTrans'
+import { ArticleImage } from '@/types'
 import { onUnmounted, ref, watch } from 'vue'
 
 const { t } = useTrans()
 
 const props = withDefaults(
     defineProps<{
-        images: string[]
+        images: ArticleImage[]
         open: boolean
         startIndex?: number
         alt?: string

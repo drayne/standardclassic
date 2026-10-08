@@ -38,7 +38,7 @@
                     <div class="relative h-64 w-2/5 flex-shrink-0">
                         <img
                             v-if="article.image"
-                            :src="article.image"
+                            :src="article.thumbnail || article.image"
                             :alt="article.title || ''"
                             class="h-full w-full object-cover" />
                         <div v-else class="flex h-full items-center justify-center">

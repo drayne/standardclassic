@@ -126,10 +126,15 @@ class GetArticleTest extends TestCase
         $response->assertInertia(fn (Assert $page) => $page
             ->component('Articles/Show')
             ->where('article.image', 'https://example.com/glavna.jpg')
+            ->where('article.thumbnail', 'https://example.com/glavna.jpg')
             ->where('article.images', [
-                'https://example.com/glavna.jpg',
-                'https://example.com/druga.jpg',
-                Storage::disk('article-images')->url('2026/10/treca.jpg'),
+                ['url' => 'https://example.com/glavna.jpg', 'thumbnail' => 'https://example.com/glavna.jpg'],
+                ['url' => 'https://example.com/druga.jpg', 'thumbnail' => 'https://example.com/druga.jpg'],
+                // Slika bez thumbnaila koristi original
+                [
+                    'url' => Storage::disk('article-images')->url('2026/10/treca.jpg'),
+                    'thumbnail' => Storage::disk('article-images')->url('2026/10/treca.jpg'),
+                ],
             ])
         );
     }
@@ -152,7 +157,9 @@ class GetArticleTest extends TestCase
         $response = $this->get(route('vijest', ['slug' => $article->slug]));
 
         $response->assertInertia(fn (Assert $page) => $page
-            ->where('article.images', ['https://example.com/glavna.jpg'])
+            ->where('article.images', [
+                ['url' => 'https://example.com/glavna.jpg', 'thumbnail' => 'https://example.com/glavna.jpg'],
+            ])
         );
     }
 }

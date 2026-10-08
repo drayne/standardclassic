@@ -12,7 +12,7 @@
                 <div class="relative h-64 md:w-2/5 shrink-0 overflow-hidden">
                     <img
                         v-if="article.image"
-                        :src="article.image"
+                        :src="article.thumbnail || article.image"
                         :alt="article.title || ''"
                         class="h-full w-full object-cover hover:scale-105 transition-transform duration-600 hover:cursor-pointer"
                         @click="$inertia.visit(route('vijest', { slug: article.slug }))" />

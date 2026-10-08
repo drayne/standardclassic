@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Articles\Schemas;
 
+use App\Services\ImageOptimizer;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
@@ -11,6 +12,8 @@ use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class ArticleForm
 {
@@ -90,6 +93,10 @@ class ArticleForm
                                             ->label('Sadržaj')
                                             ->fileAttachmentsDisk('article-images')
                                             ->fileAttachmentsDirectory(fn () => date('Y/m'))
+                                            ->saveUploadedFileAttachmentUsing(function (TemporaryUploadedFile $file) {
+                                                $path = $file->storePublicly(date('Y/m'), 'article-images');
+                                                return app(ImageOptimizer::class)->optimize(Storage::disk('article-images'), $path);
+                                            })
                                             ->required()
                                             ->columnSpanFull(),
                                     ])

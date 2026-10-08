@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ImageOptimizer;
 use App\Traits\LogsActivity;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
@@ -24,9 +25,27 @@ class Article extends Model
 {
     use LogsActivity;
 
+    /**
+     * Izmjene slika iz trenutnog snimanja (popunjava se u "saving", koristi u "saved").
+     */
+    private ?array $pendingImageChanges = null;
+
     protected static function booted(): void
     {
+        // Izmjene slika bilježimo prije snimanja, jer refresh() (ovdje i u LogsActivity) briše originalne vrijednosti
+        static::saving(function (Article $article) {
+            $article->pendingImageChanges = [
+                'image' => $article->isDirty('image'),
+                'previousImage' => $article->exists ? $article->getOriginal('image') : null,
+                'gallery' => $article->isDirty('gallery'),
+                'previousGallery' => $article->exists ? ($article->getOriginal('gallery') ?? []) : [],
+            ];
+        });
+
         static::saved(function (Article $article) {
+            $changes = $article->pendingImageChanges;
+            $article->pendingImageChanges = null;
+
             if ($article->image && !str_starts_with($article->image, 'http')) {
                 $pathInfo = pathinfo($article->image);
                 $extension = $pathInfo['extension'] ?? '';
@@ -47,13 +66,81 @@ class Article extends Model
 
                         $disk->move($article->image, $newName);
 
+                        // Thumbnail prati preimenovanu sliku
+                        $oldThumbnail = ImageOptimizer::thumbnailPath($article->image);
+                        if ($disk->exists($oldThumbnail)) {
+                            $disk->delete(ImageOptimizer::thumbnailPath($newName));
+                            $disk->move($oldThumbnail, ImageOptimizer::thumbnailPath($newName));
+                        }
+
                         $article->withoutEvents(function () use ($article, $newName) {
                             $article->updateQuietly(['image' => $newName]);
                         });
                     }
                 }
             }
+
+            if ($changes) {
+                $article->optimizeImages($changes['image'], $changes['previousImage'], $changes['gallery'], $changes['previousGallery']);
+            }
         });
+
+        static::deleted(function (Article $article) {
+            $disk = Storage::disk('article-images');
+
+            collect([$article->image, ...($article->gallery ?? [])])
+                ->filter()
+                ->each(fn (string $path) => $disk->delete(ImageOptimizer::thumbnailPath($path)));
+        });
+    }
+
+    /**
+     * Smanjuje nove slike i pravi im thumbnails; uklanja thumbnails slika koje više nisu u vijesti.
+     */
+    private function optimizeImages(bool $imageChanged, ?string $previousImage, bool $galleryChanged, array $previousGallery): void
+    {
+        $disk = Storage::disk('article-images');
+        $optimizer = app(ImageOptimizer::class);
+
+        $newPaths = [];
+        $removedPaths = [];
+
+        if ($imageChanged) {
+            $newPaths[] = $this->image;
+            $removedPaths[] = $previousImage;
+        }
+
+        if ($galleryChanged) {
+            $gallery = $this->gallery ?? [];
+            $newPaths = [...$newPaths, ...array_diff($gallery, $previousGallery)];
+            $removedPaths = [...$removedPaths, ...array_diff($previousGallery, $gallery)];
+        }
+
+        foreach (array_filter($removedPaths) as $path) {
+            if (! str_starts_with($path, 'http')) {
+                $disk->delete(ImageOptimizer::thumbnailPath($path));
+            }
+        }
+
+        // PNG slike se mogu pretvoriti u JPEG, pa pamtimo nove putanje
+        $renamed = [];
+        foreach (array_filter($newPaths) as $path) {
+            $optimizedPath = $optimizer->optimize($disk, $path);
+            $optimizer->createThumbnail($disk, $optimizedPath);
+
+            if ($optimizedPath !== $path) {
+                $renamed[$path] = $optimizedPath;
+            }
+        }
+
+        if ($renamed) {
+            $this->updateQuietly([
+                'image' => $renamed[$this->image] ?? $this->image,
+                'gallery' => $this->gallery
+                    ? array_map(fn (string $path) => $renamed[$path] ?? $path, $this->gallery)
+                    : $this->gallery,
+            ]);
+        }
     }
 
     protected $fillable = [
@@ -91,25 +178,44 @@ class Article extends Model
         return Storage::disk('article-images')->url($this->image);
     }
 
-    /**
-     * URL-ovi svih slika vijesti: glavna slika prva, zatim slike iz galerije.
-     *
-     * @return array<int, string>
-     */
-    public function getGalleryUrlsAttribute(): array
+    public function getThumbnailUrlAttribute(): ?string
     {
-        $disk = Storage::disk('article-images');
+        return $this->image ? $this->imageUrls($this->image)['thumbnail'] : null;
+    }
 
-        $galleryUrls = collect($this->gallery ?? [])
-            ->filter()
-            ->map(fn (string $path) => str_starts_with($path, 'http') ? $path : $disk->url($path));
-
-        return collect([$this->image_url])
-            ->merge($galleryUrls)
+    /**
+     * Sve slike vijesti (naslovna prva, zatim galerija), svaka sa URL-om originala i thumbnaila.
+     *
+     * @return array<int, array{url: string, thumbnail: string}>
+     */
+    public function getGalleryImagesAttribute(): array
+    {
+        return collect([$this->image, ...($this->gallery ?? [])])
             ->filter()
             ->unique()
+            ->map(fn (string $path) => $this->imageUrls($path))
             ->values()
             ->all();
+    }
+
+    /**
+     * Za slike bez thumbnaila (npr. one uploadovane prije optimizacije) koristimo original.
+     *
+     * @return array{url: string, thumbnail: string}
+     */
+    private function imageUrls(string $path): array
+    {
+        if (str_starts_with($path, 'http')) {
+            return ['url' => $path, 'thumbnail' => $path];
+        }
+
+        $disk = Storage::disk('article-images');
+        $thumbnailPath = ImageOptimizer::thumbnailPath($path);
+
+        return [
+            'url' => $disk->url($path),
+            'thumbnail' => $disk->url($disk->exists($thumbnailPath) ? $thumbnailPath : $path),
+        ];
     }
 
     public function category(): BelongsTo
