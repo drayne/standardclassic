@@ -56,6 +56,15 @@ class MediaSchedulesTable
                     ->tooltip('Izbriši')
                     ->color('danger'),
             ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make()
+                        ->label('Izbriši izabrane')
+                        ->modalHeading('Brisanje izabranih emisija')
+                        ->modalDescription('Da li ste sigurni da želite da izbrišete sve izabrane zakazane emisije? Ova akcija se ne može poništiti.')
+                        ->modalSubmitActionLabel('Izbriši'),
+                ]),
+            ])
             ->emptyStateHeading('Nema zakazanih emisija');
     }
 }
