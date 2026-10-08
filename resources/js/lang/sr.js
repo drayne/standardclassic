@@ -15,6 +15,13 @@ export default {
     next: 'Sljedeća >',
     source: 'Izvor',
     photo: 'Foto',
+    gallery: {
+        photos: 'fotografija',
+        open: 'Otvori galeriju',
+        close: 'Zatvori',
+        previous: 'Prethodna slika',
+        next: 'Sljedeća slika',
+    },
     language: {
         sr: 'srpski',
         en: 'english',

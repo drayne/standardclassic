@@ -35,9 +35,20 @@ class ArticleForm
                             ->displayFormat('d.m.Y H:i')
                             ->seconds(false),
                         FileUpload::make('image')
-                            ->label('Slika')
+                            ->label('Naslovna slika')
                             ->image()
                             ->imageEditor()
+                            ->disk('article-images')
+                            ->directory(fn () => date('Y/m'))
+                            ->columnSpanFull(),
+                        FileUpload::make('gallery')
+                            ->label('Dodatne slike (galerija)')
+                            ->helperText('Možete odabrati više slika odjednom. Na portalu će se otvarati u galeriji zajedno s glavnom slikom.')
+                            ->image()
+                            ->multiple()
+                            ->reorderable()
+                            ->appendFiles()
+                            ->panelLayout('grid')
                             ->disk('article-images')
                             ->directory(fn () => date('Y/m'))
                             ->columnSpanFull(),

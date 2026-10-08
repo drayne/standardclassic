@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Category;
 use App\Models\Language;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
@@ -101,5 +102,57 @@ class GetArticleTest extends TestCase
         $response = $this->get(route('vijest', ['slug' => 'future-vijest']));
 
         $response->assertStatus(404);
+    }
+
+    public function test_article_exposes_main_image_and_gallery_images(): void
+    {
+        $category = Category::firstOrCreate(
+            ['slug' => 'vijesti-iz-kulture'],
+            ['name' => 'Vijesti iz kulture'],
+        );
+
+        $article = Article::create([
+            'category_id' => $category->id,
+            'slug' => 'vijest-sa-galerijom',
+            'active' => true,
+            'published_at' => now(),
+            'image' => 'https://example.com/glavna.jpg',
+            'gallery' => ['https://example.com/druga.jpg', '2026/10/treca.jpg'],
+        ]);
+
+        $response = $this->get(route('vijest', ['slug' => $article->slug]));
+
+        $response->assertStatus(200);
+        $response->assertInertia(fn (Assert $page) => $page
+            ->component('Articles/Show')
+            ->where('article.image', 'https://example.com/glavna.jpg')
+            ->where('article.images', [
+                'https://example.com/glavna.jpg',
+                'https://example.com/druga.jpg',
+                Storage::disk('article-images')->url('2026/10/treca.jpg'),
+            ])
+        );
+    }
+
+    public function test_article_without_gallery_has_only_main_image(): void
+    {
+        $category = Category::firstOrCreate(
+            ['slug' => 'vijesti-iz-kulture'],
+            ['name' => 'Vijesti iz kulture'],
+        );
+
+        $article = Article::create([
+            'category_id' => $category->id,
+            'slug' => 'vijest-bez-galerije',
+            'active' => true,
+            'published_at' => now(),
+            'image' => 'https://example.com/glavna.jpg',
+        ]);
+
+        $response = $this->get(route('vijest', ['slug' => $article->slug]));
+
+        $response->assertInertia(fn (Assert $page) => $page
+            ->where('article.images', ['https://example.com/glavna.jpg'])
+        );
     }
 }

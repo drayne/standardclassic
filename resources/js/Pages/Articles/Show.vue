@@ -3,14 +3,8 @@
 
     <div class="pb-6">
         <article>
-            <div v-if="article.image" class="mb-8 ml-12 hidden w-full float-right sm:block sm:w-1/2 md:w-3/7">
-                <img
-                    :src="article.image"
-                    :alt="article.title || ''"
-                    class="h-auto w-full rounded-sm object-cover shadow-sm" />
-                <div v-if="article.image_source" class="mt-1 text-right text-xs font-bold text-gray-500 italic">
-                    {{ t('photo') }}: {{ article.image_source }}
-                </div>
+            <div v-if="article.images.length" class="mb-8 ml-12 hidden w-full float-right sm:block sm:w-1/2 md:w-3/7">
+                <ArticleImages :images="article.images" :alt="article.title || ''" :source="article.image_source" />
             </div>
 
             <h1 class="mb-4 text-2xl font-medium md:font-bold leading-tight md:text-4xl">
@@ -22,14 +16,8 @@
                 {{ article.published_at }}
             </div>
 
-            <div v-if="article.image" class="mb-6 w-full sm:hidden">
-                <img
-                    :src="article.image"
-                    :alt="article.title || ''"
-                    class="h-auto w-full rounded-sm object-cover shadow-sm" />
-                <div v-if="article.image_source" class="mt-1 text-right text-xs font-bold text-gray-500 italic">
-                    {{ t('photo') }}: {{ article.image_source }}
-                </div>
+            <div v-if="article.images.length" class="mb-6 w-full sm:hidden">
+                <ArticleImages :images="article.images" :alt="article.title || ''" :source="article.image_source" />
             </div>
 
             <div class="prose max-w-none text-gray-800" v-html="article.content"></div>
@@ -48,6 +36,7 @@
 </template>
 
 <script setup lang="ts">
+import ArticleImages from '@/Components/ArticleImages.vue'
 import { useTrans } from '@/Composables/useTrans'
 import MainLayout from '@/Layouts/MainLayout.vue'
 import { Article } from '@/types'

@@ -39,10 +39,17 @@ class ArticleInfolist
                             ->hiddenLabel()
                             ->disk('article-images')
                             ->extraImgAttributes([
-                                'style' => 'width: 100%; height: auto; object-fit: cover; border-radius: 0.5rem;',
+                                'style' => 'max-width: 100%; max-height: 400px; width: auto; height: auto; object-fit: contain; border-radius: 0.5rem;',
                             ])
                             ->columnSpanFull()
                             ->placeholder('-'),
+
+                        ImageEntry::make('gallery')
+                            ->label('Galerija')
+                            ->disk('article-images')
+                            ->imageHeight(120)
+                            ->visible(fn ($record) => filled($record->gallery))
+                            ->columnSpanFull(),
 
                         TextEntry::make('content')
                             ->hiddenLabel()

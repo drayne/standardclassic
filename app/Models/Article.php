@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
  * @property int $category_id
  * @property string $slug
  * @property string $image
+ * @property array|null $gallery
  * @property string $image_source
  * @property string $article_source
  * @property bool $active
@@ -60,6 +61,7 @@ class Article extends Model
         'slug',
         'published_at',
         'image',
+        'gallery',
         'image_source',
         'article_source',
         'active',
@@ -72,6 +74,7 @@ class Article extends Model
     protected $casts = [
         'published_at' => 'datetime',
         'active' => 'boolean',
+        'gallery' => 'array',
     ];
 
     public function getImageUrlAttribute()
@@ -86,6 +89,27 @@ class Article extends Model
         }
 
         return Storage::disk('article-images')->url($this->image);
+    }
+
+    /**
+     * URL-ovi svih slika vijesti: glavna slika prva, zatim slike iz galerije.
+     *
+     * @return array<int, string>
+     */
+    public function getGalleryUrlsAttribute(): array
+    {
+        $disk = Storage::disk('article-images');
+
+        $galleryUrls = collect($this->gallery ?? [])
+            ->filter()
+            ->map(fn (string $path) => str_starts_with($path, 'http') ? $path : $disk->url($path));
+
+        return collect([$this->image_url])
+            ->merge($galleryUrls)
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
     }
 
     public function category(): BelongsTo

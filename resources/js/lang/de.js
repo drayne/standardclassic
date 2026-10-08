@@ -13,6 +13,13 @@ export default {
     back_home: 'Zurück zur Startseite',
     previous: '< Vorherige',
     next: 'Nächste >',
+    gallery: {
+        photos: 'Fotos',
+        open: 'Galerie öffnen',
+        close: 'Schließen',
+        previous: 'Vorheriges Bild',
+        next: 'Nächstes Bild',
+    },
     language: {
         sr: 'srpski',
         en: 'english',

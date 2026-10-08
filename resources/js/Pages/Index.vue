@@ -35,7 +35,7 @@
                     :key="article.id"
                     class="flex overflow-hidden rounded-md border border-gray-200 bg-white transition hover:shadow-md hover:cursor-pointer"
                     @click="$inertia.visit(`/vijest/${article.slug}`)">
-                    <div class="h-64 w-2/5 flex-shrink-0">
+                    <div class="relative h-64 w-2/5 flex-shrink-0">
                         <img
                             v-if="article.image"
                             :src="article.image"
@@ -44,6 +44,12 @@
                         <div v-else class="flex h-full items-center justify-center">
                             <p class="text-xs text-gray-400 italic">{{ t('index_page.no_image') }}</p>
                         </div>
+                        <span
+                            v-if="article.images.length > 1"
+                            class="pointer-events-none absolute left-2 top-2 flex items-center gap-1.5 rounded-sm bg-black/70 px-2 py-1 text-xs font-bold text-white">
+                            <i class="pi pi-images text-sm" aria-hidden="true"></i>
+                            {{ article.images.length }}
+                        </span>
                     </div>
                     <div class="flex w-full flex-col justify-between p-6">
                         <div>

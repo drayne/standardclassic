@@ -9,7 +9,7 @@
 
         <div class="grid grid-cols-1 gap-12">
             <div v-for="article in allArticles" :key="article.id" class="flex flex-col md:flex-row overflow-hidden">
-                <div class="h-64 md:w-2/5 shrink-0 overflow-hidden">
+                <div class="relative h-64 md:w-2/5 shrink-0 overflow-hidden">
                     <img
                         v-if="article.image"
                         :src="article.image"
@@ -19,6 +19,12 @@
                     <div v-else class="flex h-full items-center justify-center">
                         <p class="text-xs text-gray-400 italic">[Nema slike]</p>
                     </div>
+                    <span
+                        v-if="article.images.length > 1"
+                        class="pointer-events-none absolute left-2 top-2 flex items-center gap-1.5 rounded-sm bg-black/70 px-2 py-1 text-xs font-bold text-white">
+                        <i class="pi pi-images text-sm" aria-hidden="true"></i>
+                        {{ article.images.length }}
+                    </span>
                 </div>
                 <div class="flex w-full flex-col justify-between lg:px-6 py-2 lg:py-1">
                     <div>

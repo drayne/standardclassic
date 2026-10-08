@@ -15,6 +15,13 @@ export default {
     next: 'Next >',
     source: 'Source',
     photo: 'Photo',
+    gallery: {
+        photos: 'photos',
+        open: 'Open gallery',
+        close: 'Close',
+        previous: 'Previous image',
+        next: 'Next image',
+    },
     language: {
         sr: 'srpski',
         en: 'english',
