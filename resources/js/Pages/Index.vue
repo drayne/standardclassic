@@ -2,36 +2,38 @@
     <Head :title="t('index_page.title')" />
 
     <div>
-        <section class="mb-12">
-            <h1 class="inline-block text-2xl md:text-[1.75rem] -mt-6" v-html="t('index_page.welcome_header')"></h1>
-        </section>
+        <div class="mb-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div class="flex flex-col justify-between">
+                <section class="mb-12 lg:mb-6">
+                    <h1 class="inline-block text-2xl md:text-[1.75rem] -mt-6" v-html="t('index_page.welcome_header')"></h1>
+                </section>
 
-        <div class="mb-10 grid grid-cols-1 items-center gap-6 lg:grid-cols-2">
-            <Link :href="route('udarnik')" class="group block overflow-hidden" aria-label="Udarnik">
-                <img
-                    src="/images/udarnik.jpg"
-                    alt="Udarnik – promocija mladih preduzetnika u StandardClassic Podcastu"
-                    class="h-auto w-full transition duration-300 group-hover:opacity-90" />
-            </Link>
+                <Link :href="route('udarnik')" class="group block overflow-hidden" aria-label="Udarnik">
+                    <img
+                        src="/images/udarnik.jpg"
+                        alt="Udarnik – promocija mladih preduzetnika u StandardClassic Podcastu"
+                        class="h-auto w-full transition duration-300 group-hover:opacity-90" />
+                </Link>
+            </div>
 
-            <section class="overflow-hidden rounded-md border border-gray-200 bg-white">
-                <h2 class="flex items-center bg-gray-900 px-4 py-2 text-sm font-bold tracking-wide text-white uppercase">
+            <section class="flex flex-col overflow-hidden rounded-md border border-gray-200 bg-white">
+                <h2 class="flex items-center border-b border-gray-200 px-4 py-2 text-sm font-bold tracking-wide text-gray-700 uppercase">
                     <span class="bg-radio-red mr-3 h-1 w-6"></span>
                     {{ t('index_page.schedule_title') }}
                 </h2>
-                <table class="w-full text-left text-sm">
+                <table class="w-full flex-1 text-left text-sm">
                     <thead class="border-b border-gray-200 text-xs text-gray-500 uppercase">
                         <tr>
-                            <th class="px-4 py-2 font-semibold">{{ t('index_page.schedule_show') }}</th>
-                            <th class="px-4 py-2 font-semibold">{{ t('index_page.schedule_premiere') }}</th>
-                            <th class="px-4 py-2 font-semibold">{{ t('index_page.schedule_rerun') }}</th>
+                            <th class="px-4 py-1.5 font-semibold">{{ t('index_page.schedule_show') }}</th>
+                            <th class="px-4 py-1.5 font-semibold">{{ t('index_page.schedule_premiere') }}</th>
+                            <th class="px-4 py-1.5 font-semibold">{{ t('index_page.schedule_rerun') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="show in schedule" :key="show.name" class="border-b border-gray-100 last:border-0 even:bg-gray-50">
-                            <td class="px-4 py-2 font-bold">{{ show.name }}</td>
-                            <td class="text-radio-red px-4 py-2 font-semibold">{{ t(`index_page.schedule_${show.key}_premiere`) }}</td>
-                            <td class="px-4 py-2 text-gray-600">{{ t(`index_page.schedule_${show.key}_rerun`) }}</td>
+                            <td class="px-4 py-1.5 font-bold">{{ show.name }}</td>
+                            <td class="text-radio-red px-4 py-1.5 font-semibold">{{ t(`index_page.schedule_${show.key}_premiere`) }}</td>
+                            <td class="px-4 py-1.5 text-gray-600">{{ t(`index_page.schedule_${show.key}_rerun`) }}</td>
                         </tr>
                     </tbody>
                 </table>
