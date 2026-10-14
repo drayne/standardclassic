@@ -2,10 +2,10 @@
     <Head :title="t('index_page.title')" />
 
     <div>
-        <div class="mb-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div class="mb-10 grid grid-cols-1 gap-6 xl:grid-cols-2">
             <div class="flex flex-col justify-between">
-                <section class="mb-12 lg:mb-6">
-                    <h1 class="inline-block text-2xl md:text-[1.75rem] -mt-6" v-html="t('index_page.welcome_header')"></h1>
+                <section class="mb-12 xl:mb-6">
+                    <h1 class="inline-block text-2xl md:text-[1.75rem] xl:text-xl xl:whitespace-nowrap -mt-6" v-html="t('index_page.welcome_header')"></h1>
                 </section>
 
                 <Link :href="route('udarnik')" class="group block overflow-hidden" aria-label="Udarnik">
@@ -21,19 +21,19 @@
                     <span class="bg-radio-red mr-3 h-1 w-6"></span>
                     {{ t('index_page.schedule_title') }}
                 </h2>
-                <table class="w-full flex-1 text-left text-sm">
+                <table class="w-full flex-1 text-left text-[13px]">
                     <thead class="border-b border-gray-200 text-xs text-gray-500 uppercase">
                         <tr>
-                            <th class="px-4 py-1.5 font-semibold">{{ t('index_page.schedule_show') }}</th>
-                            <th class="px-4 py-1.5 font-semibold">{{ t('index_page.schedule_premiere') }}</th>
-                            <th class="px-4 py-1.5 font-semibold">{{ t('index_page.schedule_rerun') }}</th>
+                            <th class="px-3 py-1 font-semibold">{{ t('index_page.schedule_show') }}</th>
+                            <th class="px-3 py-1 font-semibold">{{ t('index_page.schedule_premiere') }}</th>
+                            <th class="px-3 py-1 font-semibold">{{ t('index_page.schedule_rerun') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="show in schedule" :key="show.name" class="border-b border-gray-100 last:border-0 even:bg-gray-50">
-                            <td class="px-4 py-1.5 font-bold">{{ show.name }}</td>
-                            <td class="text-radio-red px-4 py-1.5 font-semibold">{{ t(`index_page.schedule_${show.key}_premiere`) }}</td>
-                            <td class="px-4 py-1.5 text-gray-600">{{ t(`index_page.schedule_${show.key}_rerun`) }}</td>
+                            <td class="px-3 py-1 font-bold">{{ show.name }}</td>
+                            <td class="text-radio-red px-3 py-1 font-semibold">{{ t(`index_page.schedule_${show.key}_premiere`) }}</td>
+                            <td class="px-3 py-1 text-gray-600">{{ t(`index_page.schedule_${show.key}_rerun`) }}</td>
                         </tr>
                     </tbody>
                 </table>
