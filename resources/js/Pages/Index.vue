@@ -2,19 +2,18 @@
     <Head :title="t('index_page.title')" />
 
     <div>
-        <div class="mb-10 grid grid-cols-1 gap-6 xl:grid-cols-2">
-            <div class="flex flex-col justify-between">
-                <section class="mb-12 xl:mb-6">
-                    <h1 class="inline-block text-2xl md:text-[1.75rem] xl:text-xl xl:whitespace-nowrap -mt-6" v-html="t('index_page.welcome_header')"></h1>
-                </section>
+        <section class="mb-12">
+            <h1 class="inline-block text-2xl md:text-[1.75rem] -mt-6" v-html="t('index_page.welcome_header')"></h1>
+        </section>
 
-                <Link :href="route('udarnik')" class="group block overflow-hidden" aria-label="Udarnik">
-                    <img
-                        src="/images/udarnik.jpg"
-                        alt="Udarnik – promocija mladih preduzetnika u StandardClassic Podcastu"
-                        class="h-auto w-full transition duration-300 group-hover:opacity-90" />
-                </Link>
-            </div>
+        <div class="mb-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <!-- pozadina iste boje kao ivice banera, da se baner "produži" do visine tabele -->
+            <Link :href="route('udarnik')" class="group flex items-center overflow-hidden bg-[#f3e3cf]" aria-label="Udarnik">
+                <img
+                    src="/images/udarnik.jpg"
+                    alt="Udarnik – promocija mladih preduzetnika u StandardClassic Podcastu"
+                    class="h-auto w-full transition duration-300 group-hover:opacity-90" />
+            </Link>
 
             <section class="flex flex-col overflow-hidden rounded-md border border-gray-200 bg-white">
                 <h2 class="flex items-center border-b border-gray-200 px-4 py-2 text-sm font-bold tracking-wide text-gray-700 uppercase">
