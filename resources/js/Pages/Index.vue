@@ -29,8 +29,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="show in schedule" :key="show.name" class="border-b border-gray-100 last:border-0 even:bg-gray-50">
-                            <td class="px-3 py-1 font-bold">{{ show.name }}</td>
+                        <tr
+                            v-for="show in schedule"
+                            :key="show.name"
+                            class="group cursor-pointer border-b border-gray-100 transition last:border-0 even:bg-gray-50 hover:bg-red-50"
+                            @click="$inertia.visit(route(show.route))">
+                            <td class="px-3 py-1 font-bold">
+                                <Link :href="route(show.route)" class="group-hover:text-radio-red transition" @click.stop>{{ show.name }}</Link>
+                            </td>
                             <td class="text-radio-red px-3 py-1 font-semibold">{{ t(`index_page.schedule_${show.key}_premiere`) }}</td>
                             <td class="px-3 py-1 text-gray-600">{{ t(`index_page.schedule_${show.key}_rerun`) }}</td>
                         </tr>
@@ -223,10 +229,10 @@ const { t } = useTrans()
 defineOptions({ layout: MainLayout })
 
 const schedule = [
-    { key: 'film_music', name: 'Veče klasične filmske muzike' },
-    { key: 'aca', name: 'Popodne sa Acom Informacijom' },
-    { key: 'podcast', name: 'Standard Classic Podcast' },
-    { key: 'nekultura', name: 'Gdje se fura (ne)kultura' },
+    { key: 'film_music', route: 'klasicna-filmska-muzika', name: 'Veče klasične filmske muzike' },
+    { key: 'aca', route: 'popodne-sa-Acom-Informacijom', name: 'Popodne sa Acom Informacijom' },
+    { key: 'podcast', route: 'Milos-Stevanovic-standard-classic-podcast', name: 'Standard Classic Podcast' },
+    { key: 'nekultura', route: 'gdje-se-fura-nekultura', name: 'Gdje se fura (ne)kultura' },
 ]
 
 interface CoverImage {
