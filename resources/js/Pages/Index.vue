@@ -231,7 +231,7 @@ defineOptions({ layout: MainLayout })
 const schedule = [
     { key: 'film_music', route: 'klasicna-filmska-muzika', name: 'Veče klasične filmske muzike' },
     { key: 'aca', route: 'popodne-sa-Acom-Informacijom', name: 'Popodne sa Acom Informacijom' },
-    { key: 'podcast', route: 'Milos-Stevanovic-standard-classic-podcast', name: 'Standard Classic Podcast' },
+    { key: 'podcast', route: 'Milos-Stevanovic-standard-classic-podcast', name: 'Standard Classic Podcast sa Milošem Stevanovićem' },
     { key: 'nekultura', route: 'gdje-se-fura-nekultura', name: 'Gdje se fura (ne)kultura' },
 ]
 
